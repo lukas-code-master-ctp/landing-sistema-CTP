@@ -32,10 +32,11 @@ export default async function handler(req, res) {
 
   const nombre = String(body.nombre || '').trim();
   const email = String(body.email || '').trim();
+  const telefono = String(body.telefono || '').trim();
   const empresa = String(body.empresa || '').trim();
   const equipo = String(body.equipo || '').trim();
 
-  if (!nombre || !email || !empresa) {
+  if (!nombre || !email || !telefono || !empresa) {
     return res.status(400).json({ error: 'Faltan campos obligatorios.' });
   }
   if (!EMAIL_RE.test(email)) {
@@ -67,6 +68,7 @@ export default async function handler(req, res) {
           <h2>Nueva solicitud de demo</h2>
           <p><strong>Nombre:</strong> ${esc(nombre)}</p>
           <p><strong>Email:</strong> ${esc(email)}</p>
+          <p><strong>Teléfono:</strong> ${esc(telefono)}</p>
           <p><strong>Inmobiliaria / corredora:</strong> ${esc(empresa)}</p>
           <p><strong>Tamaño del equipo:</strong> ${esc(equipo) || '—'}</p>
         `,
