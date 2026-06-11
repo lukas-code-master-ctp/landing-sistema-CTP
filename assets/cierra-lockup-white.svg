@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" width="720" height="200" role="img" aria-label="Cierra.cl invertido">
+  <g transform="translate(20,52) scale(0.1875)">
+    <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+    <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+    <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+  </g>
+  <text x="150" y="135" font-family="Sora, &#39;Helvetica Neue&#39;, Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#FFFFFF">Cıerra<tspan fill="#43B94E">.cl</tspan></text>
+  <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#43B94E"></path>
+</svg>

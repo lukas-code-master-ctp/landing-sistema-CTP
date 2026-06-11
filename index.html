@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cierra.cl — El software que opera la venta de parcelas, del lead al CBR</title>
-<link rel="icon" href="assets/favicon.png">
+<link rel="icon" type="image/svg+xml" href="assets/cierra-icon-green.svg">
 <link rel="stylesheet" href="assets/colors_and_type.css">
 <style>
   * { box-sizing: border-box; }
@@ -57,11 +57,8 @@
   .nav { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / .82); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
   .nav.scrolled { border-color: var(--border); box-shadow: var(--shadow-card); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  .nav-logo { height: 30px; width: auto; }
-  .brand { display: inline-flex; align-items: baseline; font-weight: var(--fw-extra); font-size: 23px; letter-spacing: -.03em; color: var(--zinc-950); }
-  .brand .tld { color: var(--brand-700); }
-  .brand.on-dark { color: #fff; }
-  .brand.on-dark .tld { color: var(--brand-400); }
+  .nav-logo-link { display: inline-flex; }
+  .nav-logo { height: 34px; width: auto; display: block; }
   .nav-links { display: flex; align-items: center; gap: 30px; }
   .nav-links a { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-600); transition: color .15s; }
   .nav-links a:hover { color: var(--zinc-900); }
@@ -272,8 +269,8 @@
   /* =========================================================== FOOTER */
   .footer { background: var(--zinc-950); color: var(--zinc-400); padding: 64px 0 36px; }
   .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
-  .foot-logo { height: 28px; width: auto; margin-bottom: 16px; }
-  .foot-brand { font-size: 24px; margin-bottom: 16px; }
+  .foot-logo-link { display: inline-flex; margin-bottom: 16px; }
+  .foot-logo { height: 30px; width: auto; display: block; }
   .foot-about { font-size: 14px; line-height: 1.6; color: var(--zinc-500); max-width: 280px; }
   .foot-col h4 { font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--zinc-300); margin: 0 0 16px; }
   .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
@@ -326,7 +323,17 @@
   <!-- ===================================================== NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="#top" class="brand" aria-label="Cierra.cl">Cierra<span class="tld">.cl</span></a>
+      <a href="#top" class="nav-logo-link" aria-label="Cierra.cl">
+        <svg class="nav-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+          <g transform="translate(20,52) scale(0.1875)">
+            <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+            <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+            <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+          </g>
+          <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#09090B">Cıerra<tspan fill="#007C10">.cl</tspan></text>
+          <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#007C10"></path>
+        </svg>
+      </a>
       <nav class="nav-links">
         <a href="#producto">Producto</a>
         <a href="#modulos">Módulos</a>
@@ -713,7 +720,17 @@
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <a href="#top" class="brand on-dark foot-brand" aria-label="Cierra.cl">Cierra<span class="tld">.cl</span></a>
+          <a href="#top" class="foot-logo-link" aria-label="Cierra.cl">
+            <svg class="foot-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+              <g transform="translate(20,52) scale(0.1875)">
+                <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+                <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+                <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+              </g>
+              <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#FFFFFF">Cıerra<tspan fill="#43B94E">.cl</tspan></text>
+              <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#43B94E"></path>
+            </svg>
+          </a>
           <p class="foot-about">El software de automatización operativa para la venta de parcelas en Chile. Del primer lead a la inscripción en el CBR —incluyendo el financiamiento del propio desarrollador— en un solo flujo.</p>
         </div>
         <div class="foot-col">
