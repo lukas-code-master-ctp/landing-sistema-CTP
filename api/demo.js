@@ -6,11 +6,12 @@
 // Variables de entorno (Vercel → Project → Settings → Environment Variables):
 //   RESEND_API_KEY  (obligatoria) — API key de Resend (empieza con "re_").
 //   DEMO_TO         (opcional)    — bandeja que recibe los leads.
-//                                   Default: ventas@compratuparcela.cl
+//                                   Default: ventas@cierra.cl
 //   DEMO_FROM       (opcional)    — remitente. DEBE pertenecer a un dominio
-//                                   verificado en Resend. Para probar sin
-//                                   verificar dominio usa: onboarding@resend.dev
-//                                   (solo envía al dueño de la cuenta Resend).
+//                                   verificado en Resend (ej. cierra.cl). Para
+//                                   probar sin verificar dominio usa:
+//                                   onboarding@resend.dev (solo envía al dueño
+//                                   de la cuenta Resend).
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const esc = (s) =>
@@ -49,8 +50,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Servicio sin configurar.' });
   }
 
-  const to = process.env.DEMO_TO || 'ventas@compratuparcela.cl';
-  const from = process.env.DEMO_FROM || 'CompraTuParcela <onboarding@resend.dev>';
+  const to = process.env.DEMO_TO || 'ventas@cierra.cl';
+  const from = process.env.DEMO_FROM || 'Cierra.cl <onboarding@resend.dev>';
 
   try {
     const r = await fetch('https://api.resend.com/emails', {

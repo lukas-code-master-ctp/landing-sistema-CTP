@@ -1,12 +1,12 @@
-# Landing CompraTuParcela
+# Landing Cierra.cl
 
-Landing page SaaS para vender el sistema CompraTuParcela a inmobiliarias y corredoras de parcelas. Implementada desde el handoff de Claude Design, usando los tokens, colores y componentes exactos del design system del CRM.
+Landing page SaaS para vender **Cierra.cl** —el software de automatización operativa que opera la venta de parcelas de punta a punta, del lead a la inscripción en el CBR, incluyendo el financiamiento del propio desarrollador— a inmobiliarias y corredoras. Implementada desde el handoff de Claude Design, usando los tokens, colores y componentes exactos del design system.
 
 ## Estructura
 
 - `index.html` — la landing completa (una sola página, es-CL).
 - `api/demo.js` — función serverless (Vercel) que envía el formulario de demo vía Resend.
-- `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del CRM).
+- `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del sistema).
 - `assets/dashboard.png` — captura real del dashboard que se muestra en "Velo en acción".
 - `assets/logo-dark.png` / `logo-light.png` / `favicon.png` — logos y favicon.
 
@@ -23,7 +23,7 @@ Dependencias externas cargadas por CDN: [Lucide](https://unpkg.com/lucide@latest
 
 ## Secciones
 
-Nav sticky · Hero con composición flotante de KPIs reales del CRM · logos de clientes · banda oscura de posicionamiento (flujo Lead → Reserva → Autorización → Firma → Escritura) · 6 módulos + 7 roles · showcase "Velo en acción" · testimonios · 3 planes (en UF, el del medio destacado) · FAQ · CTA final con formulario de demo · footer.
+Nav sticky · Hero con composición flotante de KPIs · logos de clientes · banda oscura de posicionamiento (flujo Lead → Reserva → Autorización → Firma → Inscripción CBR) · 6 módulos + 7 roles · showcase "Velo en acción" · testimonios · 4 planes (en UF, con toggle mensual/anual) · FAQ · CTA final con formulario de demo · footer.
 
 ## Para terminar de pulir
 
@@ -38,7 +38,7 @@ El formulario "Agenda tu demo" hace `POST /api/demo` con los campos en JSON. Ese
 1. Importa este repo en Vercel (Root Directory por defecto: la raíz del repo, donde están `index.html` y `api/`).
 2. En *Settings → Environment Variables* agrega:
    - `RESEND_API_KEY` — tu API key de Resend (obligatoria).
-   - `DEMO_TO` — bandeja que recibe los leads (opcional; default `ventas@compratuparcela.cl`).
+   - `DEMO_TO` — bandeja que recibe los leads (opcional; default `ventas@cierra.cl`).
    - `DEMO_FROM` — remitente; debe ser de un **dominio verificado en Resend**. Para probar sin verificar dominio usa `onboarding@resend.dev` (solo envía al dueño de la cuenta).
 3. Deploy. (Local: `vercel dev` corre la función; `python -m http.server` solo sirve el estático y el envío fallará con el mensaje de error.)
 

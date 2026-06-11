@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CompraTuParcela — El sistema operativo de tu inmobiliaria de parcelas</title>
+<title>Cierra.cl — El software que opera la venta de parcelas, del lead al CBR</title>
 <link rel="icon" href="assets/favicon.png">
 <link rel="stylesheet" href="assets/colors_and_type.css">
 <style>
@@ -58,6 +58,10 @@
   .nav.scrolled { border-color: var(--border); box-shadow: var(--shadow-card); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .nav-logo { height: 30px; width: auto; }
+  .brand { display: inline-flex; align-items: baseline; font-weight: var(--fw-extra); font-size: 23px; letter-spacing: -.03em; color: var(--zinc-950); }
+  .brand .tld { color: var(--brand-700); }
+  .brand.on-dark { color: #fff; }
+  .brand.on-dark .tld { color: var(--brand-400); }
   .nav-links { display: flex; align-items: center; gap: 30px; }
   .nav-links a { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-600); transition: color .15s; }
   .nav-links a:hover { color: var(--zinc-900); }
@@ -269,6 +273,7 @@
   .footer { background: var(--zinc-950); color: var(--zinc-400); padding: 64px 0 36px; }
   .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
   .foot-logo { height: 28px; width: auto; margin-bottom: 16px; }
+  .foot-brand { font-size: 24px; margin-bottom: 16px; }
   .foot-about { font-size: 14px; line-height: 1.6; color: var(--zinc-500); max-width: 280px; }
   .foot-col h4 { font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--zinc-300); margin: 0 0 16px; }
   .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
@@ -321,7 +326,7 @@
   <!-- ===================================================== NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a href="#top" aria-label="CompraTuParcela"><img src="assets/logo-dark.png" alt="CompraTuParcela" class="nav-logo" style="width: 115px; height: 36px"></a>
+      <a href="#top" class="brand" aria-label="Cierra.cl">Cierra<span class="tld">.cl</span></a>
       <nav class="nav-links">
         <a href="#producto">Producto</a>
         <a href="#modulos">Módulos</a>
@@ -341,9 +346,9 @@
     <div class="hero-glow"></div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow"><span class="dot"></span>Sistema de ventas y operaciones · Parcelas</span>
-        <h1 class="hero-h1">El sistema operativo de tu inmobiliaria de <span class="g">parcelas</span>.</h1>
-        <p class="hero-sub">Más que un CRM: <strong>el flujo completo de venta y operación</strong> para loteos y venta de parcelas en Chile. Leads, reservas, pipeline legal y comisiones —del primer contacto a la escritura— en un solo lugar.</p>
+        <span class="eyebrow"><span class="dot"></span>Sistema de automatización operativa · Parcelas</span>
+        <h1 class="hero-h1">El software que opera la venta de tus <span class="g">parcelas</span>, de punta a punta.</h1>
+        <p class="hero-sub">Cierra.cl automatiza toda la operación: leads, reservas, <strong>el financiamiento que da el propio desarrollador</strong>, pipeline legal y comisiones —del primer lead a la inscripción en el CBR—. No es un CRM: es tu operación de venta, automatizada.</p>
         <div class="hero-cta">
           <a href="#demo" class="btn btn-primary btn-lg">Solicita una demo con nuestros expertos</a>
           <a href="#modulos" class="btn btn-outline btn-lg">Ver los módulos</a>
@@ -351,8 +356,8 @@
         <div class="hero-trust">
           <span>Hecho en Chile</span><span class="sep">·</span>
           <span>CLP y UF</span><span class="sep">·</span>
-          <span>RUT y notarías</span><span class="sep">·</span>
-          <span>Roles para todo el equipo</span>
+          <span>Del lead al CBR</span><span class="sep">·</span>
+          <span>Financiamiento del desarrollador</span>
         </div>
       </div>
 
@@ -361,7 +366,7 @@
         <div class="win">
           <div class="win-bar">
             <div class="win-dots"><i></i><i></i><i></i></div>
-            <span class="win-url">app.compratuparcela.cl/dashboard</span>
+            <span class="win-url">app.cierra.cl/dashboard</span>
           </div>
           <div class="win-body">
             <div class="win-head">
@@ -388,7 +393,7 @@
                 <div class="mk-delta"><span class="ctp-ic" data-lucide="trending-up" style="width:12px;height:12px"></span>+11%</div>
               </div>
               <div class="mini-kpi">
-                <div class="mk-row"><div class="mk-label">Escrituras</div><div class="mk-tile"><span class="ctp-ic" data-lucide="file-text" style="width:16px;height:16px"></span></div></div>
+                <div class="mk-row"><div class="mk-label">Inscripciones CBR</div><div class="mk-tile"><span class="ctp-ic" data-lucide="file-text" style="width:16px;height:16px"></span></div></div>
                 <div class="mk-value">18</div>
                 <div class="mk-delta down"><span class="ctp-ic" data-lucide="trending-down" style="width:12px;height:12px"></span>-4%</div>
               </div>
@@ -398,7 +403,7 @@
               <div class="mf-row"><div class="mf-meta"><span class="l">Leads</span><span class="v">142</span></div><div class="mf-track"><div class="mf-bar" style="width:100%"></div></div></div>
               <div class="mf-row"><div class="mf-meta"><span class="l">Reservas</span><span class="v">37</span></div><div class="mf-track"><div class="mf-bar" style="width:62%"></div></div></div>
               <div class="mf-row"><div class="mf-meta"><span class="l">Autorizadas</span><span class="v">29</span></div><div class="mf-track"><div class="mf-bar" style="width:46%"></div></div></div>
-              <div class="mf-row"><div class="mf-meta"><span class="l">Escrituras</span><span class="v">18</span></div><div class="mf-track"><div class="mf-bar" style="width:30%"></div></div></div>
+              <div class="mf-row"><div class="mf-meta"><span class="l">Inscritas CBR</span><span class="v">18</span></div><div class="mf-track"><div class="mf-bar" style="width:30%"></div></div></div>
             </div>
           </div>
         </div>
@@ -421,7 +426,7 @@
   <!-- ===================================================== LOGOS -->
   <section class="logos">
     <div class="wrap">
-      <p class="logos-label">Inmobiliarias y corredoras que operan con CompraTuParcela</p>
+      <p class="logos-label">Inmobiliarias y corredoras que operan con Cierra.cl</p>
       <div class="logos-row">
         <span class="logo-chip"><span class="ctp-ic" data-lucide="mountain" style="width:20px;height:20px"></span>Mirador del Valle</span>
         <span class="logo-chip"><span class="ctp-ic" data-lucide="trees" style="width:20px;height:20px"></span>Lomas de Colina</span>
@@ -436,15 +441,15 @@
   <section class="band" id="producto">
     <div class="blob1"></div><div class="blob2"></div>
     <div class="wrap band-inner">
-      <span class="eyebrow on-dark"><span class="dot"></span>No es un CRM más</span>
-      <h2 class="band-title">Un solo flujo, del primer <span class="g">lead</span> a la <span class="g">escritura</span>.</h2>
-      <p class="band-desc">Las planillas paralelas, los WhatsApp sueltos y los estados que nadie actualiza se acaban. CompraTuParcela conecta venta, finanzas y legal en una sola operación con disparadores automáticos.</p>
+      <span class="eyebrow on-dark"><span class="dot"></span>No es un CRM</span>
+      <h2 class="band-title">Un solo flujo automatizado, del primer <span class="g">lead</span> a la inscripción en el <span class="g">CBR</span>.</h2>
+      <p class="band-desc">Las planillas paralelas, los WhatsApp sueltos y los estados que nadie actualiza se acaban. Cierra.cl automatiza venta, financiamiento, finanzas y legal en una sola operación con disparadores automáticos —hasta la inscripción en el Conservador de Bienes Raíces.</p>
       <div class="flow">
         <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="inbox" style="width:18px;height:18px"></span></div><span class="flow-name">Lead</span></div><p class="flow-meta">Captura inbound y asignación al asesor.</p></div>
-        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="file-signature" style="width:18px;height:18px"></span></div><span class="flow-name">Reserva</span></div><p class="flow-meta">Asistente de 3 pasos, financiamiento y pago.</p></div>
+        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="file-signature" style="width:18px;height:18px"></span></div><span class="flow-name">Reserva</span></div><p class="flow-meta">Asistente de 3 pasos, financiamiento del desarrollador y pago.</p></div>
         <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span></div><span class="flow-name">Autorización</span></div><p class="flow-meta">Validación de pago y estado por rol.</p></div>
         <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="calendar" style="width:18px;height:18px"></span></div><span class="flow-name">Firma</span></div><p class="flow-meta">Agenda en notaría y documentación lista.</p></div>
-        <div class="flow-step last"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="banknote" style="width:18px;height:18px"></span></div><span class="flow-name">Escritura + comisión</span></div><p class="flow-meta">Parcela vendida y comisiones creadas solas.</p></div>
+        <div class="flow-step last"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="banknote" style="width:18px;height:18px"></span></div><span class="flow-name">Inscripción CBR + comisión</span></div><p class="flow-meta">Parcela inscrita en el Conservador y comisiones creadas solas.</p></div>
       </div>
     </div>
   </section>
@@ -472,15 +477,15 @@
         </article>
         <article class="mod-card reveal">
           <div class="mod-ic"><span class="ctp-ic" data-lucide="file-signature" style="width:22px;height:22px"></span></div>
-          <h3>Reservas</h3>
-          <p>Asistente de 3 pasos con vendedor interno y corretaje externo, planes de financiamiento y una máquina de estados de pago y autorización.</p>
-          <div class="mod-tags"><span class="mod-tag">3 pasos</span><span class="mod-tag">Multi-vendedor</span><span class="mod-tag">Financiamiento</span></div>
+          <h3>Reservas y financiamiento</h3>
+          <p>Asistente de 3 pasos con vendedor interno y corretaje externo, financiamiento del propio desarrollador (pie y cuotas) y una máquina de estados de pago y autorización.</p>
+          <div class="mod-tags"><span class="mod-tag">3 pasos</span><span class="mod-tag">Financiamiento propio</span><span class="mod-tag">Pie y cuotas</span></div>
         </article>
         <article class="mod-card reveal">
           <div class="mod-ic"><span class="ctp-ic" data-lucide="file-text" style="width:22px;height:22px"></span></div>
-          <h3>Pipeline legal</h3>
-          <p>Borrador → Agenda firma → Escritura. Al cerrar, la parcela pasa a vendida y las comisiones se crean solas. Adiós a las planillas paralelas.</p>
-          <div class="mod-tags"><span class="mod-tag">Promesa</span><span class="mod-tag">Notaría</span><span class="mod-tag">Disparadores</span></div>
+          <h3>Pipeline legal y CBR</h3>
+          <p>Borrador → Agenda firma → Escritura → Inscripción en el CBR. Al inscribir, la parcela pasa a vendida y las comisiones se crean solas. Adiós a las planillas paralelas.</p>
+          <div class="mod-tags"><span class="mod-tag">Notaría</span><span class="mod-tag">CBR</span><span class="mod-tag">Disparadores</span></div>
         </article>
         <article class="mod-card reveal">
           <div class="mod-ic"><span class="ctp-ic" data-lucide="banknote" style="width:22px;height:22px"></span></div>
@@ -519,9 +524,9 @@
       <div class="shot-frame reveal">
         <div class="shot-bar">
           <div class="win-dots"><i></i><i></i><i></i></div>
-          <span class="win-url">app.compratuparcela.cl/dashboard</span>
+          <span class="win-url">app.cierra.cl/dashboard</span>
         </div>
-        <img class="shot-slot" src="assets/dashboard.png" alt="Dashboard de CompraTuParcela: KPIs de reservas, embudo de conversión, tendencia de 6 meses y alertas operativas" style="height: auto;">
+        <img class="shot-slot" src="assets/dashboard.png" alt="Dashboard de Cierra.cl: KPIs de reservas, embudo de conversión, tendencia de 6 meses y alertas operativas" style="height: auto;">
       </div>
       <div class="feature-pills">
         <span class="feature-pill"><span class="ctp-ic" data-lucide="layout-grid" style="width:15px;height:15px"></span>Vista cards ↔ lista ↔ mapa</span>
@@ -549,7 +554,7 @@
           <div class="tst-who"><span class="tst-av">DF</span><div><div class="tst-name">Diego Fuentes</div><div class="tst-role">Jefe de ventas · Mirador del Valle</div></div></div>
         </article>
         <article class="tst-card reveal">
-          <p class="tst-quote">El pipeline legal nos cambió la pega. Borrador, agenda de firma, escritura —todo trazado— y la parcela pasa a vendida sin que nadie la toque a mano.</p>
+          <p class="tst-quote">El pipeline legal nos cambió la pega. Borrador, agenda de firma, escritura e inscripción en el CBR —todo trazado— y la parcela queda vendida e inscrita sin que nadie la toque a mano.</p>
           <div class="tst-who"><span class="tst-av">VC</span><div><div class="tst-name">Valentina Cid</div><div class="tst-role">Coordinadora legal · Altos de Pirque</div></div></div>
         </article>
       </div>
@@ -645,8 +650,8 @@
       </div>
       <div class="faq reveal">
         <details class="faq-item" open>
-          <summary>¿Sirve para vender parcelas con financiamiento directo?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
-          <p class="faq-answer">Sí. Cada reserva soporta planes de financiamiento con pie y cuotas, además de pago al contado. El sistema lleva el estado de pago y bloquea el avance de la reserva hasta que esté autorizada, así no se escritura nada que no esté al día.</p>
+          <summary>¿Sirve para vender parcelas con financiamiento del propio desarrollador?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí, justamente para eso. Cada reserva soporta el financiamiento que da el propio desarrollador —con pie y cuotas— además del pago al contado. El sistema lleva el estado de pago y bloquea el avance de la reserva hasta que esté autorizada, así no se escritura nada que no esté al día.</p>
         </details>
         <details class="faq-item">
           <summary>¿Maneja UF y CLP?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
@@ -658,11 +663,11 @@
         </details>
         <details class="faq-item">
           <summary>¿Cómo funcionan los roles y permisos?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
-          <p class="faq-answer">El CRM es 100% basado en roles: owner, admin, asesor, finanzas, legal, agenda y corretaje. Cada rol ve un dashboard y una navegación a su medida, y ciertas acciones —como autorizar un pago o pagar una comisión— quedan reservadas al rol que corresponde.</p>
+          <p class="faq-answer">El sistema es 100% basado en roles: owner, admin, asesor, finanzas, legal, agenda y corretaje. Cada rol ve un dashboard y una navegación a su medida, y ciertas acciones —como autorizar un pago o pagar una comisión— quedan reservadas al rol que corresponde.</p>
         </details>
         <details class="faq-item">
-          <summary>¿Se conecta con notarías y firma?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
-          <p class="faq-answer">El pipeline legal te permite agendar la firma en notaría y dejar trazada la documentación de cada escritura. En el plan Operación total sumamos integraciones a medida según tus flujos y proveedores.</p>
+          <summary>¿Se conecta con notarías, firma y el CBR?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">El pipeline legal te permite agendar la firma en notaría y dejar trazada la documentación de cada escritura hasta su inscripción en el Conservador de Bienes Raíces. En el plan Enterprise sumamos integraciones a medida según tus flujos y proveedores.</p>
         </details>
         <details class="faq-item">
           <summary>¿Cuánto demora la implementación?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
@@ -679,7 +684,7 @@
       <div>
         <span class="eyebrow on-dark"><span class="dot"></span>Demo personalizada</span>
         <h2 class="cta-h">Solicita una demo con <span class="g">nuestros expertos</span>.</h2>
-        <p class="cta-p">Te mostramos el sistema con tus proyectos y respondemos cómo ordenar tu operación de venta de parcelas, de punta a punta.</p>
+        <p class="cta-p">Te mostramos el sistema con tus proyectos y respondemos cómo automatizar tu operación de venta de parcelas, del lead a la inscripción en el CBR.</p>
         <ul class="cta-list">
           <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>30 minutos, sin compromiso</li>
           <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>Recomendación de plan según tu equipo</li>
@@ -698,7 +703,7 @@
         </div>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Solicitar demo</button>
         <p class="form-status" id="demo-status" role="status" aria-live="polite" hidden></p>
-        <p class="form-fine">Al enviar aceptas que te contactemos sobre CompraTuParcela.</p>
+        <p class="form-fine">Al enviar aceptas que te contactemos sobre Cierra.cl.</p>
       </form>
     </div>
   </section>
@@ -708,8 +713,8 @@
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <img src="assets/logo-light.png" alt="CompraTuParcela" class="foot-logo">
-          <p class="foot-about">El sistema operativo para inmobiliarias y corredoras de parcelas en Chile. Del primer lead a la escritura, en un solo flujo.</p>
+          <a href="#top" class="brand on-dark foot-brand" aria-label="Cierra.cl">Cierra<span class="tld">.cl</span></a>
+          <p class="foot-about">El software de automatización operativa para la venta de parcelas en Chile. Del primer lead a la inscripción en el CBR —incluyendo el financiamiento del propio desarrollador— en un solo flujo.</p>
         </div>
         <div class="foot-col">
           <h4>Producto</h4>
@@ -725,7 +730,7 @@
         </div>
       </div>
       <div class="foot-bottom">
-        <span>© 2026 CompraTuParcela · Hecho en Chile</span>
+        <span>© 2026 Cierra.cl · Hecho en Chile</span>
         <span style="display:inline-flex;align-items:center;gap:14px">
           <a href="#" aria-label="Correo"><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span></a>
           <a href="#" aria-label="Teléfono"><span class="ctp-ic" data-lucide="phone" style="width:18px;height:18px"></span></a>
@@ -801,7 +806,7 @@
           status.textContent = '¡Gracias! Te contactamos dentro de 1 día hábil.';
         } catch (err) {
           status.className = 'form-status err';
-          status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a ventas@compratuparcela.cl.';
+          status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a ventas@cierra.cl.';
         } finally {
           status.hidden = false;
           btn.disabled = false;

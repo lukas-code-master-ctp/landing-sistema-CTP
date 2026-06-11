@@ -1,5 +1,5 @@
 /* ============================================================================
-   CompraTuParcela — Design Tokens (colors + type)
+   Cierra.cl — Design Tokens (colors + type)
    Source of truth: crm-ctp/ctp-crm/frontend  (Tailwind 3.4 config + index.css)
    Font: Plus Jakarta Sans (loaded from Google Fonts; see README font note)
    ============================================================================ */
@@ -8,7 +8,7 @@
 
 :root {
   /* ---------------------------------------------------------------------------
-     BRAND — green scale (CompraTuParcela). brand-700 (#007c10) is THE primary.
+     BRAND — green scale (Cierra.cl). brand-700 (#007c10) is THE primary.
      Lifted verbatim from tailwind.config.js > theme.extend.colors.brand
   --------------------------------------------------------------------------- */
   --brand-50:  #e6f5e7;
