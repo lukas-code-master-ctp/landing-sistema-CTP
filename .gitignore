@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Vercel
+.vercel/
+
+# Env / secrets
+.env
+.env*.local
+
+# image-slot sidecar (no aplica en este deploy)
+.image-slots.state.json
+
+# OS / editor
+.DS_Store
+Thumbs.db

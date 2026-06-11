@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompraTuParcela — El sistema operativo de tu inmobiliaria de parcelas</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--fg-primary);
+    background: var(--bg-surface);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  img { display: block; max-width: 100%; }
+  .ctp-ic svg { width: 100%; height: 100%; display: block; }
+  ::selection { background: var(--brand-100); color: var(--brand-900); }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---- Buttons (from CRM) ---- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: var(--radius-sm); font-weight: var(--fw-semibold); transition: background-color .15s, color .15s, box-shadow .15s, transform .15s; white-space: nowrap; }
+  .btn-md { height: 42px; padding: 0 18px; font-size: 15px; }
+  .btn-lg { height: 52px; padding: 0 26px; font-size: 16px; border-radius: var(--radius-md); }
+  .btn-primary { background: var(--brand-700); color: #fff; box-shadow: 0 1px 2px rgb(0 70 8 / .25); }
+  .btn-primary:hover { background: var(--brand-800); }
+  .btn-primary:active { background: var(--brand-900); }
+  .btn-outline { background: #fff; color: var(--zinc-900); border: 1px solid var(--zinc-300); }
+  .btn-outline:hover { background: var(--zinc-50); border-color: var(--zinc-400); }
+  .btn-ghost { background: transparent; color: var(--zinc-700); }
+  .btn-ghost:hover { background: var(--zinc-100); }
+  .btn-light { background: #fff; color: var(--zinc-900); }
+  .btn-light:hover { background: var(--zinc-100); }
+  .btn-dark-outline { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / .25); }
+  .btn-dark-outline:hover { background: rgb(255 255 255 / .08); border-color: rgb(255 255 255 / .45); }
+
+  /* ---- Badge / pill (from CRM) ---- */
+  .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 9999px; padding: 3px 10px; font-size: 12px; font-weight: var(--fw-medium); border: 1px solid transparent; line-height: 1.4; }
+  .badge-brand { background: var(--brand-50); color: var(--brand-800); border-color: var(--brand-100); }
+  .badge-amber { background: var(--warn-50); color: var(--warn-700); border-color: #fde68a; }
+  .badge-blue { background: var(--info-50); color: var(--info-700); border-color: #bfdbfe; }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
+  .eyebrow.on-dark { color: var(--brand-400); }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 9999px; background: currentColor; }
+
+  /* =========================================================== NAV */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / .82); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+  .nav.scrolled { border-color: var(--border); box-shadow: var(--shadow-card); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .nav-logo { height: 30px; width: auto; }
+  .nav-links { display: flex; align-items: center; gap: 30px; }
+  .nav-links a { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-600); transition: color .15s; }
+  .nav-links a:hover { color: var(--zinc-900); }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .nav-signin { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-700); padding: 0 12px; height: 42px; display: inline-flex; align-items: center; border-radius: var(--radius-sm); }
+  .nav-signin:hover { background: var(--zinc-100); }
+  .nav-burger { display: none; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; color: var(--zinc-700); }
+
+  /* =========================================================== HERO */
+  .hero { position: relative; overflow: hidden; padding: 72px 0 96px; }
+  .hero-glow { position: absolute; top: -180px; right: -120px; width: 720px; height: 720px; border-radius: 9999px; background: radial-gradient(circle, rgb(0 124 16 / .14), rgb(0 124 16 / 0) 62%); pointer-events: none; z-index: 0; }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  .hero-h1 { font-size: clamp(40px, 5.4vw, 68px); line-height: 1.04; font-weight: var(--fw-extra); letter-spacing: -0.025em; margin: 22px 0 0; color: var(--zinc-950); text-wrap: balance; }
+  .hero-h1 .g { color: var(--brand-700); }
+  .hero-sub { margin: 24px 0 0; font-size: 18px; line-height: 1.6; color: var(--fg-secondary); max-width: 540px; }
+  .hero-sub strong { color: var(--zinc-900); font-weight: var(--fw-semibold); }
+  .hero-cta { display: flex; align-items: center; gap: 12px; margin-top: 34px; flex-wrap: wrap; }
+  .hero-trust { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 26px; font-size: 13px; color: var(--fg-muted); }
+  .hero-trust .sep { color: var(--zinc-300); }
+
+  /* ---- Hero composition (floating CRM cards) ---- */
+  .compo { position: relative; min-height: 460px; }
+  .win { position: relative; z-index: 2; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: 0 30px 60px -28px rgb(9 9 11 / .28), 0 12px 24px -16px rgb(9 9 11 / .14); overflow: hidden; }
+  .win-bar { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px; border-bottom: 1px solid var(--border-faint); background: var(--zinc-50); }
+  .win-dots { display: flex; gap: 6px; }
+  .win-dots i { width: 10px; height: 10px; border-radius: 9999px; background: var(--zinc-300); }
+  .win-url { font-size: 11px; color: var(--zinc-400); font-family: var(--font-mono); margin-left: 6px; }
+  .win-body { padding: 18px; }
+  .win-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .win-title { font-size: 15px; font-weight: var(--fw-bold); color: var(--zinc-900); }
+  .win-sub { font-size: 11px; color: var(--fg-muted); margin-top: 1px; }
+  .mini-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .mini-kpi { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; }
+  .mini-kpi.hero-tone { background: var(--brand-700); border-color: var(--brand-700); }
+  .mk-label { font-size: 10px; font-weight: var(--fw-medium); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--zinc-500); }
+  .mini-kpi.hero-tone .mk-label { color: rgb(255 255 255 / .7); }
+  .mk-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .mk-value { font-size: 21px; font-weight: var(--fw-bold); color: var(--zinc-900); margin-top: 3px; letter-spacing: -.02em; }
+  .mini-kpi.hero-tone .mk-value { color: #fff; }
+  .mk-tile { width: 30px; height: 30px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex: none; background: var(--brand-50); color: var(--brand-700); }
+  .mini-kpi.hero-tone .mk-tile { background: rgb(255 255 255 / .16); color: #fff; }
+  .mk-delta { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: var(--fw-medium); margin-top: 5px; color: var(--success-700); }
+  .mk-delta.down { color: var(--danger-700); }
+  .mini-kpi.hero-tone .mk-delta { color: rgb(255 255 255 / .85); }
+
+  .mini-funnel { margin-top: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px; }
+  .mf-title { font-size: 12px; font-weight: var(--fw-semibold); color: var(--zinc-800); margin-bottom: 10px; }
+  .mf-row { margin-bottom: 9px; }
+  .mf-row:last-child { margin-bottom: 0; }
+  .mf-meta { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+  .mf-meta .l { color: var(--zinc-600); font-weight: var(--fw-medium); }
+  .mf-meta .v { color: var(--zinc-900); font-weight: var(--fw-semibold); }
+  .mf-track { height: 8px; background: var(--zinc-100); border-radius: 9999px; overflow: hidden; }
+  .mf-bar { height: 100%; border-radius: 9999px; background: var(--brand-600); }
+
+  .float-card { position: absolute; z-index: 3; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 18px 40px -18px rgb(9 9 11 / .3); padding: 13px 15px; }
+  .fc-reserva { top: -26px; right: -22px; width: 232px; }
+  .fc-comision { bottom: -24px; left: -28px; width: 244px; }
+  .fc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .fc-folio { font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold); color: var(--zinc-900); }
+  .fc-line { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--zinc-600); }
+  .fc-line + .fc-line { margin-top: 5px; }
+  .fc-ic { color: var(--brand-700); flex: none; }
+  .fc-strong { color: var(--zinc-900); font-weight: var(--fw-semibold); }
+  .fc-comision .amt { font-size: 17px; font-weight: var(--fw-bold); color: var(--zinc-900); letter-spacing: -.02em; }
+
+  /* =========================================================== LOGOS */
+  .logos { padding: 40px 0 32px; }
+  .logos-label { text-align: center; font-size: 12px; font-weight: var(--fw-medium); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); }
+  .logos-row { display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; margin-top: 22px; }
+  .logo-chip { display: inline-flex; align-items: center; gap: 9px; color: var(--zinc-400); font-weight: var(--fw-bold); font-size: 17px; letter-spacing: -.01em; transition: color .15s; }
+  .logo-chip:hover { color: var(--zinc-600); }
+  .logo-chip .ctp-ic { color: var(--zinc-300); }
+
+  /* =========================================================== SECTION HEAD */
+  .section { padding: 92px 0; }
+  .section-head { max-width: 680px; margin: 0 auto 56px; text-align: center; }
+  .section-head.left { margin-left: 0; text-align: left; }
+  .section-title { font-size: clamp(30px, 4vw, 44px); font-weight: var(--fw-extra); letter-spacing: -0.025em; line-height: 1.08; margin: 14px 0 0; color: var(--zinc-950); text-wrap: balance; }
+  .section-title .g { color: var(--brand-700); }
+  .section-desc { font-size: 18px; line-height: 1.6; color: var(--fg-secondary); margin: 16px 0 0; }
+
+  /* =========================================================== POSITIONING (dark) */
+  .band { position: relative; overflow: hidden; background: var(--zinc-950); color: #fff; }
+  .band .blob1 { position: absolute; right: -140px; bottom: -160px; width: 460px; height: 460px; border-radius: 9999px; background: rgb(0 124 16 / .22); filter: blur(90px); }
+  .band .blob2 { position: absolute; left: -120px; top: -120px; width: 380px; height: 380px; border-radius: 9999px; background: rgb(24 172 39 / .12); filter: blur(90px); }
+  .band-inner { position: relative; z-index: 1; padding: 100px 0; }
+  .band-title { font-size: clamp(30px, 4.2vw, 50px); font-weight: var(--fw-extra); letter-spacing: -0.03em; line-height: 1.06; margin: 16px 0 0; text-wrap: balance; max-width: 760px; }
+  .band-title .g { color: var(--brand-400); }
+  .band-desc { font-size: 18px; line-height: 1.6; color: var(--zinc-400); margin: 18px 0 0; max-width: 620px; }
+  .flow { display: flex; align-items: stretch; gap: 0; margin-top: 52px; flex-wrap: wrap; }
+  .flow-step { flex: 1; min-width: 150px; position: relative; padding: 0 8px; }
+  .flow-node { display: flex; align-items: center; gap: 10px; }
+  .flow-dot { width: 38px; height: 38px; border-radius: 9999px; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .14); display: flex; align-items: center; justify-content: center; color: var(--brand-400); flex: none; }
+  .flow-step.last .flow-dot { background: var(--brand-700); border-color: var(--brand-700); color: #fff; }
+  .flow-name { font-size: 14px; font-weight: var(--fw-semibold); color: #fff; }
+  .flow-meta { font-size: 12px; color: var(--zinc-500); margin-top: 12px; padding-left: 2px; }
+  .flow-line { position: absolute; top: 19px; left: calc(50% + 26px); right: calc(-50% + 26px); height: 1px; background: linear-gradient(90deg, rgb(255 255 255 / .18), rgb(255 255 255 / .04)); }
+  .flow-step:last-child .flow-line { display: none; }
+
+  /* =========================================================== MODULES */
+  .mod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .mod-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-card); transition: box-shadow .18s, border-color .18s, transform .18s; }
+  .mod-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--zinc-300); transform: translateY(-3px); }
+  .mod-ic { width: 46px; height: 46px; border-radius: var(--radius-md); background: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .mod-card h3 { font-size: 18px; font-weight: var(--fw-bold); margin: 0 0 8px; color: var(--zinc-900); letter-spacing: -.01em; }
+  .mod-card p { font-size: 14.5px; line-height: 1.6; color: var(--fg-secondary); margin: 0; }
+  .mod-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .mod-tag { font-size: 11px; font-weight: var(--fw-medium); color: var(--zinc-600); background: var(--zinc-100); border-radius: 9999px; padding: 3px 9px; }
+
+  /* =========================================================== SHOWCASE */
+  .showcase { background: var(--zinc-50); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .shot-frame { margin-top: 48px; border-radius: var(--radius-xl); border: 1px solid var(--border); background: #fff; box-shadow: 0 30px 60px -30px rgb(9 9 11 / .26); overflow: hidden; }
+  .shot-bar { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px; border-bottom: 1px solid var(--border-faint); background: var(--zinc-50); }
+  .shot-bar .win-dots i { width: 11px; height: 11px; }
+  .shot-slot { width: 100%; height: 620px; display: block; }
+  .feature-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .feature-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: var(--fw-medium); color: var(--zinc-700); background: #fff; border: 1px solid var(--border); border-radius: 9999px; padding: 7px 14px; box-shadow: var(--shadow-card); }
+  .feature-pill .ctp-ic { color: var(--brand-700); }
+
+  /* =========================================================== ROLES */
+  .roles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 38px; }
+  .role-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-700); background: #fff; border: 1px solid var(--border); border-radius: 9999px; padding: 9px 16px; transition: border-color .15s, color .15s; }
+  .role-chip:hover { border-color: var(--brand-300); color: var(--brand-800); }
+  .role-chip .ctp-ic { color: var(--brand-700); }
+
+  /* =========================================================== TESTIMONIALS */
+  .tst-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tst-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; }
+  .tst-quote { font-size: 16px; line-height: 1.6; color: var(--zinc-800); margin: 0 0 22px; flex: 1; }
+  .tst-quote::before { content: "\201C"; }
+  .tst-quote::after { content: "\201D"; }
+  .tst-who { display: flex; align-items: center; gap: 12px; }
+  .tst-av { width: 42px; height: 42px; border-radius: 9999px; background: var(--brand-700); color: #fff; font-weight: var(--fw-semibold); display: flex; align-items: center; justify-content: center; font-size: 15px; flex: none; }
+  .tst-name { font-size: 14px; font-weight: var(--fw-semibold); color: var(--zinc-900); }
+  .tst-role { font-size: 12.5px; color: var(--fg-muted); margin-top: 1px; }
+
+  /* =========================================================== PRICING */
+  .pricing { background: var(--zinc-50); border-top: 1px solid var(--border); }
+  .price-perks { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+  .price-perks .badge { font-size: 13px; padding: 6px 14px; }
+  .bill-wrap { display: flex; justify-content: center; margin-bottom: 44px; }
+  .bill-toggle { display: inline-flex; gap: 4px; padding: 4px; background: var(--zinc-100); border: 1px solid var(--border); border-radius: 9999px; }
+  .bill-opt { border: 0; background: transparent; border-radius: 9999px; padding: 8px 18px; font-size: 14px; font-weight: var(--fw-semibold); color: var(--zinc-600); display: inline-flex; align-items: center; gap: 7px; transition: background-color .15s, color .15s, box-shadow .15s; }
+  .bill-opt:hover { color: var(--zinc-900); }
+  .bill-opt.is-active { background: #fff; color: var(--zinc-900); box-shadow: var(--shadow-card); }
+  .bill-save { font-size: 11px; font-weight: var(--fw-semibold); color: var(--brand-700); background: var(--brand-50); border-radius: 9999px; padding: 2px 7px; }
+  .bill-opt.is-active .bill-save { background: var(--brand-100); }
+  .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: stretch; }
+  .price-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; }
+  .price-card.feat { border: 1.5px solid var(--brand-700); box-shadow: 0 20px 40px -22px rgb(0 124 16 / .3); position: relative; }
+  .price-flag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--brand-700); color: #fff; font-size: 11px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); border-radius: 9999px; padding: 4px 14px; }
+  .price-name { font-size: 17px; font-weight: var(--fw-bold); color: var(--zinc-900); }
+  .price-for { font-size: 13.5px; color: var(--fg-muted); margin: 6px 0 20px; min-height: 60px; }
+  .price-amt { display: flex; align-items: flex-end; gap: 6px; min-height: 46px; }
+  .price-num.txt { line-height: 1; }
+  .price-num { font-size: 40px; line-height: 1; font-weight: var(--fw-extra); letter-spacing: -.03em; color: var(--zinc-950); }
+  .price-num.txt { font-size: 26px; }
+  .price-unit { font-size: 14px; color: var(--fg-muted); font-weight: var(--fw-medium); }
+  .price-note { font-size: 12px; color: var(--fg-muted); margin-top: 6px; }
+  .price-was { font-size: 22px; font-weight: var(--fw-semibold); color: var(--fg-faint); text-decoration: line-through; letter-spacing: -.02em; }
+  .price-off { font-size: 11px; font-weight: var(--fw-semibold); color: var(--brand-700); background: var(--brand-50); border: 1px solid var(--brand-100); border-radius: 9999px; padding: 2px 8px; align-self: center; }
+  .price-amt { flex-wrap: wrap; }
+  .price-feats { list-style: none; margin: 24px 0; padding: 22px 0 0; border-top: 1px solid var(--border-faint); display: flex; flex-direction: column; gap: 11px; flex: 1; }
+  .price-feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--zinc-700); }
+  .price-feats .ctp-ic { color: var(--brand-700); flex: none; margin-top: 2px; }
+  .price-feats li.diff { font-weight: var(--fw-semibold); color: var(--zinc-900); }
+  .price-cta { width: 100%; }
+  .price-included { margin-top: 22px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px 30px; box-shadow: var(--shadow-card); }
+  .price-included h3 { font-size: 14px; font-weight: var(--fw-bold); color: var(--zinc-900); margin: 0 0 18px; display: flex; align-items: center; gap: 8px; }
+  .price-included h3 .ctp-ic { color: var(--brand-700); flex: none; }
+  .included-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px 28px; }
+  .included-grid li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--zinc-700); }
+  .included-grid .ctp-ic { color: var(--brand-700); flex: none; margin-top: 2px; }
+
+  /* =========================================================== FAQ */
+  .faq { max-width: 800px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 4px; font-size: 17px; font-weight: var(--fw-semibold); color: var(--zinc-900); cursor: pointer; list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-chev { color: var(--zinc-400); transition: transform .2s, color .2s; flex: none; }
+  .faq-item[open] .faq-chev { transform: rotate(180deg); color: var(--brand-700); }
+  .faq-answer { padding: 0 4px 24px; font-size: 15.5px; line-height: 1.65; color: var(--fg-secondary); max-width: 680px; }
+
+  /* =========================================================== FINAL CTA */
+  .cta-band-inner { position: relative; z-index: 1; padding: 96px 0; display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .cta-h { font-size: clamp(32px, 4.2vw, 50px); font-weight: var(--fw-extra); letter-spacing: -0.03em; line-height: 1.05; margin: 16px 0 0; text-wrap: balance; }
+  .cta-h .g { color: var(--brand-400); }
+  .cta-p { font-size: 18px; line-height: 1.6; color: var(--zinc-400); margin: 18px 0 0; max-width: 460px; }
+  .cta-list { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .cta-list li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--zinc-300); }
+  .cta-list .ctp-ic { color: var(--brand-400); }
+  .form-card { background: #fff; border-radius: var(--radius-xl); padding: 30px; box-shadow: var(--shadow-2xl); }
+  .form-card h3 { font-size: 19px; font-weight: var(--fw-bold); margin: 0 0 4px; color: var(--zinc-900); }
+  .form-card .fsub { font-size: 13.5px; color: var(--fg-muted); margin: 0 0 20px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: var(--fw-medium); color: var(--zinc-700); margin-bottom: 6px; }
+  .field input, .field select { height: 44px; width: 100%; border: 1px solid var(--zinc-300); border-radius: var(--radius-sm); padding: 0 12px; font-size: 14px; font-family: var(--font-sans); color: var(--fg-primary); background: #fff; transition: border-color .15s, box-shadow .15s; }
+  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+  .field input::placeholder { color: var(--zinc-400); }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--brand-700); box-shadow: 0 0 0 3px rgb(0 124 16 / .12); }
+  .form-fine { font-size: 12px; color: var(--fg-muted); margin: 14px 0 0; text-align: center; }
+  .form-status { font-size: 13px; font-weight: var(--fw-medium); margin: 12px 0 0; text-align: center; }
+  .form-status.ok { color: var(--success-700); }
+  .form-status.err { color: var(--danger-700); }
+  .btn[disabled] { opacity: .65; pointer-events: none; }
+
+  /* =========================================================== FOOTER */
+  .footer { background: var(--zinc-950); color: var(--zinc-400); padding: 64px 0 36px; }
+  .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+  .foot-logo { height: 28px; width: auto; margin-bottom: 16px; }
+  .foot-about { font-size: 14px; line-height: 1.6; color: var(--zinc-500); max-width: 280px; }
+  .foot-col h4 { font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--zinc-300); margin: 0 0 16px; }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .foot-col a { font-size: 14px; color: var(--zinc-500); transition: color .15s; }
+  .foot-col a:hover { color: #fff; }
+  .foot-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 52px; padding-top: 26px; border-top: 1px solid var(--zinc-800); font-size: 13px; color: var(--zinc-500); }
+  .foot-bottom .ctp-ic { color: var(--zinc-600); }
+
+  /* =========================================================== REVEAL */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* =========================================================== RESPONSIVE */
+  @media (max-width: 1000px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 72px; }
+    .compo { max-width: 520px; margin: 0 auto; }
+    .cta-band-inner { grid-template-columns: 1fr; gap: 40px; }
+    .mod-grid, .tst-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .included-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 860px) {
+    .nav-links, .nav-signin { display: none; }
+    .nav-burger { display: inline-flex; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 20px; }
+    .section { padding: 64px 0; }
+    .band-inner, .cta-band-inner { padding: 64px 0; }
+    .mod-grid, .tst-grid, .price-grid { grid-template-columns: 1fr; }
+    .included-grid { grid-template-columns: 1fr; }
+    .price-card.feat { order: -1; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 48px 0 72px; }
+    .shot-slot { height: 380px; }
+    .flow-line { display: none; }
+    .flow-step { flex-basis: 45%; }
+  }
+</style>
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" rx="20" fill="#007c10"/>
+      <g fill="#fff"><path d="M28 54 L50 32 L72 54 Z"/><rect x="43" y="50" width="14" height="16"/></g>
+    </svg>
+  </template>
+
+  <!-- ===================================================== NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" aria-label="CompraTuParcela"><img src="assets/logo-dark.png" alt="CompraTuParcela" class="nav-logo" style="width: 115px; height: 36px"></a>
+      <nav class="nav-links">
+        <a href="#producto">Producto</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#precios">Precios</a>
+        <a href="#faq">Preguntas</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#" class="nav-signin">Iniciar sesión</a>
+        <a href="#demo" class="btn btn-primary btn-md">Solicita una demo</a>
+        <button class="nav-burger" aria-label="Menú"><span class="ctp-ic" data-lucide="menu"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================== HERO -->
+  <section class="hero" id="top">
+    <div class="hero-glow"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span>Sistema de ventas y operaciones · Parcelas</span>
+        <h1 class="hero-h1">El sistema operativo de tu inmobiliaria de <span class="g">parcelas</span>.</h1>
+        <p class="hero-sub">Más que un CRM: <strong>el flujo completo de venta y operación</strong> para loteos y venta de parcelas en Chile. Leads, reservas, pipeline legal y comisiones —del primer contacto a la escritura— en un solo lugar.</p>
+        <div class="hero-cta">
+          <a href="#demo" class="btn btn-primary btn-lg">Solicita una demo con nuestros expertos</a>
+          <a href="#modulos" class="btn btn-outline btn-lg">Ver los módulos</a>
+        </div>
+        <div class="hero-trust">
+          <span>Hecho en Chile</span><span class="sep">·</span>
+          <span>CLP y UF</span><span class="sep">·</span>
+          <span>RUT y notarías</span><span class="sep">·</span>
+          <span>Roles para todo el equipo</span>
+        </div>
+      </div>
+
+      <!-- Floating CRM composition -->
+      <div class="compo">
+        <div class="win">
+          <div class="win-bar">
+            <div class="win-dots"><i></i><i></i><i></i></div>
+            <span class="win-url">app.compratuparcela.cl/dashboard</span>
+          </div>
+          <div class="win-body">
+            <div class="win-head">
+              <div>
+                <div class="win-title">Hola, Camila</div>
+                <div class="win-sub">Vista panorámica del negocio · junio 2026</div>
+              </div>
+              <span class="badge badge-brand"><span class="ctp-ic" data-lucide="trending-up" style="width:13px;height:13px"></span>+12%</span>
+            </div>
+            <div class="mini-kpis">
+              <div class="mini-kpi">
+                <div class="mk-row"><div class="mk-label">Reservas creadas</div><div class="mk-tile"><span class="ctp-ic" data-lucide="file-signature" style="width:16px;height:16px"></span></div></div>
+                <div class="mk-value">37</div>
+                <div class="mk-delta"><span class="ctp-ic" data-lucide="trending-up" style="width:12px;height:12px"></span>+5%</div>
+              </div>
+              <div class="mini-kpi hero-tone">
+                <div class="mk-row"><div class="mk-label">Pipeline activo</div><div class="mk-tile"><span class="ctp-ic" data-lucide="banknote" style="width:16px;height:16px"></span></div></div>
+                <div class="mk-value">$84,5M</div>
+                <div class="mk-delta"><span class="ctp-ic" data-lucide="trending-up" style="width:12px;height:12px"></span>+12%</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="mk-row"><div class="mk-label">Autorizadas</div><div class="mk-tile"><span class="ctp-ic" data-lucide="check-circle-2" style="width:16px;height:16px"></span></div></div>
+                <div class="mk-value">29</div>
+                <div class="mk-delta"><span class="ctp-ic" data-lucide="trending-up" style="width:12px;height:12px"></span>+11%</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="mk-row"><div class="mk-label">Escrituras</div><div class="mk-tile"><span class="ctp-ic" data-lucide="file-text" style="width:16px;height:16px"></span></div></div>
+                <div class="mk-value">18</div>
+                <div class="mk-delta down"><span class="ctp-ic" data-lucide="trending-down" style="width:12px;height:12px"></span>-4%</div>
+              </div>
+            </div>
+            <div class="mini-funnel">
+              <div class="mf-title">Embudo de conversión</div>
+              <div class="mf-row"><div class="mf-meta"><span class="l">Leads</span><span class="v">142</span></div><div class="mf-track"><div class="mf-bar" style="width:100%"></div></div></div>
+              <div class="mf-row"><div class="mf-meta"><span class="l">Reservas</span><span class="v">37</span></div><div class="mf-track"><div class="mf-bar" style="width:62%"></div></div></div>
+              <div class="mf-row"><div class="mf-meta"><span class="l">Autorizadas</span><span class="v">29</span></div><div class="mf-track"><div class="mf-bar" style="width:46%"></div></div></div>
+              <div class="mf-row"><div class="mf-meta"><span class="l">Escrituras</span><span class="v">18</span></div><div class="mf-track"><div class="mf-bar" style="width:30%"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="float-card fc-reserva">
+          <div class="fc-top"><span class="fc-folio">#1247</span><span class="badge badge-brand">Autorizada</span></div>
+          <div class="fc-line"><span class="ctp-ic fc-ic" data-lucide="map-pinned" style="width:14px;height:14px"></span><span class="fc-strong">A-04</span> · Mirador del Valle</div>
+          <div class="fc-line"><span class="ctp-ic fc-ic" data-lucide="calendar" style="width:14px;height:14px"></span>Firma · 03 jun 2026 · Notaría Pirque</div>
+        </div>
+
+        <div class="float-card fc-comision">
+          <div class="fc-top"><span class="fc-line" style="margin:0"><span class="ctp-ic fc-ic" data-lucide="banknote" style="width:15px;height:15px"></span>Comisión asesor</span><span class="badge badge-brand">Pagada</span></div>
+          <div class="amt">$1.645.000</div>
+          <div class="fc-line" style="margin-top:6px"><span class="ctp-ic fc-ic" data-lucide="user" style="width:14px;height:14px"></span>Camila Rojas · Reserva #1247</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== LOGOS -->
+  <section class="logos">
+    <div class="wrap">
+      <p class="logos-label">Inmobiliarias y corredoras que operan con CompraTuParcela</p>
+      <div class="logos-row">
+        <span class="logo-chip"><span class="ctp-ic" data-lucide="mountain" style="width:20px;height:20px"></span>Mirador del Valle</span>
+        <span class="logo-chip"><span class="ctp-ic" data-lucide="trees" style="width:20px;height:20px"></span>Lomas de Colina</span>
+        <span class="logo-chip"><span class="ctp-ic" data-lucide="sun" style="width:20px;height:20px"></span>Altos de Pirque</span>
+        <span class="logo-chip"><span class="ctp-ic" data-lucide="waves" style="width:20px;height:20px"></span>Terrazas del Maipo</span>
+        <span class="logo-chip"><span class="ctp-ic" data-lucide="map" style="width:20px;height:20px"></span>Campos del Sur</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== POSITIONING BAND -->
+  <section class="band" id="producto">
+    <div class="blob1"></div><div class="blob2"></div>
+    <div class="wrap band-inner">
+      <span class="eyebrow on-dark"><span class="dot"></span>No es un CRM más</span>
+      <h2 class="band-title">Un solo flujo, del primer <span class="g">lead</span> a la <span class="g">escritura</span>.</h2>
+      <p class="band-desc">Las planillas paralelas, los WhatsApp sueltos y los estados que nadie actualiza se acaban. CompraTuParcela conecta venta, finanzas y legal en una sola operación con disparadores automáticos.</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="inbox" style="width:18px;height:18px"></span></div><span class="flow-name">Lead</span></div><p class="flow-meta">Captura inbound y asignación al asesor.</p></div>
+        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="file-signature" style="width:18px;height:18px"></span></div><span class="flow-name">Reserva</span></div><p class="flow-meta">Asistente de 3 pasos, financiamiento y pago.</p></div>
+        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span></div><span class="flow-name">Autorización</span></div><p class="flow-meta">Validación de pago y estado por rol.</p></div>
+        <div class="flow-step"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="calendar" style="width:18px;height:18px"></span></div><span class="flow-name">Firma</span></div><p class="flow-meta">Agenda en notaría y documentación lista.</p></div>
+        <div class="flow-step last"><div class="flow-line"></div><div class="flow-node"><div class="flow-dot"><span class="ctp-ic" data-lucide="banknote" style="width:18px;height:18px"></span></div><span class="flow-name">Escritura + comisión</span></div><p class="flow-meta">Parcela vendida y comisiones creadas solas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== MODULES -->
+  <section class="section" id="modulos">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Módulos</span>
+        <h2 class="section-title">Todo el negocio de parcelas, <span class="g">en módulos que conversan</span>.</h2>
+        <p class="section-desc">Cada módulo resuelve una parte de la operación y comparte los mismos datos. Sin duplicar, sin re-tipear.</p>
+      </div>
+      <div class="mod-grid">
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="map-pinned" style="width:22px;height:22px"></span></div>
+          <h3>Proyectos y Parcelas</h3>
+          <p>Cada loteo y cada parcela con su estado, superficie en m²/HA y precio en CLP o UF. Disponible, en proceso o inscrita: siempre al día.</p>
+          <div class="mod-tags"><span class="mod-tag">Estados</span><span class="mod-tag">m² · HA</span><span class="mod-tag">CLP · UF</span></div>
+        </article>
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="users" style="width:22px;height:22px"></span></div>
+          <h3>Leads y Clientes</h3>
+          <p>Captura el inbound, conviértelo en cliente y maneja persona jurídica con representante legal y comprador. Nada se pierde en el camino.</p>
+          <div class="mod-tags"><span class="mod-tag">Inbound</span><span class="mod-tag">Persona jurídica</span><span class="mod-tag">RUT</span></div>
+        </article>
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="file-signature" style="width:22px;height:22px"></span></div>
+          <h3>Reservas</h3>
+          <p>Asistente de 3 pasos con vendedor interno y corretaje externo, planes de financiamiento y una máquina de estados de pago y autorización.</p>
+          <div class="mod-tags"><span class="mod-tag">3 pasos</span><span class="mod-tag">Multi-vendedor</span><span class="mod-tag">Financiamiento</span></div>
+        </article>
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="file-text" style="width:22px;height:22px"></span></div>
+          <h3>Pipeline legal</h3>
+          <p>Borrador → Agenda firma → Escritura. Al cerrar, la parcela pasa a vendida y las comisiones se crean solas. Adiós a las planillas paralelas.</p>
+          <div class="mod-tags"><span class="mod-tag">Promesa</span><span class="mod-tag">Notaría</span><span class="mod-tag">Disparadores</span></div>
+        </article>
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="banknote" style="width:22px;height:22px"></span></div>
+          <h3>Comisiones</h3>
+          <p>Comisiones de asesor y corretaje con estado por campo, según el rol. Finanzas paga, legal valida y todos ven exactamente lo mismo.</p>
+          <div class="mod-tags"><span class="mod-tag">Asesor</span><span class="mod-tag">Corretaje</span><span class="mod-tag">Por rol</span></div>
+        </article>
+        <article class="mod-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="layout-dashboard" style="width:22px;height:22px"></span></div>
+          <h3>Dashboard y Alertas SLA</h3>
+          <p>Cada rol ve sus KPIs, su embudo de conversión y sus alertas SLA. La vista justa para el owner, el asesor, finanzas y legal.</p>
+          <div class="mod-tags"><span class="mod-tag">KPIs por rol</span><span class="mod-tag">Embudo</span><span class="mod-tag">SLA</span></div>
+        </article>
+      </div>
+
+      <div class="roles">
+        <span class="role-chip"><span class="ctp-ic" data-lucide="shield" style="width:16px;height:16px"></span>Owner</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="settings" style="width:16px;height:16px"></span>Admin</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="user-round" style="width:16px;height:16px"></span>Asesor</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="banknote" style="width:16px;height:16px"></span>Finanzas</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="scale" style="width:16px;height:16px"></span>Legal</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="calendar" style="width:16px;height:16px"></span>Agenda</span>
+        <span class="role-chip"><span class="ctp-ic" data-lucide="handshake" style="width:16px;height:16px"></span>Corretaje</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== SHOWCASE -->
+  <section class="section showcase">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Velo en acción</span>
+        <h2 class="section-title">Tu operación completa, <span class="g">en una pantalla</span>.</h2>
+        <p class="section-desc">Dashboards por rol, tablas densas y filtros rápidos. Diseñado para equipos que mueven muchas parcelas al mes.</p>
+      </div>
+      <div class="shot-frame reveal">
+        <div class="shot-bar">
+          <div class="win-dots"><i></i><i></i><i></i></div>
+          <span class="win-url">app.compratuparcela.cl/dashboard</span>
+        </div>
+        <img class="shot-slot" src="assets/dashboard.png" alt="Dashboard de CompraTuParcela: KPIs de reservas, embudo de conversión, tendencia de 6 meses y alertas operativas" style="height: auto;">
+      </div>
+      <div class="feature-pills">
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="layout-grid" style="width:15px;height:15px"></span>Vista cards ↔ lista ↔ mapa</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="filter" style="width:15px;height:15px"></span>Filtros por proyecto y estado</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="bell" style="width:15px;height:15px"></span>Notificaciones en tiempo real</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="download" style="width:15px;height:15px"></span>Exporta a planilla cuando lo necesites</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== TESTIMONIALS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Confían en nosotros</span>
+        <h2 class="section-title">Equipos de parcelas que <span class="g">dejaron las planillas</span>.</h2>
+      </div>
+      <div class="tst-grid">
+        <article class="tst-card reveal">
+          <p class="tst-quote">Antes perseguíamos los pagos por WhatsApp. Ahora la reserva no avanza si no está autorizada, y la comisión se arma sola al escriturar. Es otro orden.</p>
+          <div class="tst-who"><span class="tst-av">MG</span><div><div class="tst-name">María González</div><div class="tst-role">Gerenta comercial · Lomas de Colina</div></div></div>
+        </article>
+        <article class="tst-card reveal">
+          <p class="tst-quote">Lo que más me sirve es que cada rol ve lo suyo. Mi equipo de asesores entra y sabe altiro qué reserva está pendiente. No hay que explicar nada.</p>
+          <div class="tst-who"><span class="tst-av">DF</span><div><div class="tst-name">Diego Fuentes</div><div class="tst-role">Jefe de ventas · Mirador del Valle</div></div></div>
+        </article>
+        <article class="tst-card reveal">
+          <p class="tst-quote">El pipeline legal nos cambió la pega. Borrador, agenda de firma, escritura —todo trazado— y la parcela pasa a vendida sin que nadie la toque a mano.</p>
+          <div class="tst-who"><span class="tst-av">VC</span><div><div class="tst-name">Valentina Cid</div><div class="tst-role">Coordinadora legal · Altos de Pirque</div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== PRICING -->
+  <section class="section pricing" id="precios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Planes</span>
+        <h2 class="section-title">Un plan para cada <span class="g">tamaño de operación</span>.</h2>
+        <p class="section-desc">Precios en UF, sin costos de instalación ocultos. Implementación y migración de tus datos incluidas en todos los planes.</p>
+      </div>
+      <div class="price-perks reveal">
+        <span class="badge badge-brand"><span class="ctp-ic" data-lucide="gift" style="width:14px;height:14px"></span>Primer mes gratis en todos los planes</span>
+        <span class="badge badge-brand"><span class="ctp-ic" data-lucide="calendar-check" style="width:14px;height:14px"></span>10% de descuento en planes anuales</span>
+      </div>
+      <div class="bill-wrap reveal">
+        <div class="bill-toggle" role="tablist" aria-label="Periodo de facturación">
+          <button type="button" class="bill-opt is-active" data-bill="monthly" role="tab" aria-selected="true">Mensual</button>
+          <button type="button" class="bill-opt" data-bill="annual" role="tab" aria-selected="false">Anual <span class="bill-save">−10%</span></button>
+        </div>
+      </div>
+      <div class="price-grid">
+        <article class="price-card reveal">
+          <div class="price-name">Pequeña</div>
+          <p class="price-for">Para corredoras y equipos chicos que parten a ordenar su venta.</p>
+          <div class="price-amt"><span class="price-was" hidden>2,5</span><span class="price-num" data-monthly="2.5">2,5</span><span class="price-unit">UF / mes</span><span class="price-off" hidden>−10%</span></div>
+          <ul class="price-feats">
+            <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>Hasta 5 usuarios · 2 proyectos</li>
+            <li><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span>Soporte por correo</li>
+          </ul>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta">Empezar</a>
+        </article>
+        <article class="price-card feat reveal">
+          <span class="price-flag">Más elegido</span>
+          <div class="price-name">Mediana</div>
+          <p class="price-for">Para inmobiliarias con varios proyectos y equipo de ventas completo.</p>
+          <div class="price-amt"><span class="price-was" hidden>5</span><span class="price-num" data-monthly="5">5</span><span class="price-unit">UF / mes</span><span class="price-off" hidden>−10%</span></div>
+          <ul class="price-feats">
+            <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>Hasta 25 usuarios · 15 proyectos</li>
+            <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
+          </ul>
+          <a href="#demo" class="btn btn-primary btn-lg price-cta">Solicita una demo</a>
+        </article>
+        <article class="price-card reveal">
+          <div class="price-name">Grande</div>
+          <p class="price-for">Para operaciones grandes con varios proyectos y equipo extendido.</p>
+          <div class="price-amt"><span class="price-was" hidden>10</span><span class="price-num" data-monthly="10">10</span><span class="price-unit">UF / mes</span><span class="price-off" hidden>−10%</span></div>
+          <ul class="price-feats">
+            <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>Hasta 50 usuarios · proyectos ilimitados</li>
+            <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
+            <li class="diff"><span class="ctp-ic" data-lucide="calendar-check" style="width:18px;height:18px"></span>Reunión de onboarding</li>
+          </ul>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta">Empezar</a>
+        </article>
+        <article class="price-card reveal">
+          <div class="price-name">Enterprise</div>
+          <p class="price-for">Para grupos con +50 usuarios, múltiples sociedades e integraciones.</p>
+          <div class="price-amt"><span class="price-num txt">Conversemos</span></div>
+          <ul class="price-feats">
+            <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>+50 usuarios · a medida</li>
+            <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
+            <li class="diff"><span class="ctp-ic" data-lucide="calendar-check" style="width:18px;height:18px"></span>Reunión de onboarding</li>
+          </ul>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta">Contactar ventas</a>
+        </article>
+      </div>
+      <div class="price-included reveal">
+        <h3><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>Todos los planes incluyen</h3>
+        <ul class="included-grid">
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Leads, clientes y parcelas</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Reservas con financiamiento</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Pipeline legal y escrituración</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Comisiones asesor y corretaje</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Dashboard por rol y alertas SLA</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Multi-sociedad y corretaje externo</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Reportería avanzada</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Integraciones y API</li>
+          <li><span class="ctp-ic" data-lucide="check" style="width:18px;height:18px"></span>Roles y permisos a medida</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Preguntas frecuentes</span>
+        <h2 class="section-title">Lo que más nos <span class="g">preguntan</span>.</h2>
+      </div>
+      <div class="faq reveal">
+        <details class="faq-item" open>
+          <summary>¿Sirve para vender parcelas con financiamiento directo?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí. Cada reserva soporta planes de financiamiento con pie y cuotas, además de pago al contado. El sistema lleva el estado de pago y bloquea el avance de la reserva hasta que esté autorizada, así no se escritura nada que no esté al día.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Maneja UF y CLP?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí. Los precios de parcelas se pueden expresar en CLP o UF, con el formato chileno ($1.000.000, dots como separador de miles) y RUT formateado. Las superficies van en m² o HA según el loteo.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Puedo trabajar con corredores externos?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Claro. Las reservas soportan múltiples vendedores: tu asesor interno y un corretaje externo. Las comisiones de cada uno se calculan por separado, con su propia máquina de estados, y se crean automáticamente al escriturar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo funcionan los roles y permisos?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">El CRM es 100% basado en roles: owner, admin, asesor, finanzas, legal, agenda y corretaje. Cada rol ve un dashboard y una navegación a su medida, y ciertas acciones —como autorizar un pago o pagar una comisión— quedan reservadas al rol que corresponde.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Se conecta con notarías y firma?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">El pipeline legal te permite agendar la firma en notaría y dejar trazada la documentación de cada escritura. En el plan Operación total sumamos integraciones a medida según tus flujos y proveedores.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto demora la implementación?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">La mayoría de los equipos parte operando en menos de dos semanas. Migramos tus proyectos, parcelas y clientes desde tus planillas actuales, y acompañamos al equipo en el onboarding. Aún no tenés que dejar tu operación a medias: hacemos la transición contigo.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== FINAL CTA -->
+  <section class="band" id="demo">
+    <div class="blob1"></div><div class="blob2"></div>
+    <div class="wrap cta-band-inner">
+      <div>
+        <span class="eyebrow on-dark"><span class="dot"></span>Demo personalizada</span>
+        <h2 class="cta-h">Solicita una demo con <span class="g">nuestros expertos</span>.</h2>
+        <p class="cta-p">Te mostramos el sistema con tus proyectos y respondemos cómo ordenar tu operación de venta de parcelas, de punta a punta.</p>
+        <ul class="cta-list">
+          <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>30 minutos, sin compromiso</li>
+          <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>Recomendación de plan según tu equipo</li>
+          <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>Migración de datos incluida</li>
+        </ul>
+      </div>
+      <form class="form-card" id="demo-form" novalidate>
+        <h3>Agenda tu demo</h3>
+        <p class="fsub">Te contactamos dentro de 1 día hábil.</p>
+        <div class="field"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name"></div>
+        <div class="field"><label for="f-email">Email de trabajo</label><input id="f-email" name="email" type="email" placeholder="nombre@inmobiliaria.cl" required autocomplete="email"></div>
+        <div class="field"><label for="f-empresa">Inmobiliaria o corredora</label><input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" required autocomplete="organization"></div>
+        <div class="field"><label for="f-equipo">Tamaño del equipo</label>
+          <select id="f-equipo" name="equipo"><option>1 – 5 personas</option><option>6 – 25 personas</option><option>26 – 100 personas</option><option>Más de 100</option></select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Solicitar demo</button>
+        <p class="form-status" id="demo-status" role="status" aria-live="polite" hidden></p>
+        <p class="form-fine">Al enviar aceptas que te contactemos sobre CompraTuParcela.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================================================== FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <img src="assets/logo-light.png" alt="CompraTuParcela" class="foot-logo">
+          <p class="foot-about">El sistema operativo para inmobiliarias y corredoras de parcelas en Chile. Del primer lead a la escritura, en un solo flujo.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Producto</h4>
+          <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="#demo">Solicitar demo</a></li></ul>
+        </div>
+        <div class="foot-col">
+          <h4>Empresa</h4>
+          <ul><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li><li><a href="#">Trabaja con nosotros</a></li></ul>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Seguridad</a></li></ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 CompraTuParcela · Hecho en Chile</span>
+        <span style="display:inline-flex;align-items:center;gap:14px">
+          <a href="#" aria-label="Correo"><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span></a>
+          <a href="#" aria-label="Teléfono"><span class="ctp-ic" data-lucide="phone" style="width:18px;height:18px"></span></a>
+          <a href="#" aria-label="Sitio web"><span class="ctp-ic" data-lucide="globe" style="width:18px;height:18px"></span></a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Icons
+    if (window.lucide) lucide.createIcons({ attrs: { "stroke-width": 2 } });
+
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Pricing: monthly / annual billing toggle (annual = 10% off)
+    const ANNUAL_OFF = 0.10;
+    const fmtUF = (n) => (Math.round(n * 100) / 100).toString().replace('.', ',');
+    function setBilling(mode) {
+      const annual = mode === 'annual';
+      document.querySelectorAll('.bill-opt').forEach((b) => {
+        const on = b.dataset.bill === mode;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on);
+      });
+      document.querySelectorAll('.price-card').forEach((card) => {
+        const num = card.querySelector('.price-num');
+        const monthly = num && parseFloat(num.dataset.monthly);
+        if (!num || !Number.isFinite(monthly)) return; // skip "Conversemos"
+        const was = card.querySelector('.price-was');
+        const off = card.querySelector('.price-off');
+        num.textContent = fmtUF(annual ? monthly * (1 - ANNUAL_OFF) : monthly);
+        if (was) { was.textContent = fmtUF(monthly); was.hidden = !annual; }
+        if (off) off.hidden = !annual;
+      });
+    }
+    document.querySelectorAll('.bill-opt').forEach((b) =>
+      b.addEventListener('click', () => setBilling(b.dataset.bill)));
+
+    // Demo form → POST /api/demo (serverless con la RESEND_API_KEY → Resend)
+    const demoForm = document.getElementById('demo-form');
+    if (demoForm) {
+      const status = document.getElementById('demo-status');
+      demoForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!demoForm.reportValidity()) return;
+        const btn = demoForm.querySelector('button[type="submit"]');
+        const label = btn.textContent;
+        const payload = Object.fromEntries(new FormData(demoForm).entries());
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+        status.hidden = true;
+        try {
+          const res = await fetch('/api/demo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error('status ' + res.status);
+          demoForm.reset();
+          status.className = 'form-status ok';
+          status.textContent = '¡Gracias! Te contactamos dentro de 1 día hábil.';
+        } catch (err) {
+          status.className = 'form-status err';
+          status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a ventas@compratuparcela.cl.';
+        } finally {
+          status.hidden = false;
+          btn.disabled = false;
+          btn.textContent = label;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
