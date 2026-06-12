@@ -68,7 +68,8 @@
   .nav-signin:hover { background: var(--zinc-100); }
   .nav-burger { display: none; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; color: var(--zinc-700); }
   .nav-mobile { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgb(255 255 255 / .98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); }
-  .nav-mobile-inner { display: flex; flex-direction: column; gap: 2px; padding: 10px 0 18px; }
+  .nav-mobile-inner { display: flex; flex-direction: column; gap: 2px; }
+  .nav-mobile .nav-mobile-inner { padding-top: 12px; padding-bottom: 24px; }
   .nav-mobile a:not(.btn) { display: block; padding: 12px 8px; font-size: 15px; font-weight: var(--fw-medium); color: var(--zinc-700); border-radius: var(--radius-sm); transition: background-color .15s, color .15s; }
   .nav-mobile a:not(.btn):hover { background: var(--zinc-100); color: var(--zinc-900); }
   .nav-mobile .nav-mobile-signin { border-top: 1px solid var(--border-faint); margin-top: 6px; border-radius: 0; }
