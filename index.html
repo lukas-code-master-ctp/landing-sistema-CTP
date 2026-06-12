@@ -49,7 +49,8 @@
   .badge-amber { background: var(--warn-50); color: var(--warn-700); border-color: #fde68a; }
   .badge-blue { background: var(--info-50); color: var(--info-700); border-color: #bfdbfe; }
 
-  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
+  .eyebrow { display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%; gap: 8px 0; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
+  .eyebrow .dot { margin-right: 8px; }
   .eyebrow.on-dark { color: var(--brand-400); }
   .eyebrow .dot { width: 6px; height: 6px; border-radius: 9999px; background: currentColor; }
 
@@ -66,6 +67,12 @@
   .nav-signin { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-700); padding: 0 12px; height: 42px; display: inline-flex; align-items: center; border-radius: var(--radius-sm); }
   .nav-signin:hover { background: var(--zinc-100); }
   .nav-burger { display: none; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; color: var(--zinc-700); }
+  .nav-mobile { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgb(255 255 255 / .98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+  .nav-mobile-inner { display: flex; flex-direction: column; gap: 2px; padding: 10px 0 18px; }
+  .nav-mobile a:not(.btn) { display: block; padding: 12px 8px; font-size: 15px; font-weight: var(--fw-medium); color: var(--zinc-700); border-radius: var(--radius-sm); transition: background-color .15s, color .15s; }
+  .nav-mobile a:not(.btn):hover { background: var(--zinc-100); color: var(--zinc-900); }
+  .nav-mobile .nav-mobile-signin { border-top: 1px solid var(--border-faint); margin-top: 6px; border-radius: 0; }
+  .nav-mobile .btn { width: 100%; margin-top: 12px; }
 
   /* =========================================================== HERO */
   .hero { position: relative; overflow: hidden; padding: 72px 0 96px; }
@@ -291,7 +298,7 @@
 
   /* =========================================================== RESPONSIVE */
   @media (max-width: 1000px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 72px; }
+    .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 72px; }
     .compo { max-width: 520px; margin: 0 auto; }
     .cta-band-inner { grid-template-columns: 1fr; gap: 40px; }
     .mod-grid, .tst-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
@@ -300,7 +307,9 @@
   }
   @media (max-width: 860px) {
     .nav-links, .nav-signin { display: none; }
+    .nav-actions .btn { display: none; }
     .nav-burger { display: inline-flex; }
+    .nav-mobile:not([hidden]) { display: block; }
   }
   @media (max-width: 680px) {
     .wrap { padding: 0 20px; }
@@ -348,7 +357,17 @@
       <div class="nav-actions">
         <a href="#" class="nav-signin">Iniciar sesión</a>
         <a href="#demo" class="btn btn-primary btn-md">Solicita una demo</a>
-        <button class="nav-burger" aria-label="Menú"><span class="ctp-ic" data-lucide="menu"></span></button>
+        <button class="nav-burger" id="nav-burger" aria-label="Menú" aria-controls="nav-mobile" aria-expanded="false"><span class="ctp-ic" data-lucide="menu"></span></button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile" hidden>
+      <div class="wrap nav-mobile-inner">
+        <a href="#producto">Producto</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#precios">Precios</a>
+        <a href="#faq">Preguntas</a>
+        <a href="#" class="nav-mobile-signin">Iniciar sesión</a>
+        <a href="#demo" class="btn btn-primary btn-lg">Solicita una demo</a>
       </div>
     </div>
   </header>
@@ -770,6 +789,20 @@
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile menu toggle
+    const burger = document.getElementById('nav-burger');
+    const navMobile = document.getElementById('nav-mobile');
+    if (burger && navMobile) {
+      const setOpen = (open) => {
+        navMobile.hidden = !open;
+        burger.setAttribute('aria-expanded', String(open));
+      };
+      burger.addEventListener('click', () => setOpen(navMobile.hidden));
+      navMobile.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+      // Close on resize back to desktop
+      window.addEventListener('resize', () => { if (window.innerWidth > 860) setOpen(false); });
+    }
 
     // Scroll reveal
     const io = new IntersectionObserver((entries) => {
