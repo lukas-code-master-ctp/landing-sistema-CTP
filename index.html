@@ -132,6 +132,8 @@
   .logo-chip { display: inline-flex; align-items: center; gap: 9px; color: var(--zinc-400); font-weight: var(--fw-bold); font-size: 17px; letter-spacing: -.01em; transition: color .15s; }
   .logo-chip:hover { color: var(--zinc-600); }
   .logo-chip .ctp-ic { color: var(--zinc-300); }
+  .client-logo { display: inline-block; height: 30px; background-color: var(--zinc-400); -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; transition: background-color .15s; }
+  .client-logo:hover { background-color: var(--zinc-700); }
 
   /* =========================================================== SECTION HEAD */
   .section { padding: 92px 0; }
@@ -435,11 +437,8 @@
     <div class="wrap">
       <p class="logos-label">Inmobiliarias y corredoras que operan con Cierra.cl</p>
       <div class="logos-row">
-        <span class="logo-chip"><span class="ctp-ic" data-lucide="mountain" style="width:20px;height:20px"></span>Mirador del Valle</span>
-        <span class="logo-chip"><span class="ctp-ic" data-lucide="trees" style="width:20px;height:20px"></span>Lomas de Colina</span>
-        <span class="logo-chip"><span class="ctp-ic" data-lucide="sun" style="width:20px;height:20px"></span>Altos de Pirque</span>
-        <span class="logo-chip"><span class="ctp-ic" data-lucide="waves" style="width:20px;height:20px"></span>Terrazas del Maipo</span>
-        <span class="logo-chip"><span class="ctp-ic" data-lucide="map" style="width:20px;height:20px"></span>Campos del Sur</span>
+        <span class="client-logo" role="img" aria-label="Compra Tu Parcela" style="--logo:url('assets/clients/compra-tu-parcela.png'); aspect-ratio:392/72; height:28px;"></span>
+        <span class="client-logo" role="img" aria-label="Inmobiliaria Fin del Mundo" style="--logo:url('assets/clients/inmobiliaria-fin-del-mundo.png'); aspect-ratio:180/150; height:50px;"></span>
       </div>
     </div>
   </section>
