@@ -280,6 +280,9 @@
   .foot-col a:hover { color: #fff; }
   .foot-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 52px; padding-top: 26px; border-top: 1px solid var(--zinc-800); font-size: 13px; color: var(--zinc-500); }
   .foot-bottom .ctp-ic { color: var(--zinc-600); }
+  .foot-mail { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--zinc-400); transition: color .15s; }
+  .foot-mail:hover { color: #fff; }
+  .foot-mail:hover .ctp-ic { color: var(--brand-400); }
 
   /* =========================================================== REVEAL */
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
@@ -747,8 +750,9 @@
       </div>
       <div class="foot-bottom">
         <span>© 2026 Cierra.cl · Hecho en Chile</span>
+        <a class="foot-mail" href="mailto:contacto@cierra.cl"><span class="ctp-ic" data-lucide="mail" style="width:16px;height:16px"></span>contacto@cierra.cl</a>
         <span style="display:inline-flex;align-items:center;gap:14px">
-          <a href="#" aria-label="Correo"><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span></a>
+          <a href="mailto:contacto@cierra.cl" aria-label="Correo"><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span></a>
           <a href="#" aria-label="Teléfono"><span class="ctp-ic" data-lucide="phone" style="width:18px;height:18px"></span></a>
           <a href="#" aria-label="Sitio web"><span class="ctp-ic" data-lucide="globe" style="width:18px;height:18px"></span></a>
         </span>
