@@ -138,7 +138,10 @@
   /* =========================================================== LOGOS */
   .logos { padding: 40px 0 32px; }
   .logos-label { text-align: center; font-size: 12px; font-weight: var(--fw-medium); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); }
-  .logos-row { display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; margin-top: 22px; }
+  .logos-viewport { margin-top: 22px; }
+  .logos-track { display: flex; justify-content: center; }
+  .logos-row { display: flex; align-items: center; justify-content: center; gap: 44px; flex-wrap: wrap; }
+  .logos-row[aria-hidden="true"] { display: none; }
   .logo-chip { display: inline-flex; align-items: center; gap: 9px; color: var(--zinc-400); font-weight: var(--fw-bold); font-size: 17px; letter-spacing: -.01em; transition: color .15s; }
   .logo-chip:hover { color: var(--zinc-600); }
   .logo-chip .ctp-ic { color: var(--zinc-300); }
@@ -328,6 +331,26 @@
     .shot-slot { height: 380px; }
     .flow-line { display: none; }
     .flow-step { flex-basis: 45%; }
+
+    /* Logos: franja deslizante en vez de fila que se corta en dos líneas */
+    .logos-viewport {
+      overflow: hidden;
+      margin-inline: -22px;                     /* sangra hasta el borde de pantalla */
+      -webkit-mask: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+              mask: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+    }
+    .logos-track {
+      width: max-content;
+      justify-content: flex-start;
+      animation: logos-scroll 20s linear infinite;
+    }
+    .logos-row { flex-wrap: nowrap; padding-right: 44px; }
+    .logos-row[aria-hidden="true"] { display: flex; }
+  }
+  @keyframes logos-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .logos-track { animation: none; }
+    .logos-viewport { overflow-x: auto; }
   }
 </style>
 </head>
@@ -464,9 +487,20 @@
   <section class="logos">
     <div class="wrap">
       <p class="logos-label">Inmobiliarias y corredoras que operan con Cierra.cl</p>
-      <div class="logos-row">
-        <span class="client-logo" role="img" aria-label="Compra Tu Parcela" style="--logo:url('assets/clients/compra-tu-parcela.png'); aspect-ratio:392/72; height:28px;"></span>
-        <span class="client-logo" role="img" aria-label="Inmobiliaria Fin del Mundo" style="--logo:url('assets/clients/inmobiliaria-fin-del-mundo.png'); aspect-ratio:180/150; height:50px;"></span>
+      <div class="logos-viewport">
+        <div class="logos-track">
+          <div class="logos-row">
+            <span class="client-logo" role="img" aria-label="Compra Tu Parcela" style="--logo:url('assets/clients/compra-tu-parcela.png'); aspect-ratio:392/72; height:28px;"></span>
+            <span class="client-logo" role="img" aria-label="Inmobiliaria Fin del Mundo" style="--logo:url('assets/clients/inmobiliaria-fin-del-mundo.png'); aspect-ratio:180/150; height:50px;"></span>
+            <span class="client-logo" role="img" aria-label="Capital Terrenos" style="--logo:url('assets/clients/capital-terrenos.png'); aspect-ratio:1690/147; height:20px;"></span>
+          </div>
+          <!-- Copia para el loop continuo en móvil (oculta en escritorio) -->
+          <div class="logos-row" aria-hidden="true">
+            <span class="client-logo" style="--logo:url('assets/clients/compra-tu-parcela.png'); aspect-ratio:392/72; height:28px;"></span>
+            <span class="client-logo" style="--logo:url('assets/clients/inmobiliaria-fin-del-mundo.png'); aspect-ratio:180/150; height:50px;"></span>
+            <span class="client-logo" style="--logo:url('assets/clients/capital-terrenos.png'); aspect-ratio:1690/147; height:20px;"></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
