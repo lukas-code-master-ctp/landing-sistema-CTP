@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<!--
+  Términos y condiciones + Política de privacidad de Cierra.cl (IMPULSE AI SpA).
+
+  Redactado sobre el funcionamiento real del sitio: los cinco campos del
+  formulario de demo y los tres destinos por donde pasan esos datos (Vercel,
+  Resend y la planilla de Google). Conforme a la Ley 19.628 y la Ley 21.719.
+
+  PENDIENTE: este texto no ha sido revisado por un abogado.
+
+  Si cambian las prácticas del sitio, hay que actualizar la política. En
+  particular, la sección 2.8 afirma que NO hay cookies, analítica ni píxeles de
+  seguimiento; eso es cierto hoy, pero deja de serlo apenas se agregue Google
+  Analytics o similar, y en ese caso probablemente haga falta un banner de
+  consentimiento. Lo mismo con la lista de proveedores de la sección 2.4.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Términos y condiciones y Política de privacidad — Cierra.cl</title>
+<meta name="description" content="Términos y condiciones de uso del sitio y política de privacidad de Cierra.cl: qué datos recopilamos, para qué los usamos y cómo ejercer tus derechos.">
+<link rel="canonical" href="https://cierra.cl/legal.html">
+<meta name="theme-color" content="#007C10">
+<link rel="icon" type="image/svg+xml" href="assets/cierra-icon-green.svg">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--fg-secondary);
+    background: var(--bg-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brand-700); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- Barra superior ---- */
+  .top { border-bottom: 1px solid var(--border); padding: 18px 0; }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .top-logo { height: 30px; width: auto; display: block; }
+  .top-back { font-size: 14px; font-weight: var(--fw-medium); color: var(--fg-muted); }
+  .top-back:hover { color: var(--fg-primary); text-decoration: none; }
+
+  /* ---- Encabezado ---- */
+  header.doc { padding: 56px 0 8px; }
+  h1 { font-size: 34px; line-height: 1.2; font-weight: var(--fw-extra); letter-spacing: -.02em; color: var(--fg-primary); margin: 0 0 14px; }
+  .fecha { font-size: 14px; color: var(--fg-muted); margin: 0; }
+
+  /* ---- Índice ---- */
+  .indice { margin: 34px 0 8px; padding: 22px 24px; background: var(--zinc-50); border: 1px solid var(--border); border-radius: var(--radius-xl); }
+  .indice h2 { font-size: 12px; text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); margin: 0 0 12px; font-weight: var(--fw-semibold); }
+  .indice ol { margin: 0; padding-left: 20px; }
+  .indice > ol > li { margin-bottom: 10px; font-weight: var(--fw-semibold); color: var(--fg-primary); }
+  .indice ol ol { padding-left: 18px; margin-top: 6px; }
+  .indice ol ol li { font-weight: var(--fw-regular); font-size: 14.5px; margin-bottom: 3px; }
+
+  /* ---- Cuerpo ---- */
+  main { padding-bottom: 20px; }
+  section.parte { padding-top: 46px; }
+  .parte-num { display: inline-block; font-size: 12px; font-weight: var(--fw-bold); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--brand-700); margin-bottom: 8px; }
+  h2 { font-size: 26px; line-height: 1.25; font-weight: var(--fw-bold); letter-spacing: -.015em; color: var(--fg-primary); margin: 0 0 6px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; line-height: 1.35; font-weight: var(--fw-semibold); color: var(--fg-primary); margin: 34px 0 10px; scroll-margin-top: 20px; }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--fg-primary); font-weight: var(--fw-semibold); }
+
+  .tabla { width: 100%; border-collapse: collapse; margin: 6px 0 18px; font-size: 14.5px; }
+  .tabla th, .tabla td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  .tabla th { font-size: 12px; text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); font-weight: var(--fw-semibold); background: var(--zinc-50); }
+  .tabla tr:last-child td { border-bottom: none; }
+  .tabla-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+
+  .destacado { margin: 18px 0; padding: 18px 20px; background: var(--brand-50); border: 1px solid var(--brand-100); border-radius: var(--radius-lg); font-size: 15px; }
+  .destacado p:last-child { margin-bottom: 0; }
+
+  /* ---- Pie ---- */
+  footer.doc { margin-top: 56px; background: var(--zinc-950); color: var(--zinc-400); padding: 34px 0; font-size: 13px; }
+  footer.doc .foot-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer.doc a { color: var(--zinc-400); }
+  footer.doc a:hover { color: #fff; }
+
+  @media (max-width: 680px) {
+    .wrap { padding: 0 20px; }
+    h1 { font-size: 27px; }
+    h2 { font-size: 22px; }
+    header.doc { padding-top: 38px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <div class="wrap top-inner">
+      <a href="index.html" aria-label="Cierra.cl">
+        <svg class="top-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+          <g transform="translate(20,52) scale(0.1875)">
+            <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+            <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+            <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+          </g>
+          <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#09090B">Cıerra<tspan fill="#007C10">.cl</tspan></text>
+          <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#007C10"></path>
+        </svg>
+      </a>
+      <a href="index.html" class="top-back">← Volver al sitio</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="doc">
+      <h1>Términos y condiciones y Política de privacidad</h1>
+      <p class="fecha">Última actualización: 17 de agosto de 2026</p>
+    </header>
+
+    <div class="indice">
+      <h2>Contenido</h2>
+      <ol>
+        <li>Términos y condiciones de uso
+          <ol>
+            <li><a href="#tyc-quienes">Quiénes somos</a></li>
+            <li><a href="#tyc-alcance">Qué cubre este documento</a></li>
+            <li><a href="#tyc-uso">Uso del sitio</a></li>
+            <li><a href="#tyc-demo">Solicitudes de demostración</a></li>
+            <li><a href="#tyc-planes">Planes y precios</a></li>
+            <li><a href="#tyc-pi">Propiedad intelectual</a></li>
+            <li><a href="#tyc-terceros">Servicios y enlaces de terceros</a></li>
+            <li><a href="#tyc-disponibilidad">Disponibilidad y responsabilidad</a></li>
+            <li><a href="#tyc-cambios">Cambios en estos términos</a></li>
+            <li><a href="#tyc-ley">Ley aplicable y jurisdicción</a></li>
+          </ol>
+        </li>
+        <li>Política de privacidad
+          <ol>
+            <li><a href="#pp-responsable">Quién es responsable de tus datos</a></li>
+            <li><a href="#pp-datos">Qué datos recopilamos</a></li>
+            <li><a href="#pp-uso">Para qué los usamos y con qué fundamento</a></li>
+            <li><a href="#pp-terceros">Con quién los compartimos</a></li>
+            <li><a href="#pp-transferencias">Transferencias fuera de Chile</a></li>
+            <li><a href="#pp-plazo">Cuánto tiempo los conservamos</a></li>
+            <li><a href="#pp-derechos">Tus derechos y cómo ejercerlos</a></li>
+            <li><a href="#pp-cookies">Cookies y seguimiento</a></li>
+            <li><a href="#pp-seguridad">Seguridad</a></li>
+            <li><a href="#pp-menores">Menores de edad</a></li>
+            <li><a href="#pp-cambios">Cambios en esta política</a></li>
+            <li><a href="#pp-contacto">Contacto</a></li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+
+    <main>
+
+      <!-- ══════════════════════════════════════════ PARTE 1: TÉRMINOS ══ -->
+      <section class="parte">
+        <span class="parte-num">Parte 1</span>
+        <h2>Términos y condiciones de uso</h2>
+
+        <h3 id="tyc-quienes">1.1 Quiénes somos</h3>
+        <p>Este sitio web, <strong>cierra.cl</strong>, es operado por <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile (en adelante, «Cierra.cl» o «nosotros»).</p>
+        <p>Puedes contactarnos en <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>.</p>
+
+        <h3 id="tyc-alcance">1.2 Qué cubre este documento</h3>
+        <p>Estos términos regulan el <strong>uso del sitio web</strong> y la solicitud de demostraciones a través de él. Al navegar el sitio o enviar el formulario, aceptas lo que aquí se establece.</p>
+        <div class="destacado">
+          <p><strong>La contratación del software es otra cosa.</strong> El servicio Cierra.cl se contrata mediante un contrato de prestación de servicios firmado por separado con cada cliente. Ese contrato es el que regula el acceso a la plataforma, los niveles de servicio, el tratamiento de los datos que cargues en ella, los pagos y la vigencia. En lo que se contradiga con este documento, prevalece el contrato.</p>
+        </div>
+
+        <h3 id="tyc-uso">1.3 Uso del sitio</h3>
+        <p>Puedes usar el sitio para informarte sobre el servicio, solicitar una demostración y contactarnos. Al hacerlo, te comprometes a no:</p>
+        <ul>
+          <li>Usarlo con fines ilícitos o para vulnerar derechos de terceros.</li>
+          <li>Intentar acceder a áreas o sistemas no destinados al público, ni sortear medidas de seguridad.</li>
+          <li>Extraer contenido de forma automatizada (<em>scraping</em>), ni realizar acciones que degraden o interrumpan el funcionamiento del sitio, incluido el envío masivo o automatizado de formularios.</li>
+          <li>Suplantar la identidad de otra persona o empresa.</li>
+        </ul>
+        <p>Podemos restringir el acceso a quien incumpla lo anterior, sin aviso previo.</p>
+
+        <h3 id="tyc-demo">1.4 Solicitudes de demostración</h3>
+        <p>El formulario del sitio permite solicitar una demostración comercial. Al enviarlo declaras que los datos entregados son <strong>veraces</strong> y que, si corresponden a la empresa que representas, estás <strong>autorizado</strong> para entregarlos.</p>
+        <p>Enviar el formulario no genera obligación de contratar para ninguna de las partes, ni compromete la entrega del servicio: es una solicitud de contacto comercial. Nos comunicaremos contigo por el correo o teléfono que nos indiques.</p>
+
+        <h3 id="tyc-planes">1.5 Planes y precios</h3>
+        <p>Los planes y valores publicados en el sitio son <strong>referenciales</strong> y tienen fines informativos. Están expresados en Unidades de Fomento (UF) y pueden cambiar sin aviso previo.</p>
+        <p>El precio definitivo, los impuestos aplicables, la forma de pago, los límites de usuarios y proyectos, y las condiciones de implementación se establecen en la propuesta comercial y en el contrato que se firme. Las promociones vigentes —como el primer mes sin costo o el descuento por pago anual— se sujetan a las condiciones que se informen al momento de contratar.</p>
+
+        <h3 id="tyc-pi">1.6 Propiedad intelectual</h3>
+        <p>El software Cierra.cl, el sitio web, su código, diseño, textos, marcas, logotipos e imágenes son de propiedad de Cierra.cl o de sus licenciantes, y están protegidos por la legislación chilena e internacional sobre propiedad intelectual e industrial.</p>
+        <p>Nada en este sitio te transfiere derecho alguno sobre ellos. No puedes copiarlos, modificarlos, distribuirlos ni usarlos comercialmente sin nuestra autorización escrita previa.</p>
+        <p>Los logotipos y nombres de las empresas clientes que aparecen en el sitio pertenecen a sus respectivos titulares y se muestran con su autorización, únicamente con fines de referencia.</p>
+
+        <h3 id="tyc-terceros">1.7 Servicios y enlaces de terceros</h3>
+        <p>El sitio se apoya en proveedores externos para funcionar (alojamiento, envío de correos, tipografías e íconos) y puede enlazar a sitios que no controlamos, como la plataforma en <a href="https://app.cierra.cl">app.cierra.cl</a>. No respondemos por el contenido ni las prácticas de sitios de terceros. En la sección <a href="#pp-terceros">2.4</a> detallamos qué proveedores intervienen y qué datos reciben.</p>
+
+        <h3 id="tyc-disponibilidad">1.8 Disponibilidad y responsabilidad</h3>
+        <p>Procuramos que el sitio esté disponible y que su información sea correcta y esté actualizada, pero no garantizamos que funcione sin interrupciones ni errores. Podemos modificarlo, suspenderlo o descontinuarlo en cualquier momento.</p>
+        <p>En la medida que lo permita la ley chilena, no respondemos por daños indirectos, lucro cesante ni pérdida de datos derivados del uso o de la imposibilidad de usar este sitio. Nada de lo anterior limita los derechos que la ley otorga de manera irrenunciable a los consumidores, ni nuestra responsabilidad por dolo o culpa grave.</p>
+
+        <h3 id="tyc-cambios">1.9 Cambios en estos términos</h3>
+        <p>Podemos actualizar estos términos cuando cambie el sitio o la normativa aplicable. La versión vigente es siempre la publicada en esta página, con su fecha de última actualización arriba. Si el cambio es relevante, lo informaremos de forma visible en el sitio.</p>
+
+        <h3 id="tyc-ley">1.10 Ley aplicable y jurisdicción</h3>
+        <p>Estos términos se rigen por las leyes de la República de Chile. Cualquier controversia se someterá a los tribunales ordinarios de justicia con asiento en la comuna de Santiago, sin perjuicio de los derechos que la Ley 19.496 sobre Protección de los Derechos de los Consumidores reconozca a quienes tengan esa calidad.</p>
+      </section>
+
+      <!-- ═══════════════════════════════════════ PARTE 2: PRIVACIDAD ══ -->
+      <section class="parte">
+        <span class="parte-num">Parte 2</span>
+        <h2>Política de privacidad</h2>
+
+        <p>Esta política explica qué datos personales tratamos cuando visitas cierra.cl o nos escribes, para qué los usamos y qué puedes exigirnos. Está redactada conforme a la Ley 19.628 sobre Protección de la Vida Privada y a la Ley 21.719 que regula la protección y el tratamiento de los datos personales.</p>
+
+        <h3 id="pp-responsable">2.1 Quién es responsable de tus datos</h3>
+        <p>El responsable del tratamiento es <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile. Para cualquier asunto relacionado con tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>: ese es el canal habilitado para ejercer tus derechos.</p>
+
+        <h3 id="pp-datos">2.2 Qué datos recopilamos</h3>
+        <p><strong>Los que nos entregas en el formulario de demostración:</strong> nombre, correo electrónico de trabajo, teléfono de contacto, nombre de la inmobiliaria o corredora y, opcionalmente, el tamaño del equipo.</p>
+        <p><strong>Los que nos escribes por correo</strong>, si nos contactas directamente.</p>
+        <p><strong>Datos técnicos de la visita:</strong> nuestro proveedor de alojamiento registra automáticamente la dirección IP, el tipo de navegador y la fecha y hora de las solicitudes, para operar el sitio y protegerlo de abusos.</p>
+        <p>No pedimos ni necesitamos datos sensibles. Te agradecemos no incluirlos en los mensajes que nos envíes.</p>
+
+        <h3 id="pp-uso">2.3 Para qué los usamos y con qué fundamento</h3>
+        <div class="tabla-wrap">
+          <table class="tabla">
+            <thead><tr><th>Para qué</th><th>Qué datos</th><th>Fundamento</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Contactarte y coordinar la demostración que pediste</td>
+                <td>Nombre, correo, teléfono, empresa, tamaño del equipo</td>
+                <td>Tu consentimiento, otorgado al enviar el formulario</td>
+              </tr>
+              <tr>
+                <td>Responder tus consultas por correo</td>
+                <td>Los datos que incluyas en tu mensaje</td>
+                <td>Tu consentimiento</td>
+              </tr>
+              <tr>
+                <td>Preparar una propuesta comercial ajustada a tu operación</td>
+                <td>Empresa y tamaño del equipo</td>
+                <td>Medidas precontractuales a solicitud tuya</td>
+              </tr>
+              <tr>
+                <td>Operar el sitio, mantenerlo seguro y prevenir abusos</td>
+                <td>Datos técnicos de la visita</td>
+                <td>Interés legítimo en la seguridad del servicio</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>No vendemos tus datos, no los cedemos a terceros con fines comerciales y no los usamos para publicidad.</strong> Tampoco te enviaremos comunicaciones comerciales masivas sin tu consentimiento previo; si alguna vez lo hacemos, todo correo incluirá una forma simple de darte de baja.</p>
+
+        <h3 id="pp-terceros">2.4 Con quién los compartimos</h3>
+        <p>Solo con los proveedores que necesitamos para que el sitio funcione, y únicamente para eso. Cada uno actúa como encargado del tratamiento, siguiendo nuestras instrucciones:</p>
+        <div class="tabla-wrap">
+          <table class="tabla">
+            <thead><tr><th>Proveedor</th><th>Para qué</th><th>Qué recibe</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Vercel</strong> (EE. UU.)</td><td>Alojamiento del sitio y procesamiento del formulario</td><td>Datos del formulario y datos técnicos de la visita</td></tr>
+              <tr><td><strong>Resend</strong> (EE. UU.)</td><td>Envío de los correos de aviso y de confirmación</td><td>Nombre, correo, teléfono, empresa y tamaño del equipo</td></tr>
+              <tr><td><strong>Google</strong> (EE. UU.)</td><td>Registro del contacto en nuestra planilla interna de gestión comercial</td><td>Los mismos datos del formulario</td></tr>
+              <tr><td><strong>Google Fonts</strong> y <strong>unpkg</strong></td><td>Carga de tipografías e íconos del sitio</td><td>Tu dirección IP, al descargar esos archivos desde sus servidores</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>También podemos entregar datos cuando una ley, una orden judicial o una autoridad competente nos lo exija.</p>
+
+        <h3 id="pp-transferencias">2.5 Transferencias fuera de Chile</h3>
+        <p>Los proveedores mencionados almacenan y procesan la información en servidores ubicados fuera de Chile, principalmente en Estados Unidos. Al enviarnos tus datos, entiendes y aceptas esa transferencia internacional. Trabajamos con proveedores que ofrecen resguardos contractuales y estándares de seguridad reconocidos en la industria.</p>
+
+        <h3 id="pp-plazo">2.6 Cuánto tiempo los conservamos</h3>
+        <ul>
+          <li><strong>Si no llegamos a trabajar juntos:</strong> conservamos tu solicitud por hasta <strong>24 meses</strong> desde el último contacto, y luego la eliminamos.</li>
+          <li><strong>Si te conviertes en cliente:</strong> mientras dure la relación contractual y por los plazos que exijan las obligaciones legales, tributarias y contables aplicables.</li>
+          <li><strong>Datos técnicos de la visita:</strong> por los plazos de retención de registros de nuestro proveedor de alojamiento.</li>
+        </ul>
+        <p>Puedes pedirnos que los eliminemos antes, en cualquier momento.</p>
+
+        <h3 id="pp-derechos">2.7 Tus derechos y cómo ejercerlos</h3>
+        <p>Sobre tus datos personales puedes ejercer los siguientes derechos:</p>
+        <ul>
+          <li><strong>Acceso:</strong> saber qué datos tuyos tenemos y cómo los usamos.</li>
+          <li><strong>Rectificación:</strong> corregirlos si están erróneos, incompletos o desactualizados.</li>
+          <li><strong>Supresión:</strong> pedir que los eliminemos.</li>
+          <li><strong>Oposición:</strong> oponerte a un tratamiento determinado.</li>
+          <li><strong>Bloqueo:</strong> suspender temporalmente su uso.</li>
+          <li><strong>Portabilidad:</strong> recibirlos en un formato estructurado y de uso común, o pedir que se los transfiramos a otro responsable.</li>
+        </ul>
+        <p>Para ejercerlos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a> indicando cuál quieres ejercer. Podemos pedirte antecedentes que acrediten tu identidad, para no entregarle tus datos a otra persona. <strong>Responderemos dentro de los plazos legales</strong> y sin costo para ti.</p>
+        <p>Retirar tu consentimiento es igual de simple que haberlo dado, y no afecta la licitud del tratamiento realizado antes. Si consideras que no atendimos bien tu solicitud, puedes reclamar ante la <strong>Agencia de Protección de Datos Personales</strong>.</p>
+
+        <h3 id="pp-cookies">2.8 Cookies y seguimiento</h3>
+        <div class="destacado">
+          <p><strong>Este sitio no usa cookies.</strong> No instalamos cookies propias ni de terceros, no usamos herramientas de analítica ni píxeles de seguimiento, y no guardamos información en tu navegador. Por eso no verás un banner de cookies: no hay nada que consentir.</p>
+        </div>
+        <p>Lo único que ocurre es que tu navegador descarga las tipografías y los íconos desde servidores de Google y de unpkg, y esas solicitudes les revelan tu dirección IP, como sucede con cualquier archivo que se carga desde internet.</p>
+
+        <h3 id="pp-seguridad">2.9 Seguridad</h3>
+        <p>El sitio se sirve cifrado mediante HTTPS y las credenciales de nuestros proveedores se guardan como variables de entorno en el servidor, nunca en el navegador. El acceso a la información de contactos comerciales está restringido a las personas del equipo que la necesitan para su trabajo.</p>
+        <p>Ningún sistema es completamente infalible, pero si ocurriera una vulneración que afecte tus datos y comprometa tus derechos, te lo notificaremos y daremos aviso a la autoridad, conforme a la ley.</p>
+
+        <h3 id="pp-menores">2.10 Menores de edad</h3>
+        <p>Este sitio está dirigido a profesionales y empresas. No está destinado a menores de 18 años y no recopilamos deliberadamente sus datos. Si detectamos que recibimos datos de un menor, los eliminaremos.</p>
+
+        <h3 id="pp-cambios">2.11 Cambios en esta política</h3>
+        <p>Podemos actualizarla si cambian nuestras prácticas, los proveedores que usamos o la normativa. La versión vigente es la publicada aquí, con su fecha arriba. Si el cambio es sustancial, lo informaremos de forma visible en el sitio.</p>
+
+        <h3 id="pp-contacto">2.12 Contacto</h3>
+        <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="doc">
+    <div class="wrap foot-inner">
+      <span>© 2026 Cierra.cl · Hecho en Chile</span>
+      <a href="index.html">Volver al sitio</a>
+    </div>
+  </footer>
+
+</body>
+</html>
