@@ -1,0 +1,3 @@
+# Código que no corre en Vercel: el Apps Script vive dentro de la planilla.
+# Sin esto, Vercel lo serviría como archivo estático en cierra.cl/docs/…
+docs/

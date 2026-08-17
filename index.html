@@ -4,6 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cierra.cl — El software que opera la venta de parcelas, del lead al CBR</title>
+<meta name="description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, reservas, el financiamiento del propio desarrollador, pipeline legal y comisiones —hasta la inscripción en el CBR.">
+<link rel="canonical" href="https://cierra.cl/">
+<meta name="theme-color" content="#007C10">
+
+<!-- Vista previa al compartir el link (WhatsApp, LinkedIn, X, Slack) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cierra.cl">
+<meta property="og:locale" content="es_CL">
+<meta property="og:url" content="https://cierra.cl/">
+<meta property="og:title" content="El software que opera la venta de tus parcelas, de punta a punta">
+<meta property="og:description" content="Leads, reservas, el financiamiento del propio desarrollador, pipeline legal y comisiones —del primer lead a la inscripción en el CBR—. No es un CRM: es tu operación de venta, automatizada.">
+<meta property="og:image" content="https://cierra.cl/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cierra.cl — el software que opera la venta de parcelas, del lead a la inscripción en el CBR.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="El software que opera la venta de tus parcelas, de punta a punta">
+<meta name="twitter:description" content="Del primer lead a la inscripción en el CBR, incluyendo el financiamiento del propio desarrollador. No es un CRM: es tu operación de venta, automatizada.">
+<meta name="twitter:image" content="https://cierra.cl/assets/og-cover.png">
+
 <link rel="icon" type="image/svg+xml" href="assets/cierra-icon-green.svg">
 <link rel="stylesheet" href="assets/colors_and_type.css">
 <style>
@@ -283,7 +303,7 @@
 
   /* =========================================================== FOOTER */
   .footer { background: var(--zinc-950); color: var(--zinc-400); padding: 64px 0 36px; }
-  .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+  .foot-grid { display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 40px; }
   .foot-logo-link { display: inline-flex; margin-bottom: 16px; }
   .foot-logo { height: 30px; width: auto; display: block; }
   .foot-about { font-size: 14px; line-height: 1.6; color: var(--zinc-500); max-width: 280px; }
@@ -355,13 +375,6 @@
 </style>
 </head>
 <body>
-  <template id="__bundler_thumbnail">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-      <rect width="100" height="100" rx="20" fill="#007c10"/>
-      <g fill="#fff"><path d="M28 54 L50 32 L72 54 Z"/><rect x="43" y="50" width="14" height="16"/></g>
-    </svg>
-  </template>
-
   <!-- ===================================================== NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
@@ -741,7 +754,7 @@
         </details>
         <details class="faq-item">
           <summary>¿Cuánto demora la implementación?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
-          <p class="faq-answer">La mayoría de los equipos parte operando en menos de dos semanas. Migramos tus proyectos, parcelas y clientes desde tus planillas actuales, y acompañamos al equipo en el onboarding. Aún no tenés que dejar tu operación a medias: hacemos la transición contigo.</p>
+          <p class="faq-answer">La mayoría de los equipos parte operando en menos de dos semanas. Migramos tus proyectos, parcelas y clientes desde tus planillas actuales, y acompañamos al equipo en el onboarding. No tienes que dejar tu operación a medias: hacemos la transición contigo.</p>
         </details>
       </div>
     </div>
@@ -769,7 +782,13 @@
         <div class="field"><label for="f-telefono">Teléfono de contacto</label><input id="f-telefono" name="telefono" type="tel" placeholder="+56 9 1234 5678" required autocomplete="tel"></div>
         <div class="field"><label for="f-empresa">Inmobiliaria o corredora</label><input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" required autocomplete="organization"></div>
         <div class="field"><label for="f-equipo">Tamaño del equipo</label>
-          <select id="f-equipo" name="equipo"><option>1 – 5 personas</option><option>6 – 25 personas</option><option>26 – 100 personas</option><option>Más de 100</option></select>
+          <select id="f-equipo" name="equipo">
+            <option value="" selected>Selecciona una opción</option>
+            <option>1 – 5 personas</option>
+            <option>6 – 15 personas</option>
+            <option>16 – 30 personas</option>
+            <option>Más de 30 personas</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Solicitar demo</button>
         <p class="form-status" id="demo-status" role="status" aria-live="polite" hidden></p>
@@ -801,22 +820,13 @@
           <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="#demo">Solicitar demo</a></li></ul>
         </div>
         <div class="foot-col">
-          <h4>Empresa</h4>
-          <ul><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li><li><a href="#">Trabaja con nosotros</a></li></ul>
-        </div>
-        <div class="foot-col">
-          <h4>Legal</h4>
-          <ul><li><a href="#">Términos</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Seguridad</a></li></ul>
+          <h4>Contacto</h4>
+          <ul><li><a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a></li><li><a href="https://app.cierra.cl">Iniciar sesión</a></li></ul>
         </div>
       </div>
       <div class="foot-bottom">
         <span>© 2026 Cierra.cl · Hecho en Chile</span>
         <a class="foot-mail" href="mailto:contacto@cierra.cl"><span class="ctp-ic" data-lucide="mail" style="width:16px;height:16px"></span>contacto@cierra.cl</a>
-        <span style="display:inline-flex;align-items:center;gap:14px">
-          <a href="mailto:contacto@cierra.cl" aria-label="Correo"><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span></a>
-          <a href="#" aria-label="Teléfono"><span class="ctp-ic" data-lucide="phone" style="width:18px;height:18px"></span></a>
-          <a href="#" aria-label="Sitio web"><span class="ctp-ic" data-lucide="globe" style="width:18px;height:18px"></span></a>
-        </span>
       </div>
     </div>
   </footer>
@@ -901,7 +911,7 @@
           status.textContent = '¡Gracias! Te contactamos dentro de 1 día hábil.';
         } catch (err) {
           status.className = 'form-status err';
-          status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a ventas@cierra.cl.';
+          status.textContent = 'No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a contacto@cierra.cl.';
         } finally {
           status.hidden = false;
           btn.disabled = false;
