@@ -221,8 +221,10 @@
   .role-chip .ctp-ic { color: var(--brand-700); }
 
   /* =========================================================== TESTIMONIALS */
-  .tst-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .tst-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; }
+  /* Flex y no grid: la fila se acomoda sola a una, dos o tres reseñas
+     publicadas, y las deja centradas en vez de pegadas a la izquierda. */
+  .tst-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+  .tst-card { flex: 1 1 300px; max-width: 380px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; }
   .tst-quote { font-size: 16px; line-height: 1.6; color: var(--zinc-800); margin: 0 0 22px; flex: 1; }
   .tst-quote::before { content: "\201C"; }
   .tst-quote::after { content: "\201D"; }
@@ -327,7 +329,7 @@
     .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 72px; }
     .compo { max-width: 520px; margin: 0 auto; }
     .cta-band-inner { grid-template-columns: 1fr; gap: 40px; }
-    .mod-grid, .tst-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .mod-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
     .included-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
@@ -343,7 +345,7 @@
     .band-inner, .cta-band-inner { padding-top: 64px; padding-bottom: 64px; }
     .hero-cta { flex-direction: column; align-items: stretch; }
     .hero-cta .btn { width: 100%; white-space: normal; }
-    .mod-grid, .tst-grid, .price-grid { grid-template-columns: 1fr; }
+    .mod-grid, .price-grid { grid-template-columns: 1fr; }
     .included-grid { grid-template-columns: 1fr; }
     .price-card.feat { order: -1; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
@@ -629,17 +631,23 @@
       </div>
       <div class="tst-grid">
         <article class="tst-card reveal">
-          <p class="tst-quote">Antes perseguíamos los pagos por WhatsApp. Ahora la reserva no avanza si no está autorizada, y la comisión se arma sola al escriturar. Es otro orden.</p>
-          <div class="tst-who"><span class="tst-av">MG</span><div><div class="tst-name">María González</div><div class="tst-role">Gerenta comercial · Lomas de Colina</div></div></div>
+          <p class="tst-quote">Llevamos todo nuestro proceso de venta actualizado en un solo lugar y le hacemos seguimiento a cada operación, una por una. Muy conformes.</p>
+          <div class="tst-who"><span class="tst-av">JT</span><div><div class="tst-name">José Tarud</div><div class="tst-role">Gerente comercial · Capital Terrenos</div></div></div>
+        </article>
+
+        <!-- Pendientes de que el cliente apruebe el texto. Cuando confirmen,
+             se descomenta la tarjeta que corresponda: la grilla se acomoda sola
+             a una, dos o tres reseñas.
+
+        <article class="tst-card reveal">
+          <p class="tst-quote">Antes perseguíamos los pagos por WhatsApp y nadie sabía en qué iba cada reserva. Ahora la reserva no avanza si no está autorizada, y mi equipo entra en la mañana y sabe altiro qué tiene pendiente.</p>
+          <div class="tst-who"><span class="tst-av">RA</span><div><div class="tst-name">Rubén Aguilera</div><div class="tst-role">Jefe de ventas · Compra Tu Parcela</div></div></div>
         </article>
         <article class="tst-card reveal">
-          <p class="tst-quote">Lo que más me sirve es que cada rol ve lo suyo. Mi equipo de asesores entra y sabe altiro qué reserva está pendiente. No hay que explicar nada.</p>
-          <div class="tst-who"><span class="tst-av">DF</span><div><div class="tst-name">Diego Fuentes</div><div class="tst-role">Jefe de ventas · Mirador del Valle</div></div></div>
+          <p class="tst-quote">Lo que más nos cambió fue el cierre: la parcela queda inscrita en el CBR y las comisiones se arman solas, sin que nadie las calcule aparte. Se acabaron las planillas paralelas.</p>
+          <div class="tst-who"><span class="tst-av">EB</span><div><div class="tst-name">Eduardo Bravo</div><div class="tst-role">Jefe de ventas · Inmobiliaria Fin del Mundo</div></div></div>
         </article>
-        <article class="tst-card reveal">
-          <p class="tst-quote">El pipeline legal nos cambió la pega. Borrador, agenda de firma, escritura e inscripción en el CBR —todo trazado— y la parcela queda vendida e inscrita sin que nadie la toque a mano.</p>
-          <div class="tst-who"><span class="tst-av">VC</span><div><div class="tst-name">Valentina Cid</div><div class="tst-role">Coordinadora legal · Altos de Pirque</div></div></div>
-        </article>
+        -->
       </div>
     </div>
   </section>
