@@ -99,6 +99,14 @@ function generarTicketId_() {
 }
 
 function guardarReporte_(p) {
+  // Un reporte real siempre trae al menos tipo, titulo o descripcion. Si no
+  // trae ninguno, es un POST que no corresponde a esta rama: se descarta en vez
+  // de escribir una fila vacia y quemar un numero de ticket.
+  if (!p.tipo && !p.titulo && !p.descripcion) {
+    console.error('POST descartado: no parece un reporte de la app. Contenido: ' + JSON.stringify(p));
+    return responder_({ ok: false, error: 'payload no reconocido' });
+  }
+
   const sheet = getHoja_(HOJA_REPORTES);
 
   let fotoUrl = '';
