@@ -1,3 +1,7 @@
 # Código que no corre en Vercel: el Apps Script vive dentro de la planilla.
 # Sin esto, Vercel lo serviría como archivo estático en cierra.cl/docs/…
 docs/
+
+# Avatares originales a 1024px. Se guardan para poder reencuadrarlos en el
+# futuro, pero la web solo usa las versiones de 144px que están un nivel arriba.
+assets/testimonios/originales/
