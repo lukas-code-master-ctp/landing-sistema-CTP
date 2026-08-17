@@ -47,8 +47,12 @@ const HOJA_LEADS = 'clientes cierra';
 function doPost(e) {
   try {
     const p = JSON.parse(e.postData.contents);
+    // Queda en Ejecuciones. Sin esto, cuando algo no llega a la planilla no hay
+    // forma de saber por que rama se fue el POST.
+    console.log('POST recibido. origen=' + (p.origen || '(sin origen)'));
     return p.origen === 'landing/demo' ? guardarLead_(p) : guardarReporte_(p);
   } catch (err) {
+    console.error('doPost fallo: ' + err);
     return responder_({ ok: false, error: String(err) });
   }
 }
@@ -184,9 +188,16 @@ function guardarLead_(lead) {
   // del JSON. Si no hay TOKEN configurado, no se valida nada.
   const esperado = PropertiesService.getScriptProperties().getProperty('TOKEN');
   if (esperado && lead.token !== esperado) {
+    console.error(
+      'Lead rechazado: el token no coincide. Recibido ' +
+      (lead.token ? '"' + String(lead.token).slice(0, 6) + '…" (' + String(lead.token).length + ' caracteres)' : '(ninguno)') +
+      ', esperado uno de ' + esperado.length + ' caracteres que empieza en "' + esperado.slice(0, 6) + '…". ' +
+      'Revisa que CRM_WEBHOOK_TOKEN en Vercel sea identico a la propiedad TOKEN de este script.'
+    );
     return responder_({ ok: false, error: 'token inválido' });
   }
   if (!lead.email || !lead.empresa) {
+    console.error('Lead rechazado: faltan email o empresa. Recibido: ' + JSON.stringify(lead));
     return responder_({ ok: false, error: 'faltan campos' });
   }
 
@@ -199,6 +210,7 @@ function guardarLead_(lead) {
 
     sheet.appendRow(construirFilaLead_(encabezados, lead, fecha));
 
+    console.log('Lead de ' + lead.empresa + ' escrito en la fila ' + sheet.getLastRow());
     return responder_({ ok: true, fila: sheet.getLastRow() });
   } finally {
     lock.releaseLock();

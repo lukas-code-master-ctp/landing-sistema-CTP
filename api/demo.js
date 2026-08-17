@@ -34,6 +34,48 @@ const esc = (s) =>
 // "a@x.cl, b@y.cl" → ["a@x.cl", "b@y.cl"]
 const list = (v) => String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
 
+const SITIO = 'https://cierra.cl';
+const LOGO = `${SITIO}/assets/cierra-lockup-email.png`;
+
+/**
+ * Envoltorio HTML de los correos. Va con tablas y estilos en línea a propósito:
+ * Outlook y Gmail ignoran hojas de estilo, flexbox y grid. El logo es PNG
+ * porque ningún cliente de correo renderiza SVG, y va sobre una banda oscura
+ * para que se vea igual en modo claro y oscuro.
+ */
+function plantilla({ titulo, cuerpo }) {
+  return `<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(titulo)}</title></head>
+<body style="margin:0;padding:0;background:#f4f4f5;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f5;">
+    <tr><td align="center" style="padding:32px 16px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:100%;background:#ffffff;border:1px solid #e4e4e7;border-radius:14px;overflow:hidden;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+        <tr><td style="background:#09090b;padding:22px 28px;">
+          <img src="${LOGO}" width="181" height="33" alt="Cierra.cl" style="display:block;border:0;">
+        </td></tr>
+        <tr><td style="padding:32px 28px 30px;color:#3f3f46;font-size:15px;line-height:1.65;">
+          ${cuerpo}
+        </td></tr>
+        <tr><td style="background:#fafafa;border-top:1px solid #e4e4e7;padding:20px 28px;color:#71717a;font-size:12px;line-height:1.6;">
+          <a href="${SITIO}" style="color:#007c10;text-decoration:none;font-weight:600;">Cierra.cl</a> — el software que opera la venta de parcelas, del primer lead a la inscripción en el CBR.
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
+/** Filas de datos, en tabla porque los clientes de correo no hacen grid. */
+function filasDatos(pares) {
+  const filas = pares
+    .filter(([, v]) => v)
+    .map(([k, v]) => `<tr>
+        <td style="padding:7px 18px 7px 0;color:#71717a;font-size:13px;white-space:nowrap;vertical-align:top;">${esc(k)}</td>
+        <td style="padding:7px 0;color:#18181b;font-size:14px;font-weight:600;">${esc(v)}</td>
+      </tr>`).join('');
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${filas}</table>`;
+}
+
 async function sendEmail(apiKey, payload) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -96,16 +138,34 @@ export default async function handler(req, res) {
       ...(cc.length ? { cc } : {}),
       reply_to: email,
       subject: `Nueva solicitud de demo — ${empresa}`,
-      html: `
-        <h2>Nueva solicitud de demo</h2>
-        <p><strong>Nombre:</strong> ${esc(nombre)}</p>
-        <p><strong>Email:</strong> ${esc(email)}</p>
-        <p><strong>Teléfono:</strong> ${esc(telefono)}</p>
-        <p><strong>Inmobiliaria / corredora:</strong> ${esc(empresa)}</p>
-        <p><strong>Tamaño del equipo:</strong> ${esc(equipo) || '—'}</p>
-        <hr>
-        <p style="color:#71717a;font-size:13px">Recibida el ${esc(fecha)} · Responde este correo para contestarle directamente a ${esc(nombre)}.</p>
-      `,
+      text: [
+        'Nueva solicitud de demo',
+        '',
+        `Nombre: ${nombre}`,
+        `Email: ${email}`,
+        `Teléfono: ${telefono}`,
+        `Inmobiliaria o corredora: ${empresa}`,
+        `Tamaño del equipo: ${equipo || '—'}`,
+        '',
+        `Recibida el ${fecha}`,
+        `Este correo responde a ${email}, así que puedes contestarle desde aquí.`,
+      ].join('\n'),
+      html: plantilla({
+        titulo: `Nueva solicitud de demo — ${empresa}`,
+        cuerpo: `
+          <p style="margin:0 0 4px;color:#007c10;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Nuevo lead</p>
+          <h1 style="margin:0 0 22px;color:#09090b;font-size:23px;line-height:1.3;font-weight:800;">${esc(empresa)}</h1>
+          ${filasDatos([
+            ['Nombre', nombre],
+            ['Email', email],
+            ['Teléfono', telefono],
+            ['Tamaño del equipo', equipo || '—'],
+          ])}
+          <p style="margin:26px 0 0;padding-top:18px;border-top:1px solid #e4e4e7;color:#71717a;font-size:13px;line-height:1.6;">
+            Recibida el ${esc(fecha)}<br>
+            Este correo lleva configurado el <strong>Responder a: ${esc(email)}</strong>, así que puedes contestarle directamente desde aquí.
+          </p>`,
+      }),
     });
   } catch (err) {
     console.error('No se pudo avisar al equipo:', err);
@@ -123,23 +183,57 @@ export default async function handler(req, res) {
       to: [email],
       reply_to: replyTo,
       subject: 'Recibimos tu solicitud de demo — Cierra.cl',
-      html: `
-        <div style="font-family:'Helvetica Neue',Arial,sans-serif;color:#09090b;line-height:1.6">
-          <p>Hola ${esc(nombre)},</p>
-          <p>Recibimos tu solicitud de demo para <strong>${esc(empresa)}</strong>. Te contactamos dentro de <strong>1 día hábil</strong> para coordinar una sesión de 30 minutos, sin compromiso.</p>
-          <p>Estos son los datos que nos dejaste:</p>
-          <table cellpadding="0" cellspacing="0" style="font-size:14px;color:#3f3f46">
-            <tr><td style="padding:2px 16px 2px 0"><strong>Email</strong></td><td>${esc(email)}</td></tr>
-            <tr><td style="padding:2px 16px 2px 0"><strong>Teléfono</strong></td><td>${esc(telefono)}</td></tr>
-            <tr><td style="padding:2px 16px 2px 0"><strong>Inmobiliaria</strong></td><td>${esc(empresa)}</td></tr>
-            ${equipo ? `<tr><td style="padding:2px 16px 2px 0"><strong>Equipo</strong></td><td>${esc(equipo)}</td></tr>` : ''}
+      text: [
+        `Hola ${nombre},`,
+        '',
+        `Recibimos tu solicitud de demo para ${empresa}. Te contactamos dentro de 1 día hábil para coordinar la sesión.`,
+        '',
+        'Qué vas a ver en la demo:',
+        '· 30 minutos, sin compromiso.',
+        '· El sistema funcionando con tus proyectos, no con datos de ejemplo.',
+        '· Una recomendación de plan según el tamaño de tu equipo.',
+        '',
+        'Los datos que nos dejaste:',
+        `Email: ${email}`,
+        `Teléfono: ${telefono}`,
+        `Inmobiliaria o corredora: ${empresa}`,
+        equipo ? `Tamaño del equipo: ${equipo}` : '',
+        '',
+        'Si algo está mal o quieres agregar contexto, responde este correo.',
+        '',
+        'Equipo Cierra.cl',
+        SITIO,
+      ].filter(Boolean).join('\n'),
+      html: plantilla({
+        titulo: 'Recibimos tu solicitud de demo',
+        cuerpo: `
+          <h1 style="margin:0 0 18px;color:#09090b;font-size:24px;line-height:1.3;font-weight:800;">Recibimos tu solicitud</h1>
+          <p style="margin:0 0 16px;">Hola <strong style="color:#18181b;">${esc(nombre)}</strong>, gracias por tu interés en Cierra.cl.</p>
+          <p style="margin:0 0 26px;">Tenemos tu solicitud de demo para <strong style="color:#18181b;">${esc(empresa)}</strong> y te contactamos dentro de <strong style="color:#18181b;">1 día hábil</strong> para coordinar la sesión.</p>
+
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f6faf6;border:1px solid #d8ebd9;border-radius:10px;">
+            <tr><td style="padding:20px 22px;">
+              <p style="margin:0 0 12px;color:#09090b;font-size:14px;font-weight:700;">Qué vas a ver en la demo</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr><td style="padding:3px 10px 3px 0;color:#007c10;font-size:14px;font-weight:700;">✓</td><td style="padding:3px 0;font-size:14px;">30 minutos, sin compromiso.</td></tr>
+                <tr><td style="padding:3px 10px 3px 0;color:#007c10;font-size:14px;font-weight:700;">✓</td><td style="padding:3px 0;font-size:14px;">El sistema funcionando con tus proyectos, no con datos de ejemplo.</td></tr>
+                <tr><td style="padding:3px 10px 3px 0;color:#007c10;font-size:14px;font-weight:700;">✓</td><td style="padding:3px 0;font-size:14px;">Una recomendación de plan según el tamaño de tu equipo.</td></tr>
+              </table>
+            </td></tr>
           </table>
-          <p>Si algo está mal o quieres agregar contexto, responde este correo.</p>
-          <p style="margin-top:24px">Equipo Cierra.cl<br>
-            <span style="color:#71717a;font-size:13px">El software que opera la venta de parcelas, del lead a la inscripción en el CBR.</span>
-          </p>
-        </div>
-      `,
+
+          <p style="margin:28px 0 10px;color:#09090b;font-size:14px;font-weight:700;">Los datos que nos dejaste</p>
+          ${filasDatos([
+            ['Email', email],
+            ['Teléfono', telefono],
+            ['Inmobiliaria o corredora', empresa],
+            ['Tamaño del equipo', equipo],
+          ])}
+
+          <p style="margin:26px 0 0;padding-top:18px;border-top:1px solid #e4e4e7;color:#71717a;font-size:13px;line-height:1.6;">
+            ¿Algo está mal o quieres agregar contexto? Responde este correo y te leemos.
+          </p>`,
+      }),
     }).catch((err) => { console.error('No se pudo confirmarle al cliente:', err); }),
   );
 
