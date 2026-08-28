@@ -1,0 +1,69 @@
+# Cierra.cl
+
+> Software chileno que opera de punta a punta la venta de parcelas y loteos:
+> del primer lead a la inscripción en el Conservador de Bienes Raíces (CBR),
+> incluyendo el financiamiento que otorga el propio desarrollador. No es un CRM
+> genérico adaptado al rubro: es la operación de venta completa, automatizada.
+
+Cierra.cl es un producto de IMPULSE AI SpA (RUT 78.479.762-7), Chile.
+Contacto: contacto@cierra.cl · Plataforma: https://app.cierra.cl
+
+## Qué problema resuelve
+
+Las inmobiliarias y corredoras que venden parcelas suelen operar con planillas
+paralelas, WhatsApp y estados que nadie actualiza. Cierra.cl reemplaza eso con
+un solo flujo con disparadores automáticos: al inscribir la parcela en el CBR,
+esta pasa a vendida y las comisiones se crean solas.
+
+## El flujo que automatiza
+
+1. **Lead** — captura inbound y asignación al asesor.
+2. **Reserva** — asistente de 3 pasos, financiamiento del desarrollador (pie y
+   cuotas) y registro del pago.
+3. **Autorización** — validación del pago y cambio de estado según el rol.
+4. **Firma** — agenda en notaría y documentación trazada.
+5. **Inscripción en el CBR + comisión** — la parcela queda inscrita y las
+   comisiones de asesor y corretaje se generan automáticamente.
+
+## Módulos
+
+- Proyectos y Parcelas: estado, superficie en m² o hectáreas, precio en CLP o UF.
+- Leads y Clientes: inbound, persona jurídica con representante legal, RUT.
+- Reservas y financiamiento: vendedor interno y corretaje externo, pie y cuotas.
+- Pipeline legal y CBR: borrador, agenda de firma, escritura e inscripción.
+- Comisiones: de asesor y de corretaje, con estado por rol.
+- Dashboard y alertas SLA: KPIs y embudo de conversión por rol.
+
+## Roles
+
+owner, admin, asesor, finanzas, legal, agenda y corretaje. Cada uno ve su propio
+dashboard y navegación, y ciertas acciones —autorizar un pago, pagar una
+comisión— quedan reservadas al rol que corresponde.
+
+## Planes
+
+Precios en UF por mes, referenciales; el valor final se fija en el contrato.
+Primer mes sin costo y 10% de descuento en planes anuales.
+
+- Pequeña — 2,5 UF/mes · hasta 5 usuarios y 2 proyectos.
+- Mediana — 5 UF/mes · hasta 15 usuarios y 15 proyectos.
+- Grande — 10 UF/mes · hasta 30 usuarios y proyectos ilimitados.
+- Enterprise — a convenir · más de 30 usuarios, múltiples sociedades e integraciones.
+
+Todos incluyen implementación y migración de datos. La mayoría de los equipos
+queda operando en menos de dos semanas.
+
+## Para quién es
+
+Inmobiliarias y corredoras que venden parcelas y loteos en Chile, desde equipos
+de 5 personas hasta grupos con varias sociedades. Clientes actuales incluyen
+CompraTuParcela, CTP Real Estate (Uruguay), Inmobiliaria Fin del Mundo, Capital
+Terrenos y Distrito Chile.
+
+## Enlaces
+
+- [Sitio y planes](https://cierra.cl/): descripción completa, módulos y precios.
+- [Preguntas frecuentes](https://cierra.cl/#faq): financiamiento propio, UF y CLP,
+  corredores externos, roles, notarías y CBR, plazos de implementación.
+- [Solicitar una demo](https://cierra.cl/#demo): 30 minutos, sin compromiso.
+- [Términos y privacidad](https://cierra.cl/legal.html).

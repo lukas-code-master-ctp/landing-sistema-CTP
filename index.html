@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +25,9 @@
 <meta name="twitter:image" content="https://cierra.cl/assets/og-cover.png">
 
 <link rel="icon" type="image/svg+xml" href="assets/cierra-icon-green.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@700;800&display=swap">
 <link rel="stylesheet" href="assets/colors_and_type.css">
 <style>
   * { box-sizing: border-box; }
@@ -376,6 +379,134 @@
     .logos-viewport { overflow-x: auto; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cierra.cl/#organizacion",
+      "name": "Cierra.cl",
+      "legalName": "IMPULSE AI SpA",
+      "taxID": "78.479.762-7",
+      "url": "https://cierra.cl/",
+      "logo": "https://cierra.cl/assets/cierra-lockup-email.png",
+      "image": "https://cierra.cl/assets/og-cover.png",
+      "email": "contacto@cierra.cl",
+      "description": "Software chileno que automatiza la venta de parcelas de punta a punta, del primer lead a la inscripción en el Conservador de Bienes Raíces.",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Chile"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CL"
+      },
+      "knowsLanguage": "es-CL"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cierra.cl/#sitio",
+      "url": "https://cierra.cl/",
+      "name": "Cierra.cl",
+      "inLanguage": "es-CL",
+      "publisher": {
+        "@id": "https://cierra.cl/#organizacion"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://cierra.cl/#software",
+      "name": "Cierra.cl",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Software de gestión inmobiliaria y venta de parcelas",
+      "operatingSystem": "Web",
+      "url": "https://cierra.cl/",
+      "inLanguage": "es-CL",
+      "description": "Opera la venta de parcelas y loteos en un solo flujo: leads, reservas, financiamiento del propio desarrollador, autorización de pagos, pipeline legal, escrituración, inscripción en el CBR y comisiones.",
+      "provider": {
+        "@id": "https://cierra.cl/#organizacion"
+      },
+      "audience": {
+        "@type": "BusinessAudience",
+        "name": "Inmobiliarias y corredoras que venden parcelas y loteos en Chile"
+      },
+      "featureList": [
+        "Proyectos y parcelas con estado, superficie en m² o hectáreas y precio en CLP o UF",
+        "Leads y clientes, con persona jurídica y representante legal",
+        "Reservas con financiamiento del propio desarrollador: pie y cuotas",
+        "Autorización de pagos por rol",
+        "Pipeline legal: borrador, agenda de firma, escritura e inscripción en el CBR",
+        "Comisiones de asesor y de corretaje externo, creadas automáticamente al escriturar",
+        "Dashboard y alertas SLA por rol"
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "CLF",
+        "lowPrice": "2.5",
+        "highPrice": "10",
+        "offerCount": 4,
+        "url": "https://cierra.cl/#precios"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://cierra.cl/#preguntas",
+      "inLanguage": "es-CL",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Sirve para vender parcelas con financiamiento del propio desarrollador?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, justamente para eso. Cada reserva soporta el financiamiento que da el propio desarrollador —con pie y cuotas— además del pago al contado. El sistema lleva el estado de pago y bloquea el avance de la reserva hasta que esté autorizada, así no se escritura nada que no esté al día."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Maneja UF y CLP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Los precios de parcelas se pueden expresar en CLP o UF, con el formato chileno ($1.000.000, dots como separador de miles) y RUT formateado. Las superficies van en m² o HA según el loteo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo trabajar con corredores externos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claro. Las reservas soportan múltiples vendedores: tu asesor interno y un corretaje externo. Las comisiones de cada uno se calculan por separado, con su propia máquina de estados, y se crean automáticamente al escriturar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo funcionan los roles y permisos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El sistema es 100% basado en roles: owner, admin, asesor, finanzas, legal, agenda y corretaje. Cada rol ve un dashboard y una navegación a su medida, y ciertas acciones —como autorizar un pago o pagar una comisión— quedan reservadas al rol que corresponde."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Se conecta con notarías, firma y el CBR?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El pipeline legal te permite agendar la firma en notaría y dejar trazada la documentación de cada escritura hasta su inscripción en el Conservador de Bienes Raíces. En el plan Enterprise sumamos integraciones a medida según tus flujos y proveedores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto demora la implementación?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La mayoría de los equipos parte operando en menos de dos semanas. Migramos tus proyectos, parcelas y clientes desde tus planillas actuales, y acompañamos al equipo en el onboarding. No tienes que dejar tu operación a medias: hacemos la transición contigo."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!-- ===================================================== NAV -->
@@ -614,7 +745,7 @@
           <div class="win-dots"><i></i><i></i><i></i></div>
           <span class="win-url">app.cierra.cl/dashboard</span>
         </div>
-        <img class="shot-slot" src="assets/dashboard.png" alt="Dashboard de Cierra.cl: KPIs de reservas, embudo de conversión, tendencia de 6 meses y alertas operativas" style="height: auto;">
+        <img class="shot-slot" src="assets/dashboard.png" width="1882" height="941" loading="lazy" decoding="async" alt="Dashboard de Cierra.cl: KPIs de reservas, embudo de conversión, tendencia de 6 meses y alertas operativas" style="height: auto;">
       </div>
       <div class="feature-pills">
         <span class="feature-pill"><span class="ctp-ic" data-lucide="layout-grid" style="width:15px;height:15px"></span>Vista cards ↔ lista ↔ mapa</span>
@@ -838,7 +969,7 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@1.35.0/dist/umd/lucide.min.js"></script>
   <script>
     // Icons
     if (window.lucide) lucide.createIcons({ attrs: { "stroke-width": 2 } });

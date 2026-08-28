@@ -1,0 +1,36 @@
+# https://cierra.cl — reglas de rastreo
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Rastreadores de motores generativos. Se permiten a propósito: para que
+# ChatGPT, Perplexity, Claude o los resúmenes de Google puedan citar a
+# Cierra.cl al responder sobre software de venta de parcelas, primero tienen
+# que poder leer el sitio. Si algún día no se quiere aparecer ahí, basta
+# cambiar el Allow por Disallow en el bloque que corresponda.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://cierra.cl/sitemap.xml
