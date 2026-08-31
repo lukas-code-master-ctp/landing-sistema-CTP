@@ -42,7 +42,8 @@ comisión— quedan reservadas al rol que corresponde.
 
 ## Planes
 
-Precios en UF por mes, referenciales; el valor final se fija en el contrato.
+Precios en UF por mes, mas IVA, referenciales; el valor final se fija en el
+contrato.
 Primer mes sin costo y 10% de descuento en planes anuales.
 
 - Pequeña — 2,5 UF/mes · hasta 5 usuarios y 2 proyectos.
