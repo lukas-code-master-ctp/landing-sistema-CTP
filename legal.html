@@ -8,11 +8,12 @@
 
   PENDIENTE: este texto no ha sido revisado por un abogado.
 
-  Si cambian las prácticas del sitio, hay que actualizar la política. En
-  particular, la sección 2.8 afirma que NO hay cookies, analítica ni píxeles de
-  seguimiento; eso es cierto hoy, pero deja de serlo apenas se agregue Google
-  Analytics o similar, y en ese caso probablemente haga falta un banner de
-  consentimiento. Lo mismo con la lista de proveedores de la sección 2.4.
+  Si cambian las prácticas del sitio, hay que actualizar la política. La
+  sección 2.8 declara que no hay cookies y que la medición es agregada y sin
+  cookies (Vercel Web Analytics). Si algún día se agrega una herramienta que
+  SÍ use cookies —Google Analytics, píxeles publicitarios— hay que reescribir
+  esa sección y probablemente sumar un banner de consentimiento. Lo mismo con
+  la lista de proveedores de la sección 2.4.
 -->
 <html lang="es-CL">
 <head>
@@ -96,6 +97,10 @@
     header.doc { padding-top: 38px; }
   }
 </style>
+<!-- Vercel Web Analytics. Se sirve desde el propio dominio (/_vercel/…),
+     no desde un CDN externo, y no usa cookies ni almacenamiento local.
+     En local devuelve 404: la ruta solo existe una vez desplegado. -->
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -119,7 +124,7 @@
   <div class="wrap">
     <header class="doc">
       <h1>Términos y condiciones y Política de privacidad</h1>
-      <p class="fecha">Última actualización: 17 de agosto de 2026</p>
+      <p class="fecha">Última actualización: 28 de agosto de 2026</p>
     </header>
 
     <div class="indice">
@@ -226,6 +231,7 @@
         <p><strong>Los que nos entregas en el formulario de demostración:</strong> nombre, correo electrónico de trabajo, teléfono de contacto, nombre de la inmobiliaria o corredora y, opcionalmente, el tamaño del equipo.</p>
         <p><strong>Los que nos escribes por correo</strong>, si nos contactas directamente.</p>
         <p><strong>Datos técnicos de la visita:</strong> nuestro proveedor de alojamiento registra automáticamente la dirección IP, el tipo de navegador y la fecha y hora de las solicitudes, para operar el sitio y protegerlo de abusos.</p>
+        <p><strong>Estadísticas de uso agregadas:</strong> páginas vistas, sitio de procedencia, país y tipo de dispositivo, para saber qué contenido sirve y qué no. Se recogen sin cookies y no permiten identificarte.</p>
         <p>No pedimos ni necesitamos datos sensibles. Te agradecemos no incluirlos en los mensajes que nos envíes.</p>
 
         <h3 id="pp-uso">2.3 Para qué los usamos y con qué fundamento</h3>
@@ -264,7 +270,7 @@
           <table class="tabla">
             <thead><tr><th>Proveedor</th><th>Para qué</th><th>Qué recibe</th></tr></thead>
             <tbody>
-              <tr><td><strong>Vercel</strong> (EE. UU.)</td><td>Alojamiento del sitio y procesamiento del formulario</td><td>Datos del formulario y datos técnicos de la visita</td></tr>
+              <tr><td><strong>Vercel</strong> (EE. UU.)</td><td>Alojamiento del sitio, procesamiento del formulario y estadísticas de uso (Vercel Web Analytics)</td><td>Datos del formulario, datos técnicos de la visita y las estadísticas agregadas descritas en la sección 2.8</td></tr>
               <tr><td><strong>Resend</strong> (EE. UU.)</td><td>Envío de los correos de aviso y de confirmación</td><td>Nombre, correo, teléfono, empresa y tamaño del equipo</td></tr>
               <tr><td><strong>Google</strong> (EE. UU.)</td><td>Registro del contacto en nuestra planilla interna de gestión comercial</td><td>Los mismos datos del formulario</td></tr>
               <tr><td><strong>Google Fonts</strong> y <strong>unpkg</strong></td><td>Carga de tipografías e íconos del sitio</td><td>Tu dirección IP, al descargar esos archivos desde sus servidores</td></tr>
@@ -299,8 +305,9 @@
 
         <h3 id="pp-cookies">2.8 Cookies y seguimiento</h3>
         <div class="destacado">
-          <p><strong>Este sitio no usa cookies.</strong> No instalamos cookies propias ni de terceros, no usamos herramientas de analítica ni píxeles de seguimiento, y no guardamos información en tu navegador. Por eso no verás un banner de cookies: no hay nada que consentir.</p>
+          <p><strong>Este sitio no usa cookies.</strong> No instalamos cookies propias ni de terceros, no usamos píxeles de seguimiento publicitario y no guardamos información en tu navegador. Por eso no verás un banner de cookies: no hay nada que consentir.</p>
         </div>
+        <p><strong>Sí medimos las visitas, pero sin cookies.</strong> Usamos Vercel Web Analytics, que cuenta páginas vistas y visitantes de forma agregada. No instala cookies, no guarda nada en tu navegador y no te sigue entre distintos sitios: registra la página visitada, el sitio de procedencia, el país, y el tipo de dispositivo y navegador. No podemos identificarte a partir de esos datos ni cruzarlos con lo que nos dejes en el formulario.</p>
         <p>Lo único que ocurre es que tu navegador descarga las tipografías y los íconos desde servidores de Google y de unpkg, y esas solicitudes les revelan tu dirección IP, como sucede con cualquier archivo que se carga desde internet.</p>
 
         <h3 id="pp-seguridad">2.9 Seguridad</h3>
