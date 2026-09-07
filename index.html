@@ -313,9 +313,12 @@
   .foot-logo-link { display: inline-flex; margin-bottom: 16px; }
   .foot-logo { height: 30px; width: auto; display: block; }
   .foot-about { font-size: 14px; line-height: 1.6; color: var(--zinc-500); max-width: 280px; }
-  .foot-parent { margin: 18px 0 0; font-size: 13px; color: var(--zinc-500); }
-  .foot-parent a { color: var(--zinc-300); font-weight: var(--fw-semibold); transition: color .15s; }
-  .foot-parent a:hover { color: #fff; }
+  .foot-parent { display: flex; align-items: center; gap: 9px; margin: 18px 0 0; font-size: 13px; color: var(--zinc-500); }
+  .foot-parent a { display: inline-flex; }
+  /* Apenas atenuado para que no compite con el logo de Cierra, y se
+     aclara al pasar el mouse como el resto de los enlaces del pie. */
+  .foot-parent img { height: 22px; width: auto; display: block; opacity: .88; transition: opacity .15s; }
+  .foot-parent a:hover img { opacity: 1; }
   .foot-col h4 { font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--zinc-300); margin: 0 0 16px; }
   .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
   .foot-col a { font-size: 14px; color: var(--zinc-500); transition: color .15s; }
@@ -963,7 +966,7 @@
             </svg>
           </a>
           <p class="foot-about">El software de automatización operativa para la venta de parcelas en Chile. Del primer lead a la inscripción en el CBR —incluyendo el financiamiento del propio desarrollador— en un solo flujo.</p>
-          <p class="foot-parent">Una empresa de <a href="https://www.impulseai.cl/" target="_blank" rel="noopener">Impulse AI</a></p>
+          <p class="foot-parent">Una empresa de <a href="https://www.impulseai.cl/" target="_blank" rel="noopener" aria-label="Impulse AI"><img src="assets/impulse-ai.png" alt="Impulse AI" width="107" height="22" loading="lazy" decoding="async"></a></p>
         </div>
         <div class="foot-col">
           <h4>Producto</h4>
