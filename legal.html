@@ -124,7 +124,7 @@
   <div class="wrap">
     <header class="doc">
       <h1>Términos y condiciones y Política de privacidad</h1>
-      <p class="fecha">Última actualización: 28 de agosto de 2026</p>
+      <p class="fecha">Última actualización: 30 de septiembre de 2026</p>
     </header>
 
     <div class="indice">
@@ -158,6 +158,16 @@
             <li><a href="#pp-menores">Menores de edad</a></li>
             <li><a href="#pp-cambios">Cambios en esta política</a></li>
             <li><a href="#pp-contacto">Contacto</a></li>
+          </ol>
+        </li>
+        <li>Datos de Google en la plataforma Cierra
+          <ol>
+            <li><a href="#gg-calendar">Integración con Google Calendar</a></li>
+            <li><a href="#gg-datos">Qué datos de Google usamos</a></li>
+            <li><a href="#gg-uso">Para qué los usamos</a></li>
+            <li><a href="#gg-limitado">Uso limitado</a></li>
+            <li><a href="#gg-almacenamiento">Dónde y cómo los protegemos</a></li>
+            <li><a href="#gg-desconectar">Cómo desconectar y borrar el acceso</a></li>
           </ol>
         </li>
       </ol>
@@ -322,6 +332,69 @@
 
         <h3 id="pp-contacto">2.12 Contacto</h3>
         <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
+      </section>
+
+      <!-- ═══════════════════════════════ PARTE 3: DATOS DE GOOGLE (APP) ══ -->
+      <section class="parte">
+        <span class="parte-num">Parte 3</span>
+        <h2>Datos de Google en la plataforma Cierra</h2>
+
+        <div class="destacado">
+          <p>Esta parte aplica a quienes usan la <strong>plataforma Cierra</strong> (app.cierra.cl) y conectan su cuenta de Google. Las partes 1 y 2 describen el sitio web cierra.cl; esta describe lo que ocurre dentro de la plataforma cuando se activa la integración con Google Calendar.</p>
+        </div>
+
+        <h3 id="gg-calendar">3.1 Integración con Google Calendar</h3>
+        <p>La integración es <strong>opcional</strong> y la activa el administrador de cada empresa (la inmobiliaria o loteadora que contrata Cierra). Sirve para que las firmas de escritura que se agendan en Cierra aparezcan como eventos en un calendario de Google elegido por esa empresa, e inviten por correo al cliente, al abogado y a la persona encargada de la agenda.</p>
+        <p>Cuando el administrador conecta su cuenta, Google le muestra una pantalla de consentimiento que detalla los permisos pedidos. Sin ese consentimiento, Cierra no accede a nada de Google.</p>
+
+        <h3 id="gg-datos">3.2 Qué datos de Google usamos</h3>
+        <p>Pedimos los permisos mínimos necesarios:</p>
+        <div class="tabla-wrap">
+          <table class="tabla">
+            <thead><tr><th>Permiso de Google</th><th>Qué hacemos con él</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Ver y editar eventos</strong> (<code>calendar.events</code>)</td>
+                <td>Crear, mover y borrar <strong>únicamente los eventos de firma que Cierra crea</strong>. No leemos, listamos ni modificamos los demás eventos de tu calendario.</td>
+              </tr>
+              <tr>
+                <td><strong>Ver la lista de tus calendarios</strong> (<code>calendar.calendarlist.readonly</code>)</td>
+                <td>Mostrarte qué calendarios puedes usar, para que elijas uno. Solo vemos su nombre, identificador y zona horaria, y solo listamos aquellos donde tienes permiso de escritura.</td>
+              </tr>
+              <tr>
+                <td><strong>Correo de tu cuenta</strong> (<code>openid</code>, <code>email</code>)</td>
+                <td>Mostrar qué cuenta de Google está conectada.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Además guardamos el <strong>token de actualización</strong> que Google nos entrega, necesario para seguir creando eventos sin pedirte que vuelvas a autorizar cada vez, y el identificador de cada evento que creamos, para poder moverlo o borrarlo si la firma se reagenda o se cancela.</p>
+        <p><strong>Qué contiene cada evento:</strong> la fecha y hora de la firma, la notaría y ciudad, el número de reserva, el nombre del cliente, la parcela, el nombre de la persona encargada, las observaciones de la agenda y un enlace a la reserva en Cierra. Los <strong>correos del cliente, del abogado y del encargado</strong> se envían a Google como invitados para que reciban la invitación.</p>
+
+        <h3 id="gg-uso">3.3 Para qué los usamos</h3>
+        <p>Únicamente para entregar la función descrita: que una firma agendada en Cierra exista, se actualice y se elimine en el calendario de la empresa, y que los invitados reciban su aviso. No usamos estos datos para publicidad, no los vendemos, no los cedemos a terceros y no los usamos para entrenar modelos de inteligencia artificial.</p>
+
+        <h3 id="gg-limitado">3.4 Uso limitado</h3>
+        <p>El uso y la transferencia a cualquier otra aplicación de la información recibida de las APIs de Google se ajustará a la <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Política de Datos del Usuario de los Servicios de las APIs de Google</a>, incluidos los requisitos de Uso limitado.</p>
+        <p lang="en"><em>Cierra&rsquo;s use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</em></p>
+        <ul>
+          <li>Solo usamos los datos de Google para proporcionar la función visible para ti, descrita arriba.</li>
+          <li>No transferimos estos datos a terceros, salvo que sea necesario para prestar la función (Google mismo, para enviar las invitaciones), para cumplir la ley o ante una orden de autoridad competente.</li>
+          <li>Ninguna persona de nuestro equipo lee los datos de tu calendario, salvo que tú lo pidas expresamente para soporte, por seguridad o por obligación legal.</li>
+          <li>No usamos los datos de Google para publicidad ni para entrenar modelos de inteligencia artificial generalizados.</li>
+        </ul>
+
+        <h3 id="gg-almacenamiento">3.5 Dónde y cómo los protegemos</h3>
+        <p>La plataforma corre en infraestructura de Google Cloud, en la región de São Paulo (Brasil). El token de actualización se guarda <strong>cifrado</strong> en nuestra base de datos y se descifra solo en el momento de hablar con Google. El acceso a la plataforma exige autenticación, y cada empresa ve únicamente sus propios datos.</p>
+        <p>El responsable de los datos de clientes y de agendas que la empresa carga en Cierra es esa empresa; <strong>IMPULSE AI SpA</strong> los trata por cuenta suya, según el contrato de servicios firmado con cada cliente.</p>
+
+        <h3 id="gg-desconectar">3.6 Cómo desconectar y borrar el acceso</h3>
+        <ul>
+          <li><strong>Desde Cierra:</strong> el administrador puede desconectar la cuenta en <em>Configuraciones → Integraciones</em>. Al hacerlo borramos el token guardado y le pedimos a Google que lo revoque.</li>
+          <li><strong>Desde Google:</strong> puedes retirar el acceso en cualquier momento en <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Cierra deja de tener acceso de inmediato.</li>
+          <li><strong>Los eventos ya creados</strong> pertenecen al calendario de la empresa y quedan ahí; se pueden borrar desde Google Calendar.</li>
+          <li><strong>Para pedir acceso, corrección o eliminación</strong> de cualquier dato, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Aplican los derechos descritos en la sección 2.7.</li>
+        </ul>
       </section>
 
     </main>
