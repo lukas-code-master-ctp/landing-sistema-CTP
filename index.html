@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cierra.cl — El software que opera la venta de parcelas, del lead al CBR</title>
-<meta name="description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, reservas, el financiamiento del propio desarrollador, pipeline legal y comisiones —hasta la inscripción en el CBR.">
+<meta name="description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, cotizaciones, reservas, financiamiento del propio desarrollador, pipeline legal y liquidación de comisiones —hasta la inscripción en el CBR—, con IA incluida.">
 <link rel="canonical" href="https://cierra.cl/">
 <meta name="theme-color" content="#007C10">
 
@@ -14,14 +14,14 @@
 <meta property="og:locale" content="es_CL">
 <meta property="og:url" content="https://cierra.cl/">
 <meta property="og:title" content="El software que opera la venta de tus parcelas, de punta a punta">
-<meta property="og:description" content="Leads, reservas, el financiamiento del propio desarrollador, pipeline legal y comisiones —del primer lead a la inscripción en el CBR—. No es un CRM: es tu operación de venta, automatizada.">
+<meta property="og:description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, cotizaciones, reservas, financiamiento del propio desarrollador, pipeline legal y liquidación de comisiones —hasta la inscripción en el CBR—, con IA incluida.">
 <meta property="og:image" content="https://cierra.cl/assets/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Cierra.cl — el software que opera la venta de parcelas, del lead a la inscripción en el CBR.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="El software que opera la venta de tus parcelas, de punta a punta">
-<meta name="twitter:description" content="Del primer lead a la inscripción en el CBR, incluyendo el financiamiento del propio desarrollador. No es un CRM: es tu operación de venta, automatizada.">
+<meta name="twitter:description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, cotizaciones, reservas, financiamiento del propio desarrollador, pipeline legal y liquidación de comisiones —hasta la inscripción en el CBR—, con IA incluida.">
 <meta name="twitter:image" content="https://cierra.cl/assets/og-cover.png">
 
 <link rel="icon" type="image/svg+xml" href="assets/cierra-icon-green.svg">
@@ -453,10 +453,16 @@
       "image": "https://cierra.cl/assets/og-cover.png",
       "email": "contacto@cierra.cl",
       "description": "Software chileno que automatiza la venta de parcelas de punta a punta, del primer lead a la inscripción en el Conservador de Bienes Raíces.",
-      "areaServed": {
-        "@type": "Country",
-        "name": "Chile"
-      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Country",
+          "name": "Uruguay"
+        }
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "CL"
@@ -488,16 +494,25 @@
       },
       "audience": {
         "@type": "BusinessAudience",
-        "name": "Inmobiliarias y corredoras que venden parcelas y loteos en Chile"
+        "name": "Loteadoras, inmobiliarias y corredoras que venden parcelas y loteos en Chile y Latinoamérica"
       },
       "featureList": [
-        "Proyectos y parcelas con estado, superficie en m² o hectáreas y precio en CLP o UF",
-        "Leads y clientes, con persona jurídica y representante legal",
-        "Reservas con financiamiento del propio desarrollador: pie y cuotas",
-        "Autorización de pagos por rol",
-        "Pipeline legal: borrador, agenda de firma, escritura e inscripción en el CBR",
-        "Comisiones de asesor y de corretaje externo, creadas automáticamente al escriturar",
-        "Dashboard y alertas SLA por rol"
+        "Proyectos y parcelas con estado, mapa, superficie en m² o hectáreas, precio en CLP, UF o USD y campos a medida",
+        "Leads y clientes: captura por webhook, persona natural o jurídica con representante legal y RUT",
+        "Cotizaciones en PDF con tu marca, simulación de financiamiento y promociones por proyecto",
+        "Reservas en 4 pasos o pre-reserva express, con formulario de reserva en PDF generado desde la app",
+        "Financiamiento del propio desarrollador y cobranza: pie, cuotas, cronograma y recordatorios de vencimiento",
+        "Pipeline legal hasta el CBR: promesa, firma en notaría agendada en Google Calendar, escritura e inscripción",
+        "Liquidación de comisiones de asesores y corredores externos, con retención de boleta o IVA de factura",
+        "Dashboards e insights por rol, alertas SLA y reporte PDF automático por correo",
+        "Capacitaciones con IA para equipos de venta: lecciones, quiz, niveles e insignias",
+        "Asistente Cierra con IA: consultas en lenguaje natural sobre reservas, clientes e inventario",
+        "Flujo de venta configurable sin programar: pasos, roles, plazos SLA y rutas legales",
+        "Marca propia: subdominio, logo y colores en la app, los correos y los PDFs",
+        "Multi-país y multi-moneda: CLP, UF, USD o EUR, con dashboards consolidados",
+        "Portal del inversionista: ventas, lo que le corresponde, lo recaudado y próximos cobros",
+        "Proyectos compartidos entre loteadoras y corredoras sobre el mismo stock",
+        "Integraciones: API con llaves y permisos, webhook de leads, Google Sheets y Google Calendar"
       ],
       "offers": {
         "@type": "AggregateOffer",
@@ -528,10 +543,10 @@
         },
         {
           "@type": "Question",
-          "name": "¿Maneja UF y CLP?",
+          "name": "¿Maneja UF, CLP y otras monedas?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí. Los precios de parcelas se pueden expresar en CLP o UF, con el formato chileno ($1.000.000, dots como separador de miles) y RUT formateado. Las superficies van en m² o HA según el loteo."
+            "text": "Sí. Los precios se expresan en CLP, UF, USD o la moneda de cada país, con formato chileno ($1.000.000, puntos como separador de miles) y RUT validado. Los tipos de cambio se toman de fuentes oficiales y los dashboards se consolidan en tu moneda de informe. Las superficies van en m² o HA."
           }
         },
         {
@@ -539,7 +554,7 @@
           "name": "¿Puedo trabajar con corredores externos?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Claro. Las reservas soportan múltiples vendedores: tu asesor interno y un corretaje externo. Las comisiones de cada uno se calculan por separado, con su propia máquina de estados, y se crean automáticamente al escriturar."
+            "text": "Claro. Cada reserva puede tener a tu asesor interno y a un corredor externo. Cierra genera las liquidaciones de comisiones de cada uno por separado —por venta o por período—, con su boleta o factura, y finanzas las paga con comprobante."
           }
         },
         {
@@ -552,10 +567,42 @@
         },
         {
           "@type": "Question",
-          "name": "¿Se conecta con notarías, firma y el CBR?",
+          "name": "¿Se conecta con notarías, Google Calendar y el CBR?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "El pipeline legal te permite agendar la firma en notaría y dejar trazada la documentación de cada escritura hasta su inscripción en el Conservador de Bienes Raíces. En el plan Enterprise sumamos integraciones a medida según tus flujos y proveedores."
+            "text": "Sí. El pipeline legal te permite agendar la firma en notaría —con invitación en Google Calendar para el cliente, el abogado y el encargado— y dejar trazada la documentación de cada promesa y escritura hasta su inscripción en el Conservador de Bienes Raíces. En el plan Enterprise sumamos integraciones a medida según tus flujos y proveedores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo usar mi propio formulario de reserva?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Armas tu formulario una vez —con tus cláusulas, anexos y campos para cónyuge o empresa— y Cierra lo genera en PDF con los datos de cada venta ya completos, listo para firmar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo adaptar el flujo a mi proceso?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Con el editor de flujos defines los pasos, roles, plazos y rutas legales de tu venta: contado o financiado, con o sin promesa, escritura directa o escribanía. Partes desde una plantilla probada y la ajustas sin programar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Mis inversionistas o dueños del terreno pueden ver sus ventas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Registras a cada inversionista con su participación y le envías una invitación. Desde su portal ve las ventas, lo que le corresponde, lo recaudado y los próximos cobros, y descarga su reporte en PDF."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué hace el Asistente Cierra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Responde preguntas en lenguaje natural sobre tus reservas, clientes e inventario —por ejemplo, «¿qué parcelas quedan disponibles?»— y respeta lo que cada usuario puede ver. Está incluido en todos los planes, con un cupo mensual de créditos de IA."
           }
         },
         {
@@ -563,7 +610,7 @@
           "name": "¿Cuánto demora la implementación?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "La mayoría de los equipos parte operando en menos de dos semanas. Migramos tus proyectos, parcelas y clientes desde tus planillas actuales, y acompañamos al equipo en el onboarding. No tienes que dejar tu operación a medias: hacemos la transición contigo."
+            "text": "La mayoría de los equipos parte operando en menos de dos semanas. Importamos tus proyectos, parcelas y clientes desde tus planillas de Excel y acompañamos al equipo en el onboarding. No tienes que dejar tu operación a medias: hacemos la transición contigo."
           }
         }
       ]
@@ -1063,6 +1110,22 @@
         <details class="faq-item">
           <summary>¿Se conecta con notarías, Google Calendar y el CBR?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
           <p class="faq-answer">Sí. El pipeline legal te permite agendar la firma en notaría —con invitación en Google Calendar para el cliente, el abogado y el encargado— y dejar trazada la documentación de cada promesa y escritura hasta su inscripción en el Conservador de Bienes Raíces. En el plan Enterprise sumamos integraciones a medida según tus flujos y proveedores.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Puedo usar mi propio formulario de reserva?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí. Armas tu formulario una vez —con tus cláusulas, anexos y campos para cónyuge o empresa— y Cierra lo genera en PDF con los datos de cada venta ya completos, listo para firmar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Puedo adaptar el flujo a mi proceso?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí. Con el editor de flujos defines los pasos, roles, plazos y rutas legales de tu venta: contado o financiado, con o sin promesa, escritura directa o escribanía. Partes desde una plantilla probada y la ajustas sin programar.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Mis inversionistas o dueños del terreno pueden ver sus ventas?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Sí. Registras a cada inversionista con su participación y le envías una invitación. Desde su portal ve las ventas, lo que le corresponde, lo recaudado y los próximos cobros, y descarga su reporte en PDF.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué hace el Asistente Cierra?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>
+          <p class="faq-answer">Responde preguntas en lenguaje natural sobre tus reservas, clientes e inventario —por ejemplo, «¿qué parcelas quedan disponibles?»— y respeta lo que cada usuario puede ver. Está incluido en todos los planes, con un cupo mensual de créditos de IA.</p>
         </details>
         <details class="faq-item">
           <summary>¿Cuánto demora la implementación?<span class="ctp-ic faq-chev" data-lucide="chevron-down" style="width:20px;height:20px"></span></summary>

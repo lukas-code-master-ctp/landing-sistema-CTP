@@ -4,35 +4,83 @@
 > del primer lead a la inscripción en el Conservador de Bienes Raíces (CBR),
 > incluyendo el financiamiento que otorga el propio desarrollador. No es un CRM
 > genérico adaptado al rubro: es la operación de venta completa, automatizada.
+> Hecho en Chile, multi-país y multi-moneda, con IA incluida en todos los planes.
 
 Cierra.cl es un producto de IMPULSE AI SpA (RUT 78.479.762-7), Chile.
 Contacto: contacto@cierra.cl · Plataforma: https://app.cierra.cl
 
 ## Qué problema resuelve
 
-Las inmobiliarias y corredoras que venden parcelas suelen operar con planillas
-paralelas, WhatsApp y estados que nadie actualiza. Cierra.cl reemplaza eso con
-un solo flujo con disparadores automáticos: al inscribir la parcela en el CBR,
-esta pasa a vendida y las comisiones se crean solas.
+Las loteadoras, inmobiliarias y corredoras que venden parcelas suelen operar con
+planillas paralelas, WhatsApp sueltos y estados que nadie actualiza. Cierra.cl
+reemplaza eso con una sola operación —venta, financiamiento, finanzas y legal—
+con disparadores automáticos: al inscribir la parcela en el CBR (o su
+equivalente en cada país), esta pasa a vendida y Cierra genera las liquidaciones
+de comisiones.
 
 ## El flujo que automatiza
 
-1. **Lead** — captura inbound y asignación al asesor.
-2. **Reserva** — asistente de 3 pasos, financiamiento del desarrollador (pie y
-   cuotas) y registro del pago.
-3. **Autorización** — validación del pago y cambio de estado según el rol.
-4. **Firma** — agenda en notaría y documentación trazada.
-5. **Inscripción en el CBR + comisión** — la parcela queda inscrita y las
-   comisiones de asesor y corretaje se generan automáticamente.
+1. **Lead** — captura inbound, cotización con tu marca y asignación al asesor.
+2. **Reserva** — wizard de 4 pasos o pre-reserva express desde el celular, con
+   financiamiento del desarrollador (pie y cuotas).
+3. **Autorización** — finanzas concilia el pago y la reserva avanza según el rol.
+4. **Firma** — promesa o escritura, con la firma en notaría agendada en Google
+   Calendar.
+5. **Inscripción en el CBR + liquidación** — la parcela queda inscrita en el
+   Conservador y las comisiones quedan listas para liquidar.
 
 ## Módulos
 
-- Proyectos y Parcelas: estado, superficie en m² o hectáreas, precio en CLP o UF.
-- Leads y Clientes: inbound, persona jurídica con representante legal, RUT.
-- Reservas y financiamiento: vendedor interno y corretaje externo, pie y cuotas.
-- Pipeline legal y CBR: borrador, agenda de firma, escritura e inscripción.
-- Comisiones: de asesor y de corretaje, con estado por rol.
-- Dashboard y alertas SLA: KPIs y embudo de conversión por rol.
+- Proyectos y Parcelas: estado, fotos, plano y mapa; superficie en m² o HA,
+  precio en CLP, UF o USD, y campos propios.
+- Leads y Clientes: leads desde tu web o chatbot por webhook, persona natural o
+  jurídica con representante legal, cónyuge, documentos y RUT.
+- Cotizaciones y Promociones: PDF con tu marca, precio contado y simulación con
+  financiamiento, con folio y vigencia; promociones vigentes por proyecto.
+- Reservas: wizard de 4 pasos con asesor interno y corredor externo, o
+  pre-reserva express en terreno. El formulario de reserva se genera desde
+  Cierra en PDF, en tu formato y con los datos de la venta, listo para firmar.
+- Financiamiento y cobranza: planes por proyecto con tasa, pie mínimo y cuotas;
+  cronograma para finanzas y recordatorio al cliente antes de cada vencimiento.
+- Pipeline legal y CBR: borrador, promesa, firma, escritura e inscripción. La
+  firma en notaría se agenda en Google Calendar con invitación al cliente, al
+  abogado y al encargado.
+- Comisiones y liquidaciones: Cierra genera las liquidaciones de asesores y
+  corredores —por venta, semanal, quincenal o mensual—, con la retención de
+  boleta o el IVA de factura ya calculados.
+- Dashboards, Insights y reportes: KPIs, embudo y alertas SLA por rol; stock y
+  metas por proyecto; reporte PDF automático por correo, semanal o mensual.
+- Capacitaciones: microlearning para el equipo de ventas con lecciones, quiz,
+  niveles e insignias; la IA arma la capacitación a partir de un PDF.
+
+## Hecho a tu medida
+
+- Asistente Cierra con IA: responde preguntas en lenguaje natural sobre tus
+  reservas, clientes e inventario y respeta lo que cada usuario puede ver.
+  Incluido en todos los planes, con un cupo mensual de créditos de IA.
+- Tu flujo, sin programar: editor visual de pasos, roles, plazos SLA y rutas
+  legales (contado o financiado, con o sin promesa, escritura directa o
+  escribanía), desde una plantilla probada y con versiones.
+- Con tu marca: subdominio, logo y colores en el login, los correos y los PDFs;
+  correos a tus clientes desde tu propio dominio.
+- Multi-país y multi-moneda: proyectos en Chile y en otros países, cada venta
+  en su moneda (CLP, UF, USD o EUR), tipos de cambio oficiales y dashboards
+  consolidados en tu moneda de informe.
+- Integraciones: API con llaves y permisos, webhook para recibir leads,
+  inventario sincronizado con Google Sheets y firmas en Google Calendar.
+- Tus datos entran y salen: importación desde Excel con plantillas y
+  exportación a Excel, CSV o PDF.
+
+## Todo tu ecosistema
+
+- Portal del inversionista: el dueño del terreno o inversionista ve las ventas,
+  lo que le corresponde, lo recaudado, sus próximos cobros y su reporte PDF.
+  Una sola cuenta, aunque invierta con varias loteadoras.
+- Proyectos compartidos: comparte un proyecto con otra loteadora o corredora y
+  vendan del mismo stock, cada una con su equipo; el acceso se revoca cuando
+  quieras.
+- Corredores externos: cada reserva puede sumar un corredor externo junto a tu
+  asesor, con su propio acceso y liquidación de comisiones por separado.
 
 ## Roles
 
@@ -49,22 +97,29 @@ Primer mes sin costo y 10% de descuento en planes anuales.
 - Pequeña — 2,5 UF/mes · hasta 5 usuarios y 2 proyectos.
 - Mediana — 5 UF/mes · hasta 15 usuarios y 15 proyectos.
 - Grande — 10 UF/mes · hasta 30 usuarios y proyectos ilimitados.
-- Enterprise — a convenir · más de 30 usuarios, múltiples sociedades e integraciones.
+- Enterprise — a convenir · más de 30 usuarios, varias empresas o países e
+  integraciones a medida.
 
-Todos incluyen implementación y migración de datos. La mayoría de los equipos
-queda operando en menos de dos semanas.
+Todos incluyen implementación, migración de datos y créditos de IA (Asistente
+Cierra y Capacitaciones con IA). La mayoría de los equipos queda operando en
+menos de dos semanas.
 
 ## Para quién es
 
-Inmobiliarias y corredoras que venden parcelas y loteos en Chile, desde equipos
-de 5 personas hasta grupos con varias sociedades. Clientes actuales incluyen
-CompraTuParcela, CTP Real Estate (Uruguay), Inmobiliaria Fin del Mundo, Capital
-Terrenos y Distrito Chile.
+Loteadoras, inmobiliarias y corredoras que venden parcelas y loteos en Chile y
+Latinoamérica, desde equipos de 5 personas hasta grupos con varias sociedades o
+países. Clientes actuales incluyen CompraTuParcela, CTP Real Estate (Uruguay),
+Inmobiliaria Fin del Mundo, Capital Terrenos y Distrito Chile.
 
 ## Enlaces
 
 - [Sitio y planes](https://cierra.cl/): descripción completa, módulos y precios.
-- [Preguntas frecuentes](https://cierra.cl/#faq): financiamiento propio, UF y CLP,
-  corredores externos, roles, notarías y CBR, plazos de implementación.
+- [Hecho a tu medida](https://cierra.cl/#a-medida): Asistente con IA, flujo,
+  marca, multi-país e integraciones.
+- [Todo tu ecosistema](https://cierra.cl/#ecosistema): inversionistas, proyectos
+  compartidos y corredores externos.
+- [Preguntas frecuentes](https://cierra.cl/#faq): financiamiento propio,
+  monedas, corredores externos, roles, notarías y CBR, formulario de reserva,
+  flujo a medida, inversionistas, Asistente Cierra y plazos de implementación.
 - [Solicitar una demo](https://cierra.cl/#demo): 30 minutos, sin compromiso.
 - [Términos y privacidad](https://cierra.cl/legal.html).

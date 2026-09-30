@@ -28,7 +28,7 @@ Dependencias externas cargadas por CDN: [Lucide](https://unpkg.com/lucide@latest
 
 ## Secciones
 
-Nav sticky · Hero con composición flotante de KPIs · logos de clientes · banda oscura de posicionamiento (flujo Lead → Reserva → Autorización → Firma → Inscripción CBR) · 6 módulos + 7 roles · showcase "Velo en acción" · testimonios · 4 planes (en UF, con toggle mensual/anual) · FAQ · CTA final con formulario de demo · footer.
+Nav sticky · Hero con composición flotante de KPIs · logos de clientes · banda oscura de posicionamiento (flujo Lead → Reserva → Autorización → Firma → Inscripción CBR) · 9 módulos + 7 roles (`#modulos`) · "Hecho a tu medida" (`#a-medida`: Asistente Cierra con IA, flujo configurable, marca propia, multi-país y multi-moneda, integraciones, importación/exportación) · showcase "Velo en acción" · "Todo tu ecosistema" (`#ecosistema`: portal del inversionista, proyectos compartidos, corredores externos) · testimonios · 4 planes (en UF, con toggle mensual/anual) · FAQ (10 preguntas) · CTA final con formulario de demo · footer.
 
 ## Para terminar de pulir
 
