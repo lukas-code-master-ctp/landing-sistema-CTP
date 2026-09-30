@@ -377,7 +377,13 @@
     .fit-grid { grid-template-columns: repeat(2, 1fr); }
     .fit-card.feat { grid-row: auto; }
     .fit-card:last-child { grid-column: span 2; }
-    .eco-grid { grid-template-columns: 1fr; max-width: 640px; }
+    /* Ecosistema en tablet: una fila por tarjeta a todo el ancho, con el ícono
+       a la izquierda (3 columnas quedan muy angostas y 640px dejaba un hueco). */
+    .eco-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 44px; }
+    .eco-card { display: grid; grid-template-columns: 46px 1fr; column-gap: 22px; align-content: start; }
+    .eco-card .mod-ic { grid-row: 1 / span 3; margin-bottom: 0; }
+    .eco-card h3, .eco-card p, .eco-card .mod-tags { grid-column: 2; }
+    .eco-card .mod-tags { margin-top: 0; padding-top: 16px; }
     .included-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
@@ -402,6 +408,8 @@
     .fit-card.feat { padding: 26px; }
     .fit-card.feat h3 { font-size: 21px; }
     .included-grid { grid-template-columns: 1fr; }
+    .eco-card { display: flex; padding: 24px; }
+    .eco-card .mod-ic { margin-bottom: 18px; }
     .price-card.feat { order: -1; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
     .hero { padding: 48px 0 72px; }
