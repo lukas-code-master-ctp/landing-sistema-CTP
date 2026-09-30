@@ -207,6 +207,30 @@
   .mod-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
   .mod-tag { font-size: 11px; font-weight: var(--fw-medium); color: var(--zinc-600); background: var(--zinc-100); border-radius: 9999px; padding: 3px 9px; }
 
+  /* =========================================================== A TU MEDIDA (bento) */
+  /* Escritorio (3 col): el Asistente ocupa 2 col x 2 filas y a su derecha se
+     apilan 2 tarjetas; la fila 3 lleva las otras 3. 9 celdas, sin huecos. */
+  .fit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .fit-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-card); transition: box-shadow .18s, border-color .18s, transform .18s; }
+  .fit-card:hover { box-shadow: var(--shadow-card-hover); border-color: var(--zinc-300); transform: translateY(-3px); }
+  .fit-card h3 { font-size: 18px; font-weight: var(--fw-bold); margin: 0 0 8px; color: var(--zinc-900); letter-spacing: -.01em; }
+  .fit-card p { font-size: 14.5px; line-height: 1.6; color: var(--fg-secondary); margin: 0; }
+  .fit-card.feat { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; padding: 34px; border: 1.5px solid var(--brand-200); background: radial-gradient(120% 90% at 100% 0%, rgb(0 124 16 / .10), transparent 60%), linear-gradient(180deg, var(--brand-50), #fff 75%); box-shadow: 0 20px 40px -24px rgb(0 124 16 / .28); position: relative; overflow: hidden; }
+  .fit-card.feat:hover { border-color: var(--brand-300); }
+  .fit-card.feat .mod-ic { background: var(--brand-700); color: #fff; }
+  .fit-card.feat h3 { font-size: 24px; letter-spacing: -.02em; }
+  .fit-card.feat p { font-size: 16px; max-width: 560px; }
+  .fit-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .fit-ask { margin-top: auto; padding-top: 26px; display: flex; flex-direction: column; gap: 10px; }
+  .fit-msg { max-width: 82%; font-size: 14px; line-height: 1.5; border-radius: 16px; padding: 10px 14px; }
+  .fit-msg.me { align-self: flex-end; background: var(--zinc-900); color: #fff; border-bottom-right-radius: 4px; }
+  .fit-msg.ai { align-self: flex-start; display: flex; gap: 8px; align-items: flex-start; background: #fff; color: var(--zinc-800); border: 1px solid var(--border); border-bottom-left-radius: 4px; box-shadow: var(--shadow-card); }
+  .fit-msg.ai .ctp-ic { color: var(--brand-700); margin-top: 3px; flex: none; }
+  .fit-msg b { font-weight: var(--fw-semibold); color: var(--zinc-900); }
+  .fit-ask-bar { margin-top: 6px; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--border); border-radius: 9999px; padding: 10px 10px 10px 18px; box-shadow: var(--shadow-card); font-size: 14px; color: var(--fg-muted); }
+  .fit-ask-bar span.t { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fit-ask-go { width: 34px; height: 34px; border-radius: 9999px; background: var(--brand-700); color: #fff; display: flex; align-items: center; justify-content: center; flex: none; }
+
   /* =========================================================== SHOWCASE */
   .showcase { background: var(--zinc-50); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .shot-frame { margin-top: 48px; border-radius: var(--radius-xl); border: 1px solid var(--border); background: #fff; box-shadow: 0 30px 60px -30px rgb(9 9 11 / .26); overflow: hidden; }
@@ -340,10 +364,16 @@
     .compo { max-width: 520px; margin: 0 auto; }
     .cta-band-inner { grid-template-columns: 1fr; gap: 40px; }
     .mod-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .fit-grid { grid-template-columns: repeat(2, 1fr); }
+    .fit-card.feat { grid-row: auto; }
+    .fit-card:last-child { grid-column: span 2; }
     .included-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
-  @media (max-width: 860px) {
+  /* Con 5 enlaces el nav de escritorio no cabe bajo ~1000px: se acorta el
+     espacio entre enlaces y el menú móvil entra en 1000px (antes 860px). */
+  @media (max-width: 1100px) { .nav-links { gap: 20px; } }
+  @media (max-width: 1000px) {
     .nav-links, .nav-signin { display: none; }
     .nav-actions .btn { display: none; }
     .nav-burger { display: inline-flex; }
@@ -356,6 +386,10 @@
     .hero-cta { flex-direction: column; align-items: stretch; }
     .hero-cta .btn { width: 100%; white-space: normal; }
     .mod-grid, .price-grid { grid-template-columns: 1fr; }
+    .fit-grid { grid-template-columns: 1fr; }
+    .fit-card.feat, .fit-card:last-child { grid-column: auto; }
+    .fit-card.feat { padding: 26px; }
+    .fit-card.feat h3 { font-size: 21px; }
     .included-grid { grid-template-columns: 1fr; }
     .price-card.feat { order: -1; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
@@ -541,6 +575,7 @@
       <nav class="nav-links">
         <a href="#producto">Producto</a>
         <a href="#modulos">Módulos</a>
+        <a href="#a-medida">A tu medida</a>
         <a href="#precios">Precios</a>
         <a href="#faq">Preguntas</a>
       </nav>
@@ -554,6 +589,7 @@
       <div class="wrap nav-mobile-inner">
         <a href="#producto">Producto</a>
         <a href="#modulos">Módulos</a>
+        <a href="#a-medida">A tu medida</a>
         <a href="#precios">Precios</a>
         <a href="#faq">Preguntas</a>
         <a href="https://app.cierra.cl" class="nav-mobile-signin">Iniciar sesión</a>
@@ -761,6 +797,57 @@
         <span class="role-chip"><span class="ctp-ic" data-lucide="scale" style="width:16px;height:16px"></span>Legal</span>
         <span class="role-chip"><span class="ctp-ic" data-lucide="calendar" style="width:16px;height:16px"></span>Agenda</span>
         <span class="role-chip"><span class="ctp-ic" data-lucide="handshake" style="width:16px;height:16px"></span>Corretaje</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== A TU MEDIDA -->
+  <section class="section" id="a-medida">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="dot"></span>Hecho a tu medida</span>
+        <h2 class="section-title">Tu proceso, tu marca, <span class="g">tus países</span>.</h2>
+        <p class="section-desc">Cierra se adapta a cómo vendes tú, no al revés.</p>
+      </div>
+      <div class="fit-grid">
+        <article class="fit-card feat reveal">
+          <div class="fit-top">
+            <div class="mod-ic"><span class="ctp-ic" data-lucide="sparkles" style="width:22px;height:22px"></span></div>
+            <span class="badge badge-brand">Incluido en todos los planes</span>
+          </div>
+          <h3>Asistente Cierra con IA</h3>
+          <p>Pregúntale a Cierra en tus palabras: «¿Qué parcelas quedan disponibles?», «¿Cuántas reservas llevo este mes?», «¿A qué clientes les faltan datos?». Responde al instante sobre tus reservas, clientes e inventario, y respeta lo que cada usuario puede ver.</p>
+          <div class="fit-ask" aria-hidden="true">
+            <div class="fit-msg me">¿Cuántas reservas llevo este mes?</div>
+            <div class="fit-msg ai"><span class="ctp-ic" data-lucide="sparkles" style="width:14px;height:14px"></span><span>Llevas <b>14 reservas</b> este mes: 9 al contado y 5 financiadas.</span></div>
+            <div class="fit-ask-bar"><span class="ctp-ic" data-lucide="sparkles" style="width:16px;height:16px;color:var(--brand-700)"></span><span class="t">¿Qué parcelas quedan disponibles?</span><span class="fit-ask-go"><span class="ctp-ic" data-lucide="arrow-up" style="width:16px;height:16px"></span></span></div>
+          </div>
+        </article>
+        <article class="fit-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="workflow" style="width:22px;height:22px"></span></div>
+          <h3>Tu flujo, sin programar</h3>
+          <p>Define los pasos, roles, plazos SLA y rutas legales de tu venta en un editor visual: contado o financiado, con o sin promesa, escritura directa o escribanía. Partes de una plantilla probada y guardas versiones.</p>
+        </article>
+        <article class="fit-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="palette" style="width:22px;height:22px"></span></div>
+          <h3>Con tu marca</h3>
+          <p>Tu subdominio, tu logo y tus colores en el login, los correos y los PDFs. Los correos a tus clientes salen desde tu propio dominio.</p>
+        </article>
+        <article class="fit-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="globe" style="width:22px;height:22px"></span></div>
+          <h3>Multi-país y multi-moneda</h3>
+          <p>Proyectos en Chile y en otros países, cada venta en su moneda —CLP, UF, USD o EUR— con tipos de cambio oficiales y dashboards consolidados en tu moneda de informe.</p>
+        </article>
+        <article class="fit-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="plug" style="width:22px;height:22px"></span></div>
+          <h3>Integraciones</h3>
+          <p>API con llaves y permisos, webhook para recibir leads desde tu web o chatbot, inventario sincronizado con Google Sheets y firmas en Google Calendar.</p>
+        </article>
+        <article class="fit-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="file-spreadsheet" style="width:22px;height:22px"></span></div>
+          <h3>Tus datos entran y salen</h3>
+          <p>Importa proyectos, parcelas y clientes desde Excel con plantillas, y exporta a Excel, CSV o PDF cuando lo necesites.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -1028,7 +1115,7 @@
       burger.addEventListener('click', () => setOpen(navMobile.hidden));
       navMobile.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
       // Close on resize back to desktop
-      window.addEventListener('resize', () => { if (window.innerWidth > 860) setOpen(false); });
+      window.addEventListener('resize', () => { if (window.innerWidth > 1000) setOpen(false); });
     }
 
     // Scroll reveal
