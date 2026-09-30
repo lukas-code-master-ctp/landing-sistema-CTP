@@ -207,6 +207,16 @@
   .mod-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
   .mod-tag { font-size: 11px; font-weight: var(--fw-medium); color: var(--zinc-600); background: var(--zinc-100); border-radius: 9999px; padding: 3px 9px; }
 
+  /* =========================================================== ECOSISTEMA (banda oscura) */
+  .eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; }
+  .eco-card { display: flex; flex-direction: column; background: rgb(255 255 255 / .04); border: 1px solid rgb(255 255 255 / .10); border-radius: var(--radius-xl); padding: 28px; transition: background .18s, border-color .18s, transform .18s; }
+  .eco-card:hover { background: rgb(255 255 255 / .06); border-color: rgb(255 255 255 / .18); transform: translateY(-3px); }
+  .eco-card .mod-ic { background: rgb(24 172 39 / .14); color: var(--brand-400); border: 1px solid rgb(24 172 39 / .28); }
+  .eco-card h3 { font-size: 19px; font-weight: var(--fw-bold); margin: 0 0 10px; color: #fff; letter-spacing: -.01em; }
+  .eco-card p { font-size: 14.5px; line-height: 1.65; color: var(--zinc-400); margin: 0; }
+  .eco-card .mod-tags { margin-top: auto; padding-top: 20px; }
+  .eco-card .mod-tag { color: var(--zinc-300); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .10); }
+
   /* =========================================================== A TU MEDIDA (bento) */
   /* Escritorio (3 col): el Asistente ocupa 2 col x 2 filas y a su derecha se
      apilan 2 tarjetas; la fila 3 lleva las otras 3. 9 celdas, sin huecos. */
@@ -367,6 +377,7 @@
     .fit-grid { grid-template-columns: repeat(2, 1fr); }
     .fit-card.feat { grid-row: auto; }
     .fit-card:last-child { grid-column: span 2; }
+    .eco-grid { grid-template-columns: 1fr; max-width: 640px; }
     .included-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
@@ -870,8 +881,41 @@
       <div class="feature-pills">
         <span class="feature-pill"><span class="ctp-ic" data-lucide="layout-grid" style="width:15px;height:15px"></span>Vista cards ↔ lista ↔ mapa</span>
         <span class="feature-pill"><span class="ctp-ic" data-lucide="filter" style="width:15px;height:15px"></span>Filtros por proyecto y estado</span>
-        <span class="feature-pill"><span class="ctp-ic" data-lucide="bell" style="width:15px;height:15px"></span>Notificaciones en tiempo real</span>
-        <span class="feature-pill"><span class="ctp-ic" data-lucide="download" style="width:15px;height:15px"></span>Exporta a planilla cuando lo necesites</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="bell-ring" style="width:15px;height:15px"></span>Notificaciones y recordatorios</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="at-sign" style="width:15px;height:15px"></span>@menciones en cada reserva</span>
+        <span class="feature-pill"><span class="ctp-ic" data-lucide="download" style="width:15px;height:15px"></span>Exporta a Excel o PDF</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== ECOSISTEMA -->
+  <section class="band" id="ecosistema">
+    <div class="blob1"></div><div class="blob2"></div>
+    <div class="wrap band-inner">
+      <div class="reveal">
+        <span class="eyebrow on-dark"><span class="dot"></span>Todo tu ecosistema</span>
+        <h2 class="band-title">Tus socios, corredores e inversionistas, <span class="g">en la misma operación</span>.</h2>
+        <p class="band-desc">La venta de un loteo no la hace una sola empresa. Cierra conecta a todos los que participan, cada uno con lo que le corresponde ver.</p>
+      </div>
+      <div class="eco-grid">
+        <article class="eco-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="landmark" style="width:22px;height:22px"></span></div>
+          <h3>Portal del inversionista</h3>
+          <p>El dueño del terreno o inversionista entra a su propio portal y ve las ventas, lo que le corresponde, lo recaudado, sus próximos cobros y el retorno de su capital. Una sola cuenta, aunque invierta con varias loteadoras.</p>
+          <div class="mod-tags"><span class="mod-tag">Te corresponde</span><span class="mod-tag">Próximos cobros</span><span class="mod-tag">Reporte PDF</span></div>
+        </article>
+        <article class="eco-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="share-2" style="width:22px;height:22px"></span></div>
+          <h3>Proyectos compartidos</h3>
+          <p>Comparte un proyecto con otra loteadora o corredora y vendan del mismo stock, cada una con su equipo. Tú decides quién puede vender y revocas el acceso cuando quieras.</p>
+          <div class="mod-tags"><span class="mod-tag">Mismo stock</span><span class="mod-tag">Permisos</span><span class="mod-tag">Alianzas</span></div>
+        </article>
+        <article class="eco-card reveal">
+          <div class="mod-ic"><span class="ctp-ic" data-lucide="handshake" style="width:22px;height:22px"></span></div>
+          <h3>Corredores externos</h3>
+          <p>Suma un corredor externo a cada reserva, junto a tu asesor. Cada uno tiene su propio acceso y Cierra liquida sus comisiones por separado.</p>
+          <div class="mod-tags"><span class="mod-tag">Corretaje</span><span class="mod-tag">Multi-vendedor</span><span class="mod-tag">Liquidación propia</span></div>
+        </article>
       </div>
     </div>
   </section>
