@@ -582,6 +582,31 @@ prueba('el texto se colapsa y se recorta a 60 caracteres', function () {
   assert.strictEqual(a.eventoDeEnlace('#demo', 'x', null).params.texto, '');
 });
 
+// Los enlaces reales de las páginas: todo <a> con data-ubicacion se mide
+// con el evento que corresponde a su href, salvo "Ver los módulos", que
+// lleva ubicación por ser un .btn pero no es una conversión.
+prueba('los enlaces con data-ubicacion de index.html y legal.html dan el evento esperado', function () {
+  var fs = require('node:fs');
+  var vistos = 0;
+  ['index.html', 'legal.html'].forEach(function (p) {
+    var html = fs.readFileSync(path.join(__dirname, '..', p), 'utf8');
+    (html.match(/<a\b[^>]*>/gi) || []).forEach(function (t) {
+      var u = /\sdata-ubicacion="([^"]*)"/.exec(t);
+      var h = /\shref="([^"]*)"/.exec(t);
+      if (!u || !h) return;
+      vistos++;
+      var ev = a.eventoDeEnlace(h[1], u[1], 'x');
+      var esperado = h[1] === '#modulos' ? null
+        : h[1] === '#demo' ? 'clic_solicitar_demo'
+        : h[1].indexOf('https://app.cierra.cl') === 0 ? 'clic_ingresar'
+        : h[1].indexOf('mailto:') === 0 ? 'clic_correo' : 'desconocido';
+      assert.strictEqual(ev ? ev.nombre : null, esperado, p + ' ' + t);
+      if (ev) assert.strictEqual(ev.params.ubicacion, u[1], t);
+    });
+  });
+  assert.ok(vistos >= 20, 'solo ' + vistos + ' enlaces');
+});
+
 // ── cierraEvento ────────────────────────────────────────────────────
 function eventos(win) {
   return win.dataLayer.map(function (x) { return Array.prototype.slice.call(x); })

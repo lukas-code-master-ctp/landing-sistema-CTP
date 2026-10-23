@@ -90,6 +90,12 @@
   footer.doc .foot-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   footer.doc a { color: var(--zinc-400); }
   footer.doc a:hover { color: #fff; }
+  footer.doc .foot-links { display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; }
+  /* "Preferencias de cookies" es un <button> (abre el aviso, no navega):
+     se le quita el aspecto de botón para que se vea como el enlace vecino. */
+  footer.doc .foot-cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: var(--zinc-400); cursor: pointer; text-align: left; }
+  footer.doc .foot-cookies:hover { color: #fff; }
+  footer.doc .foot-cookies:focus-visible { outline: 2px solid var(--brand-400); outline-offset: 3px; border-radius: 2px; }
 
   @media (max-width: 680px) {
     .wrap { padding: 0 20px; }
@@ -183,7 +189,7 @@
 
         <h3 id="tyc-quienes">1.1 Quiénes somos</h3>
         <p>Este sitio web, <strong>cierra.cl</strong>, es operado por <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile (en adelante, «Cierra.cl» o «nosotros»).</p>
-        <p>Puedes contactarnos en <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>.</p>
+        <p>Puedes contactarnos en <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-tyc-quienes">contacto@cierra.cl</a>.</p>
 
         <h3 id="tyc-alcance">1.2 Qué cubre este documento</h3>
         <p>Estos términos regulan el <strong>uso del sitio web</strong> y la solicitud de demostraciones a través de él. Al navegar el sitio o enviar el formulario, aceptas lo que aquí se establece.</p>
@@ -215,7 +221,7 @@
         <p>Los logotipos y nombres de las empresas clientes que aparecen en el sitio pertenecen a sus respectivos titulares y se muestran con su autorización, únicamente con fines de referencia.</p>
 
         <h3 id="tyc-terceros">1.7 Servicios y enlaces de terceros</h3>
-        <p>El sitio se apoya en proveedores externos para funcionar (alojamiento, envío de correos, tipografías e íconos) y puede enlazar a sitios que no controlamos, como la plataforma en <a href="https://app.cierra.cl">app.cierra.cl</a>. No respondemos por el contenido ni las prácticas de sitios de terceros. En la sección <a href="#pp-terceros">2.4</a> detallamos qué proveedores intervienen y qué datos reciben.</p>
+        <p>El sitio se apoya en proveedores externos para funcionar (alojamiento, envío de correos, tipografías e íconos) y puede enlazar a sitios que no controlamos, como la plataforma en <a href="https://app.cierra.cl" data-ubicacion="legal-tyc-terceros">app.cierra.cl</a>. No respondemos por el contenido ni las prácticas de sitios de terceros. En la sección <a href="#pp-terceros">2.4</a> detallamos qué proveedores intervienen y qué datos reciben.</p>
 
         <h3 id="tyc-disponibilidad">1.8 Disponibilidad y responsabilidad</h3>
         <p>Procuramos que el sitio esté disponible y que su información sea correcta y esté actualizada, pero no garantizamos que funcione sin interrupciones ni errores. Podemos modificarlo, suspenderlo o descontinuarlo en cualquier momento.</p>
@@ -236,7 +242,7 @@
         <p>Esta política explica qué datos personales tratamos cuando visitas cierra.cl o nos escribes, para qué los usamos y qué puedes exigirnos. Está redactada conforme a la Ley 19.628 sobre Protección de la Vida Privada y a la Ley 21.719 que regula la protección y el tratamiento de los datos personales.</p>
 
         <h3 id="pp-responsable">2.1 Quién es responsable de tus datos</h3>
-        <p>El responsable del tratamiento es <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile. Para cualquier asunto relacionado con tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>: ese es el canal habilitado para ejercer tus derechos.</p>
+        <p>El responsable del tratamiento es <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile. Para cualquier asunto relacionado con tus datos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-responsable">contacto@cierra.cl</a>: ese es el canal habilitado para ejercer tus derechos.</p>
 
         <h3 id="pp-datos">2.2 Qué datos recopilamos</h3>
         <p><strong>Los que nos entregas en el formulario de demostración:</strong> nombre, correo electrónico de trabajo, teléfono de contacto, nombre de la inmobiliaria o corredora y, opcionalmente, el tamaño del equipo.</p>
@@ -311,7 +317,7 @@
           <li><strong>Bloqueo:</strong> suspender temporalmente su uso.</li>
           <li><strong>Portabilidad:</strong> recibirlos en un formato estructurado y de uso común, o pedir que se los transfiramos a otro responsable.</li>
         </ul>
-        <p>Para ejercerlos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a> indicando cuál quieres ejercer. Podemos pedirte antecedentes que acrediten tu identidad, para no entregarle tus datos a otra persona. <strong>Responderemos dentro de los plazos legales</strong> y sin costo para ti.</p>
+        <p>Para ejercerlos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-derechos">contacto@cierra.cl</a> indicando cuál quieres ejercer. Podemos pedirte antecedentes que acrediten tu identidad, para no entregarle tus datos a otra persona. <strong>Responderemos dentro de los plazos legales</strong> y sin costo para ti.</p>
         <p>Retirar tu consentimiento es igual de simple que haberlo dado, y no afecta la licitud del tratamiento realizado antes. Si consideras que no atendimos bien tu solicitud, puedes reclamar ante la <strong>Agencia de Protección de Datos Personales</strong>.</p>
 
         <h3 id="pp-cookies">2.8 Cookies y seguimiento</h3>
@@ -332,7 +338,7 @@
         <p>Podemos actualizarla si cambian nuestras prácticas, los proveedores que usamos o la normativa. La versión vigente es la publicada aquí, con su fecha arriba. Si el cambio es sustancial, lo informaremos de forma visible en el sitio.</p>
 
         <h3 id="pp-contacto">2.12 Contacto</h3>
-        <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
+        <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-contacto">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
       </section>
 
       <!-- ═══════════════════════════════ PARTE 3: DATOS DE GOOGLE (APP) ══ -->
@@ -394,7 +400,7 @@
           <li><strong>Desde Cierra:</strong> el administrador puede desconectar la cuenta en <em>Configuraciones → Integraciones</em>. Al hacerlo borramos el token guardado y le pedimos a Google que lo revoque.</li>
           <li><strong>Desde Google:</strong> puedes retirar el acceso en cualquier momento en <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Cierra deja de tener acceso de inmediato.</li>
           <li><strong>Los eventos ya creados</strong> pertenecen al calendario de la empresa y quedan ahí; se pueden borrar desde Google Calendar.</li>
-          <li><strong>Para pedir acceso, corrección o eliminación</strong> de cualquier dato, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Aplican los derechos descritos en la sección 2.7.</li>
+          <li><strong>Para pedir acceso, corrección o eliminación</strong> de cualquier dato, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-gg-desconectar">contacto@cierra.cl</a>. Aplican los derechos descritos en la sección 2.7.</li>
         </ul>
       </section>
 
@@ -404,7 +410,10 @@
   <footer class="doc">
     <div class="wrap foot-inner">
       <span>© 2026 Cierra.cl · Hecho en Chile</span>
-      <a href="index.html">Volver al sitio</a>
+      <span class="foot-links">
+        <button type="button" class="foot-cookies" data-preferencias-cookies>Preferencias de cookies</button>
+        <a href="index.html">Volver al sitio</a>
+      </span>
     </div>
   </footer>
 
