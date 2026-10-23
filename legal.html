@@ -97,6 +97,17 @@
   footer.doc .foot-cookies:hover { color: #fff; }
   footer.doc .foot-cookies:focus-visible { outline: 2px solid var(--brand-400); outline-offset: 3px; border-radius: 2px; }
 
+  /* Tabla de cookies en celular: cada fila pasa a tarjeta, con la etiqueta
+     de la columna antes del valor. Con cuatro columnas en 390 px la última
+     quedaba de ~100 px y el texto se partía palabra por palabra. */
+  @media (max-width: 600px) {
+    .tabla-apilada thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .tabla-apilada, .tabla-apilada tbody, .tabla-apilada tr, .tabla-apilada td { display: block; width: 100%; }
+    .tabla-apilada tr { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .tabla-apilada tr:last-child { border-bottom: none; }
+    .tabla-apilada td { border-bottom: none; padding: 5px 14px; }
+    .tabla-apilada td::before { content: attr(data-label); display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); font-weight: var(--fw-semibold); }
+  }
   @media (max-width: 680px) {
     .wrap { padding: 0 20px; }
     h1 { font-size: 27px; }
@@ -344,11 +355,11 @@
         <p><strong>Qué medimos y para qué.</strong> Usamos Google Analytics 4, un servicio de Google LLC, para saber cómo se usa el sitio: qué páginas se visitan, de dónde llegan las visitas y qué botones se tocan. Con eso decidimos qué contenido mejorar. El detalle de los datos está en la sección <a href="#pp-datos">2.2</a>.</p>
         <p><strong>Las cookies que instala, si aceptas:</strong></p>
         <div class="tabla-wrap">
-          <table class="tabla">
+          <table class="tabla tabla-apilada">
             <thead><tr><th>Cookie</th><th>De quién</th><th>Duración</th><th>Para qué</th></tr></thead>
             <tbody>
-              <tr><td><code>_ga</code></td><td>Google Analytics</td><td>Hasta 2 años</td><td>Distinguir a un visitante de otro con un identificador aleatorio</td></tr>
-              <tr><td><code>_ga_&lt;ID&gt;</code></td><td>Google Analytics</td><td>Hasta 2 años</td><td>Mantener el estado de la sesión (empieza con <code>_ga_</code> y termina en el código de nuestra cuenta)</td></tr>
+              <tr><td data-label="Cookie"><code>_ga</code></td><td data-label="De quién">Google Analytics</td><td data-label="Duración">Hasta 2 años</td><td data-label="Para qué">Distinguir a un visitante de otro con un identificador aleatorio</td></tr>
+              <tr><td data-label="Cookie"><code>_ga_&lt;ID&gt;</code></td><td data-label="De quién">Google Analytics</td><td data-label="Duración">Hasta 2 años</td><td data-label="Para qué">Mantener el estado de la sesión (empieza con <code>_ga_</code> y termina en el código de nuestra cuenta)</td></tr>
             </tbody>
           </table>
         </div>
