@@ -250,10 +250,10 @@
         <p><strong>Datos técnicos de la visita:</strong> nuestro proveedor de alojamiento registra automáticamente la dirección IP, el tipo de navegador y la fecha y hora de las solicitudes, para operar el sitio y protegerlo de abusos.</p>
         <p><strong>Estadísticas de uso:</strong> para saber qué contenido sirve y qué no, medimos el uso del sitio de dos formas:</p>
         <ul>
-          <li><strong>Vercel Web Analytics</strong>, siempre: páginas vistas, sitio de procedencia, país y tipo de dispositivo, de forma agregada. No usa cookies y no permite identificarte.</li>
-          <li><strong>Google Analytics 4</strong>, solo si aceptas las cookies de medición: un identificador aleatorio guardado en una cookie, las páginas que ves, de dónde llegas (por ejemplo, desde un buscador o un enlace), tu dispositivo y navegador, tu ubicación aproximada (país y ciudad, que Google deduce de tu dirección IP; en Google Analytics 4 Google no guarda la IP completa) y tus interacciones con el sitio, como los clics en los botones para pedir una demostración, ingresar a la plataforma o escribirnos, y el envío del formulario. No le mandamos tu nombre, tu correo ni lo que escribes en el formulario.</li>
+          <li><strong>Vercel Web Analytics</strong>, siempre: páginas vistas, sitio de procedencia, país, tipo de dispositivo y navegador, y los clics en los botones principales, de forma agregada. No usa cookies y no permite identificarte.</li>
+          <li><strong>Google Analytics 4</strong>: las páginas que ves, de dónde llegas (por ejemplo, desde un buscador o un enlace), tu dispositivo y navegador, tu ubicación aproximada (país y ciudad, que Google deduce de tu dirección IP; Google Analytics 4 no registra ni almacena la dirección IP) y tus interacciones con el sitio, como los clics en los botones para pedir una demostración, ingresar a la plataforma o escribirnos, y el envío del formulario. Solo si aceptas las cookies de medición, además, un identificador aleatorio guardado en una cookie, que permite reconocer tu navegador de una visita a otra. No le mandamos tu nombre, tu correo ni lo que escribes en el formulario.</li>
         </ul>
-        <p>Si no aceptas, Google Analytics no instala cookies ni usa un identificador: solo recibe señales sin cookies de cada visita, como se explica en la sección <a href="#pp-cookies">2.8</a>.</p>
+        <p>Si no aceptas, Google Analytics no instala cookies ni usa un identificador: recibe esos datos de cada visita como señales sin cookies, que no permiten reconocer tu navegador, como se explica en la sección <a href="#pp-cookies">2.8</a>.</p>
         <p>No pedimos ni necesitamos datos sensibles. Te agradecemos no incluirlos en los mensajes que nos envíes.</p>
 
         <h3 id="pp-uso">2.3 Para qué los usamos y con qué fundamento</h3>
@@ -279,11 +279,11 @@
               <tr>
                 <td>Medir el uso del sitio con Google Analytics 4</td>
                 <td>Datos de navegación descritos en la sección 2.2</td>
-                <td>Tu consentimiento, otorgado al aceptar las cookies de medición</td>
+                <td>Tu consentimiento, otorgado al aceptar las cookies de medición. Si no aceptas, las señales sin cookies descritas en la sección 2.8 se basan en nuestro interés legítimo en saber qué contenido del sitio sirve</td>
               </tr>
               <tr>
                 <td>Contar visitas de forma agregada con Vercel Web Analytics</td>
-                <td>Páginas vistas, procedencia, país y tipo de dispositivo, sin cookies</td>
+                <td>Páginas vistas, procedencia, país, tipo de dispositivo y navegador, y clics en los botones principales, sin cookies</td>
                 <td>Interés legítimo en saber qué contenido del sitio sirve</td>
               </tr>
               <tr>
@@ -353,11 +353,11 @@
           </table>
         </div>
         <p>Estas cookies quedan solo en <strong>cierra.cl</strong>: no se comparten con la plataforma en app.cierra.cl ni con otros subdominios.</p>
-        <p><strong>Si rechazas.</strong> No se instala ninguna cookie. Aun así, Google recibe de cada visita señales sin cookies y sin un identificador que permita reconocer tu navegador —por ejemplo, que se vio una página o que se tocó un botón—, y las usa para estimar de forma agregada cuántas visitas hubo. Si antes habías aceptado, al rechazar borramos de tu navegador las cookies <code>_ga</code> que hubiera.</p>
+        <p><strong>Si rechazas.</strong> No se instala ninguna cookie. Aun así, Google recibe de cada visita señales sin cookies y sin un identificador que permita reconocer tu navegador —por ejemplo, que se vio una página o que se tocó un botón—, y las usa para estimar de forma agregada cuántas visitas hubo. Si antes habías aceptado, al rechazar borramos de tu navegador las cookies <code>_ga</code> y <code>_ga_&lt;ID&gt;</code> que hubiera.</p>
         <p><strong>No los usamos para publicidad.</strong> Aunque aceptes, los permisos de publicidad de Google quedan siempre desactivados: no usamos Google Signals, remarketing ni píxeles de seguimiento publicitario.</p>
         <p><strong>Dónde queda tu decisión.</strong> La guardamos en el almacenamiento local de tu navegador, con la clave <code>cierra-consentimiento</code>, para no volver a preguntarte en cada página. No es una cookie y no se envía a nadie.</p>
         <p><strong>Cómo cambiarla.</strong> Cuando quieras, con el botón <strong>«Preferencias de cookies»</strong> al pie de cada página, o borrando los datos de este sitio en tu navegador; en ese caso, el aviso vuelve a aparecer.</p>
-        <p><strong>Vercel Web Analytics sigue sin cookies.</strong> Además contamos páginas vistas y visitantes con Vercel Web Analytics, en todas las visitas, aceptes o no. No instala cookies, no guarda nada en tu navegador y no te sigue entre distintos sitios: registra la página visitada, el sitio de procedencia, el país, y el tipo de dispositivo y navegador. No podemos identificarte a partir de esos datos ni cruzarlos con lo que nos dejes en el formulario.</p>
+        <p><strong>Vercel Web Analytics sigue sin cookies.</strong> Además contamos páginas vistas y visitantes con Vercel Web Analytics, en todas las visitas, aceptes o no. No instala cookies, no guarda nada en tu navegador y no te sigue entre distintos sitios: registra la página visitada, el sitio de procedencia, el país, el tipo de dispositivo y navegador, y los clics en los botones principales (los mismos que medimos en Google Analytics). No podemos identificarte a partir de esos datos ni cruzarlos con lo que nos dejes en el formulario.</p>
         <p>Por último, tu navegador descarga las tipografías y los íconos desde servidores de Google y de unpkg, y esas solicitudes les revelan tu dirección IP, como sucede con cualquier archivo que se carga desde internet.</p>
 
         <h3 id="pp-seguridad">2.9 Seguridad</h3>
