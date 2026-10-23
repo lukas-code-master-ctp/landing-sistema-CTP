@@ -44,7 +44,7 @@ Nav sticky · Hero con composición flotante de KPIs · logos de clientes · ban
 
 Dos mediciones en paralelo, en `index.html` y `legal.html`:
 
-- **Google Analytics 4**: propiedad "Cierra" (`560564776`), ID de medición `G-GEPXVS6GJH`, cuenta lukas@impulseai.cl. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido; los estilos del aviso están en [`assets/analitica.css`](assets/analitica.css). **El ID se cambia en un solo lugar**: la constante `ID` al principio de `analitica.js`.
+- **Google Analytics 4**: propiedad "Cierra" (`560564776`), ID de medición `G-GEPXVS6GJH`, en la cuenta de Analytics de Impulse AI. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido; los estilos del aviso están en [`assets/analitica.css`](assets/analitica.css). **El ID se cambia en un solo lugar**: la constante `ID` al principio de `analitica.js`.
 - **Vercel Web Analytics**: sin cookies, cuenta todas las visitas —también las de quien rechaza— y sirve de control para comparar contra GA4.
 
 ### Consentimiento
