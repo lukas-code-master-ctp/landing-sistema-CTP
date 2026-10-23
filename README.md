@@ -6,6 +6,11 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 
 - `index.html` — la landing completa (una sola página, es-CL).
 - `api/demo.js` — función serverless (Vercel) que procesa el formulario de demo.
+- `legal.html` — términos y condiciones y política de privacidad (incluye cookies y analítica, sección 2.8).
+- `assets/analitica.js` — Google Analytics 4 con modo de consentimiento, aviso de cookies y eventos (compartido por las dos páginas).
+- `assets/analitica.css` — estilos del aviso de cookies.
+- `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
+- `tools/test_html.js` — pruebas del HTML de las dos páginas para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
 - `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del sistema).
 - `assets/dashboard.png` — captura del dashboard que se muestra en "Velo en acción".
 - `assets/og-cover.png` — imagen 1200×630 de la vista previa al compartir el link.
@@ -24,7 +29,7 @@ python -m http.server 8000
 # abre http://localhost:8000
 ```
 
-Dependencias externas cargadas por CDN: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono).
+Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono) por CDN, y Google Analytics (`gtag.js`, desde googletagmanager.com) para la medición; ver [Analítica](#analítica-google-analytics-4).
 
 ## Secciones
 
@@ -34,6 +39,47 @@ Nav sticky · Hero con composición flotante de KPIs · logos de clientes · ban
 
 - **Captura real del dashboard:** el recuadro de "Velo en acción" es ahora un `<img src="assets/dashboard.png">`. Reemplaza ese archivo por la captura real cuando quieras actualizarla.
 - **Precios:** los valores en UF y la capacidad de cada plan son referencias; ajústalos a los reales.
+
+## Analítica (Google Analytics 4)
+
+Dos mediciones en paralelo, en `index.html` y `legal.html`:
+
+- **Google Analytics 4**: propiedad "Cierra" (`560564776`), ID de medición `G-GEPXVS6GJH`, cuenta lukas@impulseai.cl. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido; los estilos del aviso están en [`assets/analitica.css`](assets/analitica.css). **El ID se cambia en un solo lugar**: la constante `ID` al principio de `analitica.js`.
+- **Vercel Web Analytics**: sin cookies, cuenta todas las visitas —también las de quien rechaza— y sirve de control para comparar contra GA4.
+
+### Consentimiento
+
+Modo de consentimiento de Google v2, **modo avanzado**:
+
+- Por defecto **todo denegado** (`analytics_storage`, `ad_storage`, `ad_user_data`, `ad_personalization`). En ese estado gtag no escribe cookies y manda señales sin identificador, que GA usa para modelar.
+- **Aceptar** concede **solo** `analytics_storage`. Los permisos de publicidad quedan **siempre** denegados: no hacemos publicidad y la política de privacidad lo promete.
+- **Rechazar** deja todo denegado y borra las cookies `_ga` y `_ga_<ID>` que hubieran quedado.
+- La decisión se guarda en `localStorage`, clave `cierra-consentimiento` (`{ v: 1, analitica: true|false, fecha }`). Sin decisión válida —o si `localStorage` falla— el aviso vuelve a aparecer y gtag sigue denegado.
+- La cookie queda **solo en cierra.cl** (`cookie_domain: 'none'`): no viaja a app.cierra.cl ni a los subdominios de las loteadoras.
+- El botón **"Preferencias de cookies"** del pie (`[data-preferencias-cookies]`) vuelve a abrir el aviso.
+
+### Eventos
+
+Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por evento). Los clics en enlaces se miden por delegación; el formulario usa `window.cierraEvento(nombre, params)`.
+
+| Evento | Cuándo | Parámetros |
+|---|---|---|
+| `clic_solicitar_demo` | Clic en un enlace a `#demo` | `ubicacion`, `texto` (texto visible, hasta 60 caracteres) |
+| `enviar_formulario` | Respuesta OK de `/api/demo` | `formulario` (`demo`), `ubicacion` |
+| `clic_ingresar` | Clic en un enlace a `https://app.cierra.cl` | `ubicacion` |
+| `clic_correo` | Clic en un `mailto:` | `ubicacion` |
+
+**Todo CTA nuevo lleva `data-ubicacion`** (por ejemplo `data-ubicacion="hero"`): sin él, el evento sale con `ubicacion: sin-ubicacion`, y `tools/test_html.js` falla.
+
+### Pruebas
+
+```bash
+node tools/test_analitica.js && node tools/test_html.js
+```
+
+Sin dependencias ni red.
+
+⚠️ **Si cambia la analítica** (qué se mide, qué cookies se instalan o cómo se pide el consentimiento), hay que actualizar `legal.html` (secciones 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8) **en el mismo PR**.
 
 ## Formulario de demo (Resend + Vercel)
 
