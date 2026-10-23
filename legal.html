@@ -9,11 +9,11 @@
   PENDIENTE: este texto no ha sido revisado por un abogado.
 
   Si cambian las prácticas del sitio, hay que actualizar la política. La
-  sección 2.8 declara que no hay cookies y que la medición es agregada y sin
-  cookies (Vercel Web Analytics). Si algún día se agrega una herramienta que
-  SÍ use cookies —Google Analytics, píxeles publicitarios— hay que reescribir
-  esa sección y probablemente sumar un banner de consentimiento. Lo mismo con
-  la lista de proveedores de la sección 2.4.
+  analítica (Google Analytics 4 con consentimiento, más Vercel Web Analytics
+  sin cookies) está descrita en 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8: si cambia lo
+  que mide, las cookies que instala o cómo se pide el consentimiento, se
+  actualizan esas secciones y assets/analitica.js en el mismo cambio. Lo
+  mismo con cualquier proveedor nuevo en la lista de la sección 2.4.
 -->
 <html lang="es-CL">
 <head>
@@ -28,6 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@700;800&display=swap">
 <link rel="stylesheet" href="assets/colors_and_type.css">
+<link rel="stylesheet" href="assets/analitica.css">
 <style>
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -89,7 +90,24 @@
   footer.doc .foot-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   footer.doc a { color: var(--zinc-400); }
   footer.doc a:hover { color: #fff; }
+  footer.doc .foot-links { display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; }
+  /* "Preferencias de cookies" es un <button> (abre el aviso, no navega):
+     se le quita el aspecto de botón para que se vea como el enlace vecino. */
+  footer.doc .foot-cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: var(--zinc-400); cursor: pointer; text-align: left; }
+  footer.doc .foot-cookies:hover { color: #fff; }
+  footer.doc .foot-cookies:focus-visible { outline: 2px solid var(--brand-400); outline-offset: 3px; border-radius: 2px; }
 
+  /* Tabla de cookies en celular: cada fila pasa a tarjeta, con la etiqueta
+     de la columna antes del valor. Con cuatro columnas en 390 px la última
+     quedaba de ~100 px y el texto se partía palabra por palabra. */
+  @media (max-width: 600px) {
+    .tabla-apilada thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .tabla-apilada, .tabla-apilada tbody, .tabla-apilada tr, .tabla-apilada td { display: block; width: 100%; }
+    .tabla-apilada tr { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .tabla-apilada tr:last-child { border-bottom: none; }
+    .tabla-apilada td { border-bottom: none; padding: 5px 14px; }
+    .tabla-apilada td::before { content: attr(data-label); display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); font-weight: var(--fw-semibold); }
+  }
   @media (max-width: 680px) {
     .wrap { padding: 0 20px; }
     h1 { font-size: 27px; }
@@ -124,7 +142,7 @@
   <div class="wrap">
     <header class="doc">
       <h1>Términos y condiciones y Política de privacidad</h1>
-      <p class="fecha">Última actualización: 30 de septiembre de 2026</p>
+      <p class="fecha">Última actualización: 23 de octubre de 2026</p>
     </header>
 
     <div class="indice">
@@ -182,7 +200,7 @@
 
         <h3 id="tyc-quienes">1.1 Quiénes somos</h3>
         <p>Este sitio web, <strong>cierra.cl</strong>, es operado por <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile (en adelante, «Cierra.cl» o «nosotros»).</p>
-        <p>Puedes contactarnos en <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>.</p>
+        <p>Puedes contactarnos en <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-tyc-quienes">contacto@cierra.cl</a>.</p>
 
         <h3 id="tyc-alcance">1.2 Qué cubre este documento</h3>
         <p>Estos términos regulan el <strong>uso del sitio web</strong> y la solicitud de demostraciones a través de él. Al navegar el sitio o enviar el formulario, aceptas lo que aquí se establece.</p>
@@ -214,7 +232,7 @@
         <p>Los logotipos y nombres de las empresas clientes que aparecen en el sitio pertenecen a sus respectivos titulares y se muestran con su autorización, únicamente con fines de referencia.</p>
 
         <h3 id="tyc-terceros">1.7 Servicios y enlaces de terceros</h3>
-        <p>El sitio se apoya en proveedores externos para funcionar (alojamiento, envío de correos, tipografías e íconos) y puede enlazar a sitios que no controlamos, como la plataforma en <a href="https://app.cierra.cl">app.cierra.cl</a>. No respondemos por el contenido ni las prácticas de sitios de terceros. En la sección <a href="#pp-terceros">2.4</a> detallamos qué proveedores intervienen y qué datos reciben.</p>
+        <p>El sitio se apoya en proveedores externos para funcionar (alojamiento, envío de correos, medición del uso, tipografías e íconos) y puede enlazar a sitios que no controlamos, como la plataforma en <a href="https://app.cierra.cl" data-ubicacion="legal-tyc-terceros">app.cierra.cl</a>. No respondemos por el contenido ni las prácticas de sitios de terceros. En la sección <a href="#pp-terceros">2.4</a> detallamos qué proveedores intervienen y qué datos reciben.</p>
 
         <h3 id="tyc-disponibilidad">1.8 Disponibilidad y responsabilidad</h3>
         <p>Procuramos que el sitio esté disponible y que su información sea correcta y esté actualizada, pero no garantizamos que funcione sin interrupciones ni errores. Podemos modificarlo, suspenderlo o descontinuarlo en cualquier momento.</p>
@@ -235,13 +253,18 @@
         <p>Esta política explica qué datos personales tratamos cuando visitas cierra.cl o nos escribes, para qué los usamos y qué puedes exigirnos. Está redactada conforme a la Ley 19.628 sobre Protección de la Vida Privada y a la Ley 21.719 que regula la protección y el tratamiento de los datos personales.</p>
 
         <h3 id="pp-responsable">2.1 Quién es responsable de tus datos</h3>
-        <p>El responsable del tratamiento es <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile. Para cualquier asunto relacionado con tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>: ese es el canal habilitado para ejercer tus derechos.</p>
+        <p>El responsable del tratamiento es <strong>IMPULSE AI SpA</strong>, RUT 78.479.762-7, sociedad constituida en Chile. Para cualquier asunto relacionado con tus datos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-responsable">contacto@cierra.cl</a>: ese es el canal habilitado para ejercer tus derechos.</p>
 
         <h3 id="pp-datos">2.2 Qué datos recopilamos</h3>
         <p><strong>Los que nos entregas en el formulario de demostración:</strong> nombre, correo electrónico de trabajo, teléfono de contacto, nombre de la inmobiliaria o corredora y, opcionalmente, el tamaño del equipo.</p>
         <p><strong>Los que nos escribes por correo</strong>, si nos contactas directamente.</p>
         <p><strong>Datos técnicos de la visita:</strong> nuestro proveedor de alojamiento registra automáticamente la dirección IP, el tipo de navegador y la fecha y hora de las solicitudes, para operar el sitio y protegerlo de abusos.</p>
-        <p><strong>Estadísticas de uso agregadas:</strong> páginas vistas, sitio de procedencia, país y tipo de dispositivo, para saber qué contenido sirve y qué no. Se recogen sin cookies y no permiten identificarte.</p>
+        <p><strong>Estadísticas de uso:</strong> para saber qué contenido sirve y qué no, medimos el uso del sitio de dos formas:</p>
+        <ul>
+          <li><strong>Vercel Web Analytics</strong>, siempre: páginas vistas, sitio de procedencia, país, tipo de dispositivo y navegador, y los clics en los botones principales, de forma agregada. No usa cookies y no permite identificarte.</li>
+          <li><strong>Google Analytics 4</strong>: las páginas que ves, de dónde llegas (por ejemplo, desde un buscador o un enlace), tu dispositivo y navegador, tu ubicación aproximada (país y ciudad, que Google deduce de tu dirección IP; Google Analytics 4 no registra ni almacena la dirección IP) y tus interacciones con el sitio, como los clics en los botones para pedir una demostración, ingresar a la plataforma o escribirnos, y el envío del formulario. Solo si aceptas las cookies de medición, además, un identificador aleatorio guardado en una cookie, que permite reconocer tu navegador de una visita a otra. No le mandamos tu nombre, tu correo ni lo que escribes en el formulario.</li>
+        </ul>
+        <p>Si no aceptas, Google Analytics no instala cookies ni usa un identificador: recibe esos datos de cada visita como señales sin cookies, que no permiten reconocer tu navegador, como se explica en la sección <a href="#pp-cookies">2.8</a>.</p>
         <p>No pedimos ni necesitamos datos sensibles. Te agradecemos no incluirlos en los mensajes que nos envíes.</p>
 
         <h3 id="pp-uso">2.3 Para qué los usamos y con qué fundamento</h3>
@@ -265,6 +288,16 @@
                 <td>Medidas precontractuales a solicitud tuya</td>
               </tr>
               <tr>
+                <td>Medir el uso del sitio con Google Analytics 4</td>
+                <td>Datos de navegación descritos en la sección 2.2</td>
+                <td>Tu consentimiento, otorgado al aceptar las cookies de medición. Si no aceptas, las señales sin cookies descritas en la sección 2.8 se basan en nuestro interés legítimo en saber qué contenido del sitio sirve</td>
+              </tr>
+              <tr>
+                <td>Contar visitas de forma agregada con Vercel Web Analytics</td>
+                <td>Páginas vistas, procedencia, país, tipo de dispositivo y navegador, y clics en los botones principales, sin cookies</td>
+                <td>Interés legítimo en saber qué contenido del sitio sirve</td>
+              </tr>
+              <tr>
                 <td>Operar el sitio, mantenerlo seguro y prevenir abusos</td>
                 <td>Datos técnicos de la visita</td>
                 <td>Interés legítimo en la seguridad del servicio</td>
@@ -283,6 +316,7 @@
               <tr><td><strong>Vercel</strong> (EE. UU.)</td><td>Alojamiento del sitio, procesamiento del formulario y estadísticas de uso (Vercel Web Analytics)</td><td>Datos del formulario, datos técnicos de la visita y las estadísticas agregadas descritas en la sección 2.8</td></tr>
               <tr><td><strong>Resend</strong> (EE. UU.)</td><td>Envío de los correos de aviso y de confirmación</td><td>Nombre, correo, teléfono, empresa y tamaño del equipo</td></tr>
               <tr><td><strong>Google</strong> (EE. UU.)</td><td>Registro del contacto en nuestra planilla interna de gestión comercial</td><td>Los mismos datos del formulario</td></tr>
+              <tr><td><strong>Google Analytics</strong> (Google LLC, EE. UU.)</td><td>Medición del uso del sitio (Google Analytics 4)</td><td>Los datos de navegación de la sección 2.2; el identificador en cookie, solo si aceptas las cookies de medición</td></tr>
               <tr><td><strong>Google Fonts</strong> y <strong>unpkg</strong></td><td>Carga de tipografías e íconos del sitio</td><td>Tu dirección IP, al descargar esos archivos desde sus servidores</td></tr>
             </tbody>
           </table>
@@ -290,13 +324,14 @@
         <p>También podemos entregar datos cuando una ley, una orden judicial o una autoridad competente nos lo exija.</p>
 
         <h3 id="pp-transferencias">2.5 Transferencias fuera de Chile</h3>
-        <p>Los proveedores mencionados almacenan y procesan la información en servidores ubicados fuera de Chile, principalmente en Estados Unidos. Al enviarnos tus datos, entiendes y aceptas esa transferencia internacional. Trabajamos con proveedores que ofrecen resguardos contractuales y estándares de seguridad reconocidos en la industria.</p>
+        <p>Los proveedores mencionados almacenan y procesan la información en servidores ubicados fuera de Chile, principalmente en Estados Unidos. Google Analytics, en particular, procesa los datos de navegación en Estados Unidos y en otros países donde Google tiene servidores. Al enviarnos tus datos, entiendes y aceptas esa transferencia internacional. Trabajamos con proveedores que ofrecen resguardos contractuales y estándares de seguridad reconocidos en la industria.</p>
 
         <h3 id="pp-plazo">2.6 Cuánto tiempo los conservamos</h3>
         <ul>
           <li><strong>Si no llegamos a trabajar juntos:</strong> conservamos tu solicitud por hasta <strong>24 meses</strong> desde el último contacto, y luego la eliminamos.</li>
           <li><strong>Si te conviertes en cliente:</strong> mientras dure la relación contractual y por los plazos que exijan las obligaciones legales, tributarias y contables aplicables.</li>
           <li><strong>Datos técnicos de la visita:</strong> por los plazos de retención de registros de nuestro proveedor de alojamiento.</li>
+          <li><strong>Datos de Google Analytics:</strong> según el plazo de retención configurado en nuestra cuenta, como máximo <strong>14 meses</strong> para los datos asociados a un visitante. Las cookies de Google Analytics duran en tu navegador hasta <strong>2 años</strong>, salvo que las borres o rechaces la medición.</li>
         </ul>
         <p>Puedes pedirnos que los eliminemos antes, en cualquier momento.</p>
 
@@ -310,15 +345,31 @@
           <li><strong>Bloqueo:</strong> suspender temporalmente su uso.</li>
           <li><strong>Portabilidad:</strong> recibirlos en un formato estructurado y de uso común, o pedir que se los transfiramos a otro responsable.</li>
         </ul>
-        <p>Para ejercerlos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a> indicando cuál quieres ejercer. Podemos pedirte antecedentes que acrediten tu identidad, para no entregarle tus datos a otra persona. <strong>Responderemos dentro de los plazos legales</strong> y sin costo para ti.</p>
+        <p>Para ejercerlos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-derechos">contacto@cierra.cl</a> indicando cuál quieres ejercer. Podemos pedirte antecedentes que acrediten tu identidad, para no entregarle tus datos a otra persona. <strong>Responderemos dentro de los plazos legales</strong> y sin costo para ti.</p>
         <p>Retirar tu consentimiento es igual de simple que haberlo dado, y no afecta la licitud del tratamiento realizado antes. Si consideras que no atendimos bien tu solicitud, puedes reclamar ante la <strong>Agencia de Protección de Datos Personales</strong>.</p>
 
         <h3 id="pp-cookies">2.8 Cookies y seguimiento</h3>
         <div class="destacado">
-          <p><strong>Este sitio no usa cookies.</strong> No instalamos cookies propias ni de terceros, no usamos píxeles de seguimiento publicitario y no guardamos información en tu navegador. Por eso no verás un banner de cookies: no hay nada que consentir.</p>
+          <p><strong>Solo instalamos cookies si las aceptas.</strong> Al entrar al sitio verás un aviso para aceptar o rechazar las cookies de medición. Mientras no decidas, o si rechazas, no se instala ninguna.</p>
         </div>
-        <p><strong>Sí medimos las visitas, pero sin cookies.</strong> Usamos Vercel Web Analytics, que cuenta páginas vistas y visitantes de forma agregada. No instala cookies, no guarda nada en tu navegador y no te sigue entre distintos sitios: registra la página visitada, el sitio de procedencia, el país, y el tipo de dispositivo y navegador. No podemos identificarte a partir de esos datos ni cruzarlos con lo que nos dejes en el formulario.</p>
-        <p>Lo único que ocurre es que tu navegador descarga las tipografías y los íconos desde servidores de Google y de unpkg, y esas solicitudes les revelan tu dirección IP, como sucede con cualquier archivo que se carga desde internet.</p>
+        <p><strong>Qué medimos y para qué.</strong> Usamos Google Analytics 4, un servicio de Google LLC, para saber cómo se usa el sitio: qué páginas se visitan, de dónde llegan las visitas y qué botones se tocan. Con eso decidimos qué contenido mejorar. El detalle de los datos está en la sección <a href="#pp-datos">2.2</a>.</p>
+        <p><strong>Las cookies que instala, si aceptas:</strong></p>
+        <div class="tabla-wrap">
+          <table class="tabla tabla-apilada">
+            <thead><tr><th>Cookie</th><th>De quién</th><th>Duración</th><th>Para qué</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Cookie"><code>_ga</code></td><td data-label="De quién">Google Analytics</td><td data-label="Duración">Hasta 2 años</td><td data-label="Para qué">Distinguir a un visitante de otro con un identificador aleatorio</td></tr>
+              <tr><td data-label="Cookie"><code>_ga_&lt;ID&gt;</code></td><td data-label="De quién">Google Analytics</td><td data-label="Duración">Hasta 2 años</td><td data-label="Para qué">Mantener el estado de la sesión (empieza con <code>_ga_</code> y termina en el código de nuestra cuenta)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Estas cookies quedan solo en <strong>cierra.cl</strong>: no se comparten con la plataforma en app.cierra.cl ni con otros subdominios.</p>
+        <p><strong>Si rechazas.</strong> No se instala ninguna cookie. Aun así, Google recibe de cada visita señales sin cookies y sin un identificador que permita reconocer tu navegador —por ejemplo, que se vio una página o que se tocó un botón—, y las usa para estimar de forma agregada cuántas visitas hubo. Si antes habías aceptado, al rechazar borramos de tu navegador las cookies <code>_ga</code> y <code>_ga_&lt;ID&gt;</code> que hubiera.</p>
+        <p><strong>No los usamos para publicidad.</strong> Aunque aceptes, los permisos de publicidad de Google quedan siempre desactivados: no usamos Google Signals, remarketing ni píxeles de seguimiento publicitario.</p>
+        <p><strong>Dónde queda tu decisión.</strong> La guardamos en el almacenamiento local de tu navegador, con la clave <code>cierra-consentimiento</code>, para no volver a preguntarte en cada página. No es una cookie y no se envía a nadie.</p>
+        <p><strong>Cómo cambiarla.</strong> Cuando quieras, con el botón <strong>«Preferencias de cookies»</strong> al pie de cada página, o borrando los datos de este sitio en tu navegador; en ese caso, el aviso vuelve a aparecer.</p>
+        <p><strong>Vercel Web Analytics sigue sin cookies.</strong> Además contamos páginas vistas y visitantes con Vercel Web Analytics, en todas las visitas, aceptes o no. No instala cookies, no guarda nada en tu navegador y no te sigue entre distintos sitios: registra la página visitada, el sitio de procedencia, el país, el tipo de dispositivo y navegador, y los clics en los botones principales (los mismos que medimos en Google Analytics). No podemos identificarte a partir de esos datos ni cruzarlos con lo que nos dejes en el formulario.</p>
+        <p>Por último, tu navegador descarga las tipografías y los íconos desde servidores de Google y de unpkg, y esas solicitudes les revelan tu dirección IP, como sucede con cualquier archivo que se carga desde internet.</p>
 
         <h3 id="pp-seguridad">2.9 Seguridad</h3>
         <p>El sitio se sirve cifrado mediante HTTPS y las credenciales de nuestros proveedores se guardan como variables de entorno en el servidor, nunca en el navegador. El acceso a la información de contactos comerciales está restringido a las personas del equipo que la necesitan para su trabajo.</p>
@@ -331,7 +382,7 @@
         <p>Podemos actualizarla si cambian nuestras prácticas, los proveedores que usamos o la normativa. La versión vigente es la publicada aquí, con su fecha arriba. Si el cambio es sustancial, lo informaremos de forma visible en el sitio.</p>
 
         <h3 id="pp-contacto">2.12 Contacto</h3>
-        <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
+        <p>Para cualquier consulta sobre este documento o sobre el tratamiento de tus datos, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-pp-contacto">contacto@cierra.cl</a>. Te responderemos a la brevedad.</p>
       </section>
 
       <!-- ═══════════════════════════════ PARTE 3: DATOS DE GOOGLE (APP) ══ -->
@@ -393,7 +444,7 @@
           <li><strong>Desde Cierra:</strong> el administrador puede desconectar la cuenta en <em>Configuraciones → Integraciones</em>. Al hacerlo borramos el token guardado y le pedimos a Google que lo revoque.</li>
           <li><strong>Desde Google:</strong> puedes retirar el acceso en cualquier momento en <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>. Cierra deja de tener acceso de inmediato.</li>
           <li><strong>Los eventos ya creados</strong> pertenecen al calendario de la empresa y quedan ahí; se pueden borrar desde Google Calendar.</li>
-          <li><strong>Para pedir acceso, corrección o eliminación</strong> de cualquier dato, escríbenos a <a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a>. Aplican los derechos descritos en la sección 2.7.</li>
+          <li><strong>Para pedir acceso, corrección o eliminación</strong> de cualquier dato, escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="legal-gg-desconectar">contacto@cierra.cl</a>. Aplican los derechos descritos en la sección 2.7.</li>
         </ul>
       </section>
 
@@ -403,9 +454,17 @@
   <footer class="doc">
     <div class="wrap foot-inner">
       <span>© 2026 Cierra.cl · Hecho en Chile</span>
-      <a href="index.html">Volver al sitio</a>
+      <span class="foot-links">
+        <button type="button" class="foot-cookies" data-preferencias-cookies>Preferencias de cookies</button>
+        <a href="index.html">Volver al sitio</a>
+      </span>
     </div>
   </footer>
 
+  <!-- Google Analytics 4 con modo de consentimiento y aviso de cookies
+       (assets/analitica.js). Al final del body y sin defer: corre cuando el
+       body ya existe, para poder insertar el aviso. Vercel Web Analytics
+       sigue en el <head>, en paralelo. -->
+  <script src="assets/analitica.js"></script>
 </body>
 </html>

@@ -1,0 +1,84 @@
+/* ===================================================================
+   Aviso de cookies — lo crea assets/analitica.js
+
+   Tarjeta chica flotando en la esquina inferior izquierda (en celular, a
+   lo ancho con margen), y no una franja de lado a lado: avisa sin tapar
+   el sitio. Aceptar en el verde de la marca y Rechazar en blanco con
+   borde, del mismo tamaño y en la misma fila.
+
+   Se carga en las dos páginas. legal.html no define las clases .btn de
+   index.html, así que los botones del aviso traen sus propios estilos,
+   acotados a .cookies y con los mismos valores que index.html: el aviso
+   se ve igual en las dos.
+   =================================================================== */
+.cookies {
+  --cookies-margen: 16px;
+  position: fixed; left: var(--cookies-margen); bottom: var(--cookies-margen);
+  /* Por encima del contenido y de la barra fija del sitio; nada del
+     sitio usa un z-index mayor. */
+  z-index: 60;
+  width: min(360px, calc(100% - 2 * var(--cookies-margen)));
+  background: #fff; border: 1px solid var(--zinc-200);
+  border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); color: var(--zinc-900);
+}
+.cookies[hidden] { display: none; }
+.cookies__inner { display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+.cookies__cabeza { display: flex; align-items: flex-start; gap: 12px; }
+/* La galleta (SVG en línea, decorativa). */
+.cookies__icono { flex: 0 0 auto; width: 32px; height: 32px; margin-top: 2px; }
+.cookies__texto { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--zinc-700); }
+.cookies__mas { color: var(--brand-700); font-weight: var(--fw-medium); text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.cookies__mas:hover { color: var(--brand-800); }
+/* Grilla de dos columnas iguales y no flex: 1 1 0. Con flex la base de
+   cada botón es su padding + borde, y como Rechazar tiene borde y Aceptar
+   no, Rechazar quedaba 2 px más ancho. */
+.cookies__acciones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cookies__btn { min-width: 0; }
+
+/* Botones: mismos valores que .btn / .btn-md / .btn-primary /
+   .btn-outline de index.html. */
+.cookies .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 0; border-radius: var(--radius-sm); font-family: inherit;
+  font-weight: var(--fw-semibold); white-space: nowrap; cursor: pointer;
+  transition: background-color .15s, color .15s, box-shadow .15s, border-color .15s;
+}
+.cookies .btn-md { height: 42px; padding: 0 18px; font-size: 15px; }
+.cookies .btn-primary { background: var(--brand-700); color: #fff; box-shadow: 0 1px 2px rgb(0 70 8 / .25); }
+.cookies .btn-primary:hover { background: var(--brand-800); }
+.cookies .btn-primary:active { background: var(--brand-900); }
+.cookies .btn-outline { background: #fff; color: var(--zinc-900); border: 1px solid var(--zinc-300); }
+.cookies .btn-outline:hover { background: var(--zinc-50); border-color: var(--zinc-400); }
+/* Foco visible con teclado: el anillo de la marca, separado del botón
+   para que se vea también sobre el verde. */
+.cookies .btn:focus-visible,
+.cookies__mas:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 2px; }
+
+/* Mientras el aviso está visible (clase en <html>), la página reserva
+   abajo su alto real, que el script mide en --cookies-alto sobre <html>:
+   - padding-bottom del body: al llegar al fondo, el pie y el último
+     enlace no quedan tapados;
+   - scroll-padding-bottom del html: al avanzar con Tab, el navegador
+     desplaza el elemento con foco para que no quede debajo del aviso
+     (WCAG 2.4.11).
+   En escritorio la tarjeta es chica y deja libre casi todo el ancho, pero
+   igual puede tapar lo que queda abajo a la izquierda: se reserva siempre. */
+html.con-cookies { scroll-padding-bottom: calc(var(--cookies-alto, 120px) + 24px); }
+html.con-cookies body { padding-bottom: calc(var(--cookies-alto, 120px) + 24px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Solo la entrada, y solo con movimiento: con movimiento reducido el
+     aviso aparece quieto en su lugar (el estado base es el final). */
+  .cookies:not([hidden]) { animation: cookies-entra .3s cubic-bezier(0, 0, 0.2, 1); }
+  @keyframes cookies-entra {
+    from { transform: translateY(16px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+}
+
+/* En celular, a lo ancho con 12 px de margen. */
+@media (max-width: 600px) {
+  .cookies { --cookies-margen: 12px; width: auto; right: var(--cookies-margen); }
+  .cookies__inner { padding: 12px 14px; gap: 10px; }
+}

@@ -5,3 +5,6 @@ docs/
 # Avatares originales a 1024px. Se guardan para poder reencuadrarlos en el
 # futuro, pero la web solo usa las versiones de 144px que están un nivel arriba.
 assets/testimonios/originales/
+
+# Pruebas de Node (node tools/test_analitica.js): no se publican.
+tools/

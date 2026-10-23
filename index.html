@@ -29,6 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@700;800&display=swap">
 <link rel="stylesheet" href="assets/colors_and_type.css">
+<link rel="stylesheet" href="assets/analitica.css">
 <style>
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -362,6 +363,11 @@
   .foot-mail { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--zinc-400); transition: color .15s; }
   .foot-mail:hover { color: #fff; }
   .foot-mail:hover .ctp-ic { color: var(--brand-400); }
+  /* "Preferencias de cookies" es un <button> (abre el aviso, no navega):
+     se le quita el aspecto de botón para que se vea como los enlaces
+     vecinos del pie. */
+  .foot-cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: 13px; line-height: inherit; color: var(--zinc-400); cursor: pointer; text-align: left; }
+  .foot-cookies:focus-visible { outline: 2px solid var(--brand-400); outline-offset: 3px; border-radius: 2px; }
 
   /* =========================================================== REVEAL */
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
@@ -412,6 +418,9 @@
     .eco-card .mod-ic { margin-bottom: 18px; }
     .price-card.feat { order: -1; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
+    /* Pie inferior en columna: con cuatro elementos, el wrap los dejaba
+       repartidos en filas desparejas. */
+    .foot-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
     .hero { padding: 48px 0 72px; }
     .shot-slot { height: 380px; }
     .flow-line { display: none; }
@@ -646,8 +655,8 @@
         <a href="#faq">Preguntas</a>
       </nav>
       <div class="nav-actions">
-        <a href="https://app.cierra.cl" class="nav-signin">Iniciar sesión</a>
-        <a href="#demo" class="btn btn-primary btn-md">Solicita una demo</a>
+        <a href="https://app.cierra.cl" class="nav-signin" data-ubicacion="nav">Iniciar sesión</a>
+        <a href="#demo" class="btn btn-primary btn-md" data-ubicacion="nav">Solicita una demo</a>
         <button class="nav-burger" id="nav-burger" aria-label="Menú" aria-controls="nav-mobile" aria-expanded="false"><span class="ctp-ic" data-lucide="menu"></span></button>
       </div>
     </div>
@@ -658,8 +667,8 @@
         <a href="#a-medida">A tu medida</a>
         <a href="#precios">Precios</a>
         <a href="#faq">Preguntas</a>
-        <a href="https://app.cierra.cl" class="nav-mobile-signin">Iniciar sesión</a>
-        <a href="#demo" class="btn btn-primary btn-lg">Solicita una demo</a>
+        <a href="https://app.cierra.cl" class="nav-mobile-signin" data-ubicacion="nav-movil">Iniciar sesión</a>
+        <a href="#demo" class="btn btn-primary btn-lg" data-ubicacion="nav-movil">Solicita una demo</a>
       </div>
     </div>
   </header>
@@ -673,8 +682,8 @@
         <h1 class="hero-h1">El software que opera la venta de tus <span class="g">parcelas</span>, de punta a punta.</h1>
         <p class="hero-sub">Cierra.cl automatiza toda la operación: leads, reservas, <strong>el financiamiento que da el propio desarrollador</strong>, pipeline legal y comisiones —del primer lead a la inscripción en el CBR—. No es un CRM: es tu operación de venta, automatizada.</p>
         <div class="hero-cta">
-          <a href="#demo" class="btn btn-primary btn-lg">Solicita una demo con nuestros expertos</a>
-          <a href="#modulos" class="btn btn-outline btn-lg">Ver los módulos</a>
+          <a href="#demo" class="btn btn-primary btn-lg" data-ubicacion="hero">Solicita una demo con nuestros expertos</a>
+          <a href="#modulos" class="btn btn-outline btn-lg" data-ubicacion="hero-modulos">Ver los módulos</a>
         </div>
         <div class="hero-trust">
           <span>Hecho en Chile</span><span class="sep">·</span>
@@ -1027,7 +1036,7 @@
             <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>Hasta 5 usuarios · 2 proyectos</li>
             <li><span class="ctp-ic" data-lucide="mail" style="width:18px;height:18px"></span>Soporte por correo</li>
           </ul>
-          <a href="#demo" class="btn btn-outline btn-lg price-cta">Empezar</a>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta" data-ubicacion="precios-pequena">Empezar</a>
         </article>
         <article class="price-card feat reveal">
           <span class="price-flag">Más elegido</span>
@@ -1038,7 +1047,7 @@
             <li><span class="ctp-ic" data-lucide="users" style="width:18px;height:18px"></span>Hasta 15 usuarios · 15 proyectos</li>
             <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
           </ul>
-          <a href="#demo" class="btn btn-primary btn-lg price-cta">Solicita una demo</a>
+          <a href="#demo" class="btn btn-primary btn-lg price-cta" data-ubicacion="precios-mediana">Solicita una demo</a>
         </article>
         <article class="price-card reveal">
           <div class="price-name">Grande</div>
@@ -1049,7 +1058,7 @@
             <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
             <li class="diff"><span class="ctp-ic" data-lucide="calendar-check" style="width:18px;height:18px"></span>Reunión de onboarding</li>
           </ul>
-          <a href="#demo" class="btn btn-outline btn-lg price-cta">Empezar</a>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta" data-ubicacion="precios-grande">Empezar</a>
         </article>
         <article class="price-card reveal">
           <div class="price-name">Enterprise</div>
@@ -1060,7 +1069,7 @@
             <li class="diff"><span class="ctp-ic" data-lucide="headset" style="width:18px;height:18px"></span>Soporte prioritario</li>
             <li class="diff"><span class="ctp-ic" data-lucide="calendar-check" style="width:18px;height:18px"></span>Reunión de onboarding</li>
           </ul>
-          <a href="#demo" class="btn btn-outline btn-lg price-cta">Contactar ventas</a>
+          <a href="#demo" class="btn btn-outline btn-lg price-cta" data-ubicacion="precios-enterprise">Contactar ventas</a>
         </article>
       </div>
       <div class="price-included reveal">
@@ -1149,7 +1158,7 @@
           <li><span class="ctp-ic" data-lucide="check-circle-2" style="width:18px;height:18px"></span>Migración de datos incluida</li>
         </ul>
       </div>
-      <form class="form-card" id="demo-form" novalidate>
+      <form class="form-card" id="demo-form" data-ubicacion="demo" novalidate>
         <h3>Agenda tu demo</h3>
         <p class="fsub">Te contactamos dentro de 1 día hábil.</p>
         <div class="field"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name"></div>
@@ -1165,7 +1174,7 @@
             <option>Más de 30 personas</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Solicitar demo</button>
+        <button type="submit" class="btn btn-primary btn-lg" data-ubicacion="demo" style="width:100%">Solicitar demo</button>
         <p class="form-status" id="demo-status" role="status" aria-live="polite" hidden></p>
         <p class="form-fine">Al enviar aceptas que te contactemos sobre Cierra.cl y el tratamiento de tus datos según nuestra <a href="legal.html#pp-datos" style="color:var(--brand-700);text-decoration:underline">Política de privacidad</a>.</p>
       </form>
@@ -1193,17 +1202,18 @@
         </div>
         <div class="foot-col">
           <h4>Producto</h4>
-          <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="#demo">Solicitar demo</a></li></ul>
+          <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="#demo" data-ubicacion="pie-producto">Solicitar demo</a></li></ul>
         </div>
         <div class="foot-col">
           <h4>Contacto</h4>
-          <ul><li><a href="mailto:contacto@cierra.cl">contacto@cierra.cl</a></li><li><a href="https://app.cierra.cl">Iniciar sesión</a></li></ul>
+          <ul><li><a href="mailto:contacto@cierra.cl" data-ubicacion="pie-contacto">contacto@cierra.cl</a></li><li><a href="https://app.cierra.cl" data-ubicacion="pie-contacto">Iniciar sesión</a></li></ul>
         </div>
       </div>
       <div class="foot-bottom">
         <span>© 2026 Cierra.cl · Hecho en Chile</span>
         <a class="foot-mail" href="legal.html"><span class="ctp-ic" data-lucide="scale" style="width:16px;height:16px"></span>Términos y privacidad</a>
-        <a class="foot-mail" href="mailto:contacto@cierra.cl"><span class="ctp-ic" data-lucide="mail" style="width:16px;height:16px"></span>contacto@cierra.cl</a>
+        <button type="button" class="foot-mail foot-cookies" data-preferencias-cookies><span class="ctp-ic" data-lucide="cookie" style="width:16px;height:16px"></span>Preferencias de cookies</button>
+        <a class="foot-mail" href="mailto:contacto@cierra.cl" data-ubicacion="pie-inferior"><span class="ctp-ic" data-lucide="mail" style="width:16px;height:16px"></span>contacto@cierra.cl</a>
       </div>
     </div>
   </footer>
@@ -1283,6 +1293,12 @@
             body: JSON.stringify(payload),
           });
           if (!res.ok) throw new Error('status ' + res.status);
+          // Conversión: solo en la rama de éxito, para no contar un envío
+          // que falló. En su propio try: medir nunca puede impedir que se
+          // muestre el mensaje de "enviado".
+          try {
+            if (window.cierraEvento) window.cierraEvento('enviar_formulario', { formulario: 'demo', ubicacion: demoForm.getAttribute('data-ubicacion') || 'demo' });
+          } catch (_) { /* sin analítica */ }
           demoForm.reset();
           status.className = 'form-status ok';
           status.textContent = '¡Gracias! Te contactamos dentro de 1 día hábil.';
@@ -1297,5 +1313,10 @@
       });
     }
   </script>
+  <!-- Google Analytics 4 con modo de consentimiento y aviso de cookies
+       (assets/analitica.js). Al final del body y sin defer: corre cuando el
+       body ya existe, para poder insertar el aviso. Vercel Web Analytics
+       sigue en el <head>, en paralelo. -->
+  <script src="assets/analitica.js"></script>
 </body>
 </html>
