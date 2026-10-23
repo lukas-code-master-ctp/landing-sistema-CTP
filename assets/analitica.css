@@ -30,8 +30,11 @@
 .cookies__texto { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--zinc-700); }
 .cookies__mas { color: var(--brand-700); font-weight: var(--fw-medium); text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
 .cookies__mas:hover { color: var(--brand-800); }
-.cookies__acciones { display: flex; gap: 8px; }
-.cookies__btn { flex: 1 1 0; min-width: 0; }
+/* Grilla de dos columnas iguales y no flex: 1 1 0. Con flex la base de
+   cada botón es su padding + borde, y como Rechazar tiene borde y Aceptar
+   no, Rechazar quedaba 2 px más ancho. */
+.cookies__acciones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cookies__btn { min-width: 0; }
 
 /* Botones: mismos valores que .btn / .btn-md / .btn-primary /
    .btn-outline de index.html. */
