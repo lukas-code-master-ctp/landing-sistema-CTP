@@ -33,9 +33,9 @@
 (function () {
   'use strict';
 
-  // ID de medición de la propiedad "Cierra" en GA4. Es un marcador hasta
-  // que la propiedad exista: se reemplaza aquí y en ningún otro lugar.
-  var ID = 'G-XXXXXXXXXX';
+  // ID de medición del flujo web cierra.cl, propiedad "Cierra" de GA4
+  // (560564776). Vive solo aquí: cambiarlo es cambiar esta línea.
+  var ID = 'G-GEPXVS6GJH';
   var CLAVE = 'cierra-consentimiento';
   // Versión del formato guardado. Si algún día cambia lo que se pregunta
   // (por ejemplo, otra herramienta), se sube y todos vuelven a decidir:
