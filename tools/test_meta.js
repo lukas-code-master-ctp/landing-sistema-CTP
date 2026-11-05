@@ -77,6 +77,12 @@ function ventana(opciones) {
 // (nunca, en Node) todo queda en la cola del stub.
 function llamadas(win) {
   if (!win.fbq || !win.fbq.queue) return [];
+  // El `set autoConfig` se prueba aparte: el resto de las pruebas mira
+  // solo los eventos.
+  return todas(win).filter(function (x) { return x[0] !== 'set'; });
+}
+function todas(win) {
+  if (!win.fbq || !win.fbq.queue) return [];
   return win.fbq.queue.map(function (x) { return Array.prototype.slice.call(x); });
 }
 function nombres(win) {
@@ -157,6 +163,14 @@ prueba('sin consentimiento, ver #demo no manda nada', function () {
 });
 
 // ── Con consentimiento guardado ─────────────────────────────────────
+prueba('autoConfig apagado antes del init (Meta no lee la página sola)', function () {
+  var w = ventana({ consentimiento: SI });
+  m.iniciar(w);
+  var c = todas(w);
+  assert.deepStrictEqual(c[0], ['set', 'autoConfig', false, m.ID]);
+  assert.deepStrictEqual(c[1], ['init', m.ID]);
+});
+
 prueba('con aceptación guardada: un script async de fbevents.js, init y PageView', function () {
   var w = ventana({ consentimiento: SI });
   m.iniciar(w);
@@ -198,7 +212,7 @@ prueba('un fbq que ya existía no se pisa ni se duplica el script', function () 
   w.fbq = function () { propias.push(Array.prototype.slice.call(arguments)); };
   m.iniciar(w);
   assert.strictEqual(scripts(w).length, 0);
-  assert.deepStrictEqual(propias, [['init', m.ID], ['track', 'PageView']]);
+  assert.deepStrictEqual(propias, [['set', 'autoConfig', false, m.ID], ['init', m.ID], ['track', 'PageView']]);
 });
 
 // ── Decisión en la página ───────────────────────────────────────────

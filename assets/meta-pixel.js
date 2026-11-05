@@ -126,6 +126,11 @@
       try {
         if (!iniciado) {
           crearStub();
+          // Sin configuración automática: Meta no detecta solo los clics ni
+          // lee el contenido de la página. Solo salen los eventos que
+          // mandamos nosotros, y ninguno lleva datos personales. Debe ir
+          // ANTES del init.
+          fbq('set', 'autoConfig', false, ID);
           fbq('init', ID);
           fbq('track', 'PageView');
           iniciado = true;
