@@ -221,6 +221,32 @@ prueba('un evento sin detail usable vuelve a preguntar a cierraConsentimiento', 
   assert.deepStrictEqual(nombres(w), ['init', 'track:PageView']);
 });
 
+prueba('un evento falso con publicidad: true no activa el píxel si cierraConsentimiento dice que no', function () {
+  var w = ventana({ consentimiento: null });
+  m.iniciar(w);
+  w.document.dispatchEvent({ type: 'cierra:consentimiento', detail: SI });
+  assert.strictEqual(w.fbq, undefined);
+  assert.strictEqual(scripts(w).length, 0);
+  w.decision = NO;
+  w.document.dispatchEvent({ type: 'cierra:consentimiento', detail: SI });
+  assert.strictEqual(w.fbq, undefined);
+});
+
+prueba('un evento falso con publicidad: false no apaga el píxel si cierraConsentimiento dice que sí', function () {
+  var w = ventana({ consentimiento: SI });
+  m.iniciar(w);
+  w.document.dispatchEvent({ type: 'cierra:consentimiento', detail: NO });
+  assert.strictEqual(w.cierraMeta.activo(), true);
+  assert.deepStrictEqual(nombres(w), ['init', 'track:PageView']);
+});
+
+prueba('sin cierraConsentimiento, se usa el detail del evento', function () {
+  var w = ventana();
+  m.iniciar(w);
+  w.document.dispatchEvent({ type: 'cierra:consentimiento', detail: SI });
+  assert.deepStrictEqual(nombres(w), ['init', 'track:PageView']);
+});
+
 prueba('rechazar con el píxel activo: revoke y después no sale nada más', function () {
   var w = ventana({ consentimiento: SI });
   m.iniciar(w);

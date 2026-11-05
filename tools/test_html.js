@@ -142,6 +142,21 @@ prueba("index.html: enviar_formulario 'demo' va dentro de la rama de éxito, una
   assert.ok(/<form\b[^>]*id="demo-form"[^>]*data-ubicacion="demo"/.test(html), 'el <form> no tiene data-ubicacion="demo"');
 });
 
+prueba("index.html: cierraMeta.lead va dentro de la rama de éxito, una sola vez, con el eventId del envío", function () {
+  var html = leer('index.html');
+  assert.strictEqual(html.split('cierraMeta.lead(').length - 1, 1, 'cierraMeta.lead debe aparecer una sola vez');
+  var envio = html.indexOf('await fetch(\'/api/demo\'');
+  var tryExito = html.lastIndexOf('try {', envio);
+  var cuerpo = bloque(html, tryExito);
+  assert.ok(cuerpo, 'no se encontró el try del envío');
+  var ok = cuerpo.indexOf('if (!res.ok) throw');
+  var llamada = cuerpo.indexOf('window.cierraMeta.lead(eventId)');
+  assert.ok(ok !== -1 && llamada > ok, 'cierraMeta.lead tiene que ir después de comprobar res.ok, dentro del try de éxito');
+  var antes = html.slice(html.lastIndexOf("demoForm.addEventListener('submit'", envio), envio);
+  assert.ok(/payload\.meta_event_id = eventId/.test(antes), 'el eventId tiene que viajar en el cuerpo, generado antes del fetch');
+  assert.ok(/payload\.meta_consentimiento = /.test(antes), 'falta meta_consentimiento en el cuerpo');
+});
+
 console.log('');
 console.log(corridas + ' pruebas, ' + fallos + ' fallo(s)');
 process.exit(fallos ? 1 : 0);

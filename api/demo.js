@@ -25,6 +25,11 @@
 //                                    Si no está definida, ese paso se omite.
 //   CRM_WEBHOOK_TOKEN(opcional)    — se manda como header X-Auth-Token al
 //                                    webhook, por si quieres protegerlo.
+//   META_PIXEL_ID, META_CAPI_ACCESS_TOKEN, META_TEST_EVENT_CODE (opcionales)
+//                                  — API de conversiones de Meta; ver
+//                                    api/_meta-capi.js. Sin ID o token se omite.
+
+import { clienteIp, enviarLeadCapi, urlFuente } from './_meta-capi.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -260,6 +265,25 @@ export default async function handler(req, res) {
         .catch((err) => { console.error('No se pudo escribir en la planilla:', err); }),
     );
   }
+
+  // ------------------------------------------- 4. Meta, API de conversiones
+  // Solo con consentimiento de publicidad (lo decide enviarLeadCapi). Los
+  // campos meta_* los manda el navegador: se validan por tipo y largo.
+  const corto = (v, max) => (typeof v === 'string' && v.length <= max ? v.trim() : '');
+  const headers = req.headers || {};
+  extras.push(
+    enviarLeadCapi({
+      consentimiento: body.meta_consentimiento === true,
+      eventId: corto(body.meta_event_id, 100),
+      email,
+      telefono,
+      ip: clienteIp(headers),
+      userAgent: corto(headers['user-agent'], 1000),
+      fbp: corto(body.meta_fbp, 255),
+      fbc: corto(body.meta_fbc, 500),
+      url: urlFuente(corto(body.pagina, 2000), corto(headers.referer, 2000)),
+    }, process.env),
+  );
 
   await Promise.allSettled(extras);
 

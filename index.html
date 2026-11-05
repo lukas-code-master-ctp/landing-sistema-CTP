@@ -1276,6 +1276,39 @@
 
     // Demo form → POST /api/demo (serverless con la RESEND_API_KEY → Resend)
     const demoForm = document.getElementById('demo-form');
+
+    // UUID v4 para el event_id de Meta. randomUUID solo existe en contextos
+    // seguros y navegadores recientes; getRandomValues es casi universal;
+    // Math.random queda de último recurso (el id solo deduplica, no es secreto).
+    function nuevoEventId() {
+      try {
+        if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+      } catch (_) { /* sigue */ }
+      const b = new Uint8Array(16);
+      try {
+        window.crypto.getRandomValues(b);
+      } catch (_) {
+        for (let i = 0; i < 16; i++) b[i] = Math.floor(Math.random() * 256);
+      }
+      b[6] = (b[6] & 0x0f) | 0x40;
+      b[8] = (b[8] & 0x3f) | 0x80;
+      const h = Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
+      return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+    }
+    // El servidor solo manda el Lead a la API de conversiones si esto es true.
+    function consintioPublicidad() {
+      try {
+        const d = typeof window.cierraConsentimiento === 'function' ? window.cierraConsentimiento() : null;
+        return !!d && d.publicidad === true;
+      } catch (_) { return false; }
+    }
+    function leerCookie(nombre) {
+      try {
+        const par = document.cookie.split('; ').find((c) => c.indexOf(nombre + '=') === 0);
+        return par ? decodeURIComponent(par.slice(nombre.length + 1)) : '';
+      } catch (_) { return ''; }
+    }
+
     if (demoForm) {
       const status = document.getElementById('demo-status');
       demoForm.addEventListener('submit', async (e) => {
@@ -1284,6 +1317,17 @@
         const btn = demoForm.querySelector('button[type="submit"]');
         const label = btn.textContent;
         const payload = Object.fromEntries(new FormData(demoForm).entries());
+        // Meta: un id por envío, el mismo para el Lead del píxel y el de la
+        // API de conversiones, así Meta los deduplica. Cada submit genera
+        // uno nuevo (un reintento es otro envío).
+        const eventId = nuevoEventId();
+        payload.meta_event_id = eventId;
+        payload.meta_consentimiento = consintioPublicidad();
+        const fbp = leerCookie('_fbp');
+        const fbc = leerCookie('_fbc');
+        if (fbp) payload.meta_fbp = fbp;
+        if (fbc) payload.meta_fbc = fbc;
+        payload.pagina = location.href.split('#')[0];
         btn.disabled = true;
         btn.textContent = 'Enviando…';
         status.hidden = true;
@@ -1300,6 +1344,9 @@
           try {
             if (window.cierraEvento) window.cierraEvento('enviar_formulario', { formulario: 'demo', ubicacion: demoForm.getAttribute('data-ubicacion') || 'demo' });
           } catch (_) { /* sin analítica */ }
+          try {
+            if (window.cierraMeta) window.cierraMeta.lead(eventId);
+          } catch (_) { /* sin Meta */ }
           demoForm.reset();
           status.className = 'form-status ok';
           status.textContent = '¡Gracias! Te contactamos dentro de 1 día hábil.';

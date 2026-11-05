@@ -157,13 +157,18 @@
     } catch (e) { inicial = null; }
     if (publicidadConcedida(inicial)) activar();
 
-    // La decisión tomada en esta página. Se usa el `detail` del evento y,
-    // si no trae nada usable, se vuelve a preguntar a analitica.js.
+    // La decisión tomada en esta página. El evento solo avisa que algo
+    // cambió: la decisión se le pregunta SIEMPRE a analitica.js, que es la
+    // fuente de verdad, así un `cierra:consentimiento` despachado por otro
+    // script con `detail: {publicidad: true}` no activa el píxel. El
+    // `detail` se usa solo si cierraConsentimiento no existe.
     if (doc.addEventListener) {
       doc.addEventListener('cierra:consentimiento', function (ev) {
-        var d = ev && ev.detail && typeof ev.detail === 'object' ? ev.detail : null;
-        if (!d) {
-          try { d = typeof win.cierraConsentimiento === 'function' ? win.cierraConsentimiento() : null; } catch (e) { d = null; }
+        var d = null;
+        if (typeof win.cierraConsentimiento === 'function') {
+          try { d = win.cierraConsentimiento(); } catch (e) { d = null; }
+        } else {
+          d = ev && ev.detail && typeof ev.detail === 'object' ? ev.detail : null;
         }
         aplicar(d);
       });

@@ -6,10 +6,12 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 
 - `index.html` — la landing completa (una sola página, es-CL).
 - `api/demo.js` — función serverless (Vercel) que procesa el formulario de demo.
+- `api/_meta-capi.js` — Lead a la API de conversiones de Meta (módulo, no ruta: el `_` lo excluye). Lo usa `api/demo.js`.
 - `legal.html` — términos y condiciones y política de privacidad (incluye cookies y analítica, sección 2.8).
 - `assets/analitica.js` — Google Analytics 4 con modo de consentimiento, aviso de cookies y eventos (compartido por las dos páginas).
 - `assets/analitica.css` — estilos del aviso de cookies.
 - `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
+- `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js` y de su llamada en `api/demo.js` (Node, sin red).
 - `tools/test_html.js` — pruebas del HTML de las dos páginas para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
 - `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del sistema).
 - `assets/dashboard.png` — captura del dashboard que se muestra en "Velo en acción".
@@ -74,7 +76,7 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 ### Pruebas
 
 ```bash
-node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js
+node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js && node tools/test_capi.mjs
 ```
 
 Sin dependencias ni red.
