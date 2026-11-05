@@ -47,7 +47,7 @@ img { display: block; max-width: 100%; }
 .nav-logo { height: 34px; width: auto; display: block; }
 .nav-links { display: flex; align-items: center; gap: 30px; }
 .nav-links a { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-600); transition: color .15s; }
-.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--zinc-900); }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--zinc-900); }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
 .nav-signin { font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-700); padding: 0 12px; height: 42px; display: inline-flex; align-items: center; border-radius: var(--radius-sm); }
 .nav-signin:hover { background: var(--zinc-100); }
