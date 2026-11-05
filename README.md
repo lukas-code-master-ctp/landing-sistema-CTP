@@ -10,6 +10,8 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 - `legal.html` — términos y condiciones y política de privacidad (incluye cookies y analítica, sección 2.8).
 - `assets/analitica.js` — Google Analytics 4 con modo de consentimiento, aviso de cookies y eventos (compartido por las dos páginas).
 - `assets/analitica.css` — estilos del aviso de cookies.
+- `assets/meta-pixel.js` — píxel de Meta (PageView, ViewContent, Lead), solo con consentimiento; le pregunta la decisión a `analitica.js`.
+- `tools/test_meta.js` — pruebas de `assets/meta-pixel.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js` y de su llamada en `api/demo.js` (Node, sin red).
 - `tools/test_html.js` — pruebas del HTML de las dos páginas para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
@@ -31,7 +33,7 @@ python -m http.server 8000
 # abre http://localhost:8000
 ```
 
-Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono) por CDN, y Google Analytics (`gtag.js`, desde googletagmanager.com) para la medición; ver [Analítica](#analítica-google-analytics-4).
+Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono) por CDN, Google Analytics (`gtag.js`, desde googletagmanager.com) para la medición y, solo con consentimiento, el píxel de Meta (`fbevents.js`, desde connect.facebook.net); ver [Analítica](#analítica-google-analytics-4).
 
 ## Secciones
 
@@ -48,15 +50,19 @@ Dos mediciones en paralelo, en `index.html` y `legal.html`:
 
 - **Google Analytics 4**: propiedad "Cierra" (`560564776`), ID de medición `G-GEPXVS6GJH`, en la cuenta de Analytics de Impulse AI. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido; los estilos del aviso están en [`assets/analitica.css`](assets/analitica.css). **El ID se cambia en un solo lugar**: la constante `ID` al principio de `analitica.js`.
 - **Vercel Web Analytics**: sin cookies, cuenta todas las visitas —también las de quien rechaza— y sirve de control para comparar contra GA4.
+- **Meta Pixel**: píxel "Cierra.cl - Pixel" (`4526586427599697`, portfolio Impulse AI), para medir las campañas de Instagram y Facebook. Lo carga [`assets/meta-pixel.js`](assets/meta-pixel.js), después de `analitica.js`; **el ID se cambia en la constante `ID`** de ese archivo (el servidor lo lee aparte, de `META_PIXEL_ID`). Usa el **mismo consentimiento v2** que GA4: sin `publicidad: true` no se descarga `fbevents.js`, no existe `fbq` y no hay cookies. Eventos: `PageView` al cargar; `ViewContent` (`content_name: 'Página demo'`) una vez por página, cuando `#demo` queda a la vista; `Lead` (`content_name: 'Demo Cierra'`) solo cuando `/api/demo` responde 200, con un `eventID` (UUID) para que Meta lo deduplique contra la API de conversiones. Sin datos personales en los parámetros.
+- **API de conversiones de Meta**: [`api/_meta-capi.js`](api/_meta-capi.js), llamada desde `api/demo.js` después del aviso al equipo. Manda el mismo `Lead`, con el mismo `event_id`, **solo si el navegador avisó consentimiento de publicidad** (`meta_consentimiento: true`) y existen `META_PIXEL_ID` y `META_CAPI_ACCESS_TOKEN`. Datos: correo y teléfono en SHA-256 (nunca en claro; el teléfono normalizado con código de país), IP, user agent, `_fbp`/`_fbc` si existen y la URL de la página. Best-effort: un error queda en el log (sin token ni datos personales) y no cambia la respuesta del formulario.
 
 ### Consentimiento
 
 Modo de consentimiento de Google v2, **modo avanzado**:
 
 - Por defecto **todo denegado** (`analytics_storage`, `ad_storage`, `ad_user_data`, `ad_personalization`). En ese estado gtag no escribe cookies y manda señales sin identificador, que GA usa para modelar.
-- **Aceptar** concede **solo** `analytics_storage`. Los permisos de publicidad quedan **siempre** denegados: no hacemos publicidad y la política de privacidad lo promete.
-- **Rechazar** deja todo denegado y borra las cookies `_ga` y `_ga_<ID>` que hubieran quedado.
-- La decisión se guarda en `localStorage`, clave `cierra-consentimiento` (`{ v: 1, analitica: true|false, fecha }`). Sin decisión válida —o si `localStorage` falla— el aviso vuelve a aparecer y gtag sigue denegado.
+- Un solo **Aceptar** cubre Google Analytics y el píxel de Meta, y un solo **Rechazar** niega los dos.
+- **Aceptar** concede en Google **solo** `analytics_storage`. Los permisos de publicidad de Google quedan **siempre** denegados: la publicidad la medimos con Meta, no con Google. Además activa el píxel de Meta.
+- **Rechazar** deja todo denegado, borra las cookies `_ga`, `_ga_<ID>`, `_fbp` y `_fbc` que hubieran quedado y, si el píxel estaba cargado, le manda `fbq('consent', 'revoke')`.
+- La decisión se guarda en `localStorage`, clave `cierra-consentimiento`, en formato **v2**: `{ v: 2, analitica: true|false, publicidad: true|false, fecha }`. Una decisión **v1** (anterior a Meta, solo cubría GA) se lee como ausente y el aviso vuelve a preguntar. Sin decisión válida —o si `localStorage` falla— el aviso vuelve a aparecer, gtag sigue denegado y Meta no carga.
+- `window.cierraConsentimiento()` devuelve la decisión vigente y el evento `cierra:consentimiento` (en `document`) avisa cuando cambia: de eso vive `meta-pixel.js`.
 - La cookie queda **solo en cierra.cl** (`cookie_domain: 'none'`): no viaja a app.cierra.cl ni a los subdominios de las loteadoras.
 - El botón **"Preferencias de cookies"** del pie (`[data-preferencias-cookies]`) vuelve a abrir el aviso.
 
@@ -81,7 +87,11 @@ node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.
 
 Sin dependencias ni red.
 
-⚠️ **Si cambia la analítica** (qué se mide, qué cookies se instalan o cómo se pide el consentimiento), hay que actualizar `legal.html` (secciones 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8) **en el mismo PR**.
+⚠️ **Si cambia la analítica o la medición de anuncios** (`assets/analitica.js`, `assets/meta-pixel.js` o `api/_meta-capi.js`: qué se mide, qué datos recibe Meta, qué cookies se instalan o cómo se pide el consentimiento), hay que actualizar `legal.html` (secciones 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8) **en el mismo PR**.
+
+### Verificación de dominio de Meta
+
+Meta pide verificar `cierra.cl` en el Administrador comercial. La forma elegida es un **registro TXT en el DNS de cierra.cl**, que vive en **Vercel** (`npx vercel dns ls cierra.cl` / `npx vercel dns add cierra.cl …`, o el panel de dominios de Vercel), en la raíz del dominio y con el contenido `facebook-domain-verification=VALOR`. El valor lo entrega Meta (lo consigue Andrés). Si algún día se prefiere el método por meta etiqueta, en el `<head>` de `index.html` hay un comentario que marca dónde pegarla.
 
 ## Formulario de demo (Resend + Vercel)
 
@@ -90,6 +100,8 @@ El formulario "Agenda tu demo" hace `POST /api/demo` con los campos en JSON. Ese
 1. **Avisa al equipo** por email vía [Resend] (`DEMO_TO`, con copia a `DEMO_CC`). El `reply_to` es el correo del lead, así que responder el aviso le contesta directo a él.
 2. **Le confirma la recepción al cliente** por email.
 3. **Empuja el lead a la planilla** que hace de CRM, si `CRM_WEBHOOK_URL` está definida.
+
+Si la persona aceptó las cookies, además **manda el Lead a la API de conversiones de Meta** (ver [Analítica](#analítica-google-analytics-4)).
 
 Solo el paso 1 puede voltear la respuesta: si falla, el front muestra el error. Los pasos 2 y 3 se intentan y, si fallan, quedan en los logs de Vercel sin afectar al visitante —el lead ya está a salvo en la bandeja del equipo—.
 
@@ -110,6 +122,9 @@ La API key vive solo en el servidor (variable de entorno), nunca en el front.
    | `DEMO_REPLY_TO` | no | `contacto@cierra.cl` | Dirección a la que responde el cliente. |
    | `CRM_WEBHOOK_URL` | no | — | URL que recibe el lead en JSON para la planilla. |
    | `CRM_WEBHOOK_TOKEN` | no | — | Se manda como header `X-Auth-Token` al webhook. |
+   | `META_PIXEL_ID` | para la API de conversiones | — | ID del píxel: `4526586427599697` (el mismo de `assets/meta-pixel.js`). |
+   | `META_CAPI_ACCESS_TOKEN` | para la API de conversiones | — | Token de la API de conversiones. **Secreto.** Lo genera Andrés en el Administrador de eventos de Meta. Sin él (o sin el ID) no se manda nada a Meta desde el servidor. |
+   | `META_TEST_EVENT_CODE` | no | — | Solo para probar: el código de "Probar eventos" del Administrador de eventos. Quitarlo después. |
 
 4. Deploy. (Local: `vercel dev` corre la función; `python -m http.server` solo sirve el estático y el envío fallará con el mensaje de error.)
 
