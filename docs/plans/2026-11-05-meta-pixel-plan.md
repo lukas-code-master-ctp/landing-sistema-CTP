@@ -30,3 +30,9 @@ un commit por tarea, PR a `main`. Un subagente por tarea y otro que la revisa.
 - `python -m http.server` + Playwright con `fbevents.js` interceptado: sin aceptar no
   se descarga; aceptar → init + PageView; ViewContent; Lead con 200 y no con 500;
   rechazar borra cookies. Escritorio y celular. Capturas a `/mnt/project-files/meta-pixel/`.
+
+## T5: Blog (spec `docs/specs/2026-11-05-blog-spec.md`)
+- `blog/index.html`, `blog/financiar-venta-parcelas-sin-banco.html`, `blog/_plantilla.html`,
+  `vercel.json` con `cleanUrls`, link en nav/menú móvil/pie de las páginas, `sitemap.xml`,
+  `llms.txt`, README, `tools/test_blog.js` y `tools/test_html.js` con las páginas del blog.
+- Commit: "Blog: lista, primera entrada y link en el menú".
