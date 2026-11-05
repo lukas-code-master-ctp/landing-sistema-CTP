@@ -1,8 +1,9 @@
 /* ===================================================================
    Cierra — Analítica (Google Analytics 4 + modo de consentimiento v2)
+   y el consentimiento que también usa el píxel de Meta
 
-   Un solo archivo compartido por las dos páginas (index.html y
-   legal.html), y no una copia incrustada en cada una: es lógica de
+   Un solo archivo compartido por todas las páginas (index.html,
+   legal.html y las del blog), y no una copia incrustada en cada una: es lógica de
    consentimiento, y dos copias de esa lógica terminan diciendo cosas
    distintas.
 
@@ -19,10 +20,18 @@
      4. Expone `window.cierraEvento(nombre, params)` (lo usa el formulario
         de demo) y mide por delegación los clics en enlaces a `#demo`, a
         app.cierra.cl y en `mailto:`.
+     5. Expone `window.cierraConsentimiento()` con la decisión vigente y,
+        al decidir, despacha `cierra:consentimiento` en document. De eso
+        vive assets/meta-pixel.js: este archivo decide, el píxel obedece.
 
-   Los tres permisos de publicidad (`ad_storage`, `ad_user_data`,
-   `ad_personalization`) van SIEMPRE denegados, también al aceptar: no
-   hacemos publicidad y el texto legal lo promete.
+   La decisión tiene dos partes: `analitica` (Google Analytics) y
+   `publicidad` (píxel de Meta). Hoy hay un solo "Aceptar", que concede
+   las dos, y un "Rechazar", que niega las dos; se guardan por separado
+   para poder agregar un "Configurar" sin cambiar el formato.
+
+   Los tres permisos de publicidad DE GOOGLE (`ad_storage`, `ad_user_data`,
+   `ad_personalization`) van SIEMPRE denegados, también al aceptar: la
+   publicidad la medimos con Meta, no con Google, y GA no la necesita.
 
    ES5 a propósito (var, function), como el JS inline del sitio: no hay
    bundler que lo traduzca. Además se puede `require` desde Node para
@@ -37,10 +46,12 @@
   // (560564776). Vive solo aquí: cambiarlo es cambiar esta línea.
   var ID = 'G-GEPXVS6GJH';
   var CLAVE = 'cierra-consentimiento';
-  // Versión del formato guardado. Si algún día cambia lo que se pregunta
-  // (por ejemplo, otra herramienta), se sube y todos vuelven a decidir:
-  // una aceptación vieja no puede valer para algo que no se le mostró.
-  var VERSION = 1;
+  // Versión del formato guardado. Si cambia lo que se pregunta (otra
+  // herramienta), se sube y todos vuelven a decidir: una aceptación vieja
+  // no puede valer para algo que no se le mostró. La 2 sumó Meta: una
+  // aceptación v1 solo cubría Google Analytics, así que se lee como null
+  // y el aviso vuelve a aparecer.
+  var VERSION = 2;
 
   // ── Funciones puras (se prueban en Node) ─────────────────────────
 
@@ -50,11 +61,22 @@
     return f instanceof Date && !isNaN(f.getTime());
   }
 
-  // Devuelve { analitica: true|false, fecha } o null si no hay una
+  // La decisión como { analitica, publicidad }, con cada parte en true
+  // solo si vino un true estricto. Acepta el objeto o un booleano (el
+  // "Aceptar" y el "Rechazar" de hoy: true concede las dos, cualquier
+  // otra cosa niega las dos). Un "true" en texto o un 1 no conceden.
+  function normalizarDecision(decision) {
+    if (decision && typeof decision === 'object') {
+      return { analitica: decision.analitica === true, publicidad: decision.publicidad === true };
+    }
+    return { analitica: decision === true, publicidad: decision === true };
+  }
+
+  // Devuelve { analitica, publicidad, fecha } o null si no hay una
   // decisión válida. Null cubre todo lo que no sea una decisión explícita
-  // de esta versión: ausente, JSON roto, otra versión, `analitica` que no
-  // es booleano o un storage que lanza (Safari en modo privado, cookies
-  // bloqueadas). Ante la duda se vuelve a preguntar y gtag sigue
+  // de esta versión: ausente, JSON roto, otra versión (una v1 incluida),
+  // `analitica` o `publicidad` que no son booleanos o un storage que lanza
+  // (Safari en modo privado, cookies bloqueadas). Ante la duda se vuelve a preguntar y gtag sigue
   // denegado: nunca se concede por un dato que no se pudo leer.
   // Una `fecha` ilegible no anula la decisión (la decisión es lo que
   // importa), pero se devuelve como null y no como vino: quien la lea
@@ -77,8 +99,9 @@
     if (!dato || typeof dato !== 'object') return null;
     if (dato.v !== VERSION) return null;
     if (typeof dato.analitica !== 'boolean') return null;
+    if (typeof dato.publicidad !== 'boolean') return null;
     var fecha = typeof dato.fecha === 'string' && !isNaN(Date.parse(dato.fecha)) ? dato.fecha : null;
-    return { analitica: dato.analitica, fecha: fecha };
+    return { analitica: dato.analitica, publicidad: dato.publicidad, fecha: fecha };
   }
 
   // Guarda la decisión. Devuelve true si quedó escrita. Si el storage
@@ -86,11 +109,14 @@
   // página y el aviso vuelve a aparecer en la siguiente, que es mejor que
   // romper la página o asumir un sí. La fecha se valida ANTES de armar el
   // dato: con un Date inválido, toISOString() lanzaría fuera del try y el
-  // clic en Aceptar/Rechazar no cerraría el aviso.
-  function guardarConsentimiento(storage, analitica, ahora) {
+  // clic en Aceptar/Rechazar no cerraría el aviso. `decision` es lo que
+  // acepta normalizarDecision: el objeto o un booleano para las dos.
+  function guardarConsentimiento(storage, decision, ahora) {
+    var d = normalizarDecision(decision);
     var dato = {
       v: VERSION,
-      analitica: analitica === true,
+      analitica: d.analitica,
+      publicidad: d.publicidad,
       fecha: (fechaValida(ahora) ? ahora : new Date()).toISOString()
     };
     try {
@@ -102,9 +128,10 @@
     }
   }
 
-  // El estado de consentimiento que corresponde a una decisión. Solo
-  // `analitica === true` (estricto) concede: un "true" en texto o un 1 no
-  // cuentan. Publicidad, siempre denegada.
+  // El estado de consentimiento de Google que corresponde a una decisión
+  // de analítica. Solo `analitica === true` (estricto) concede: un "true"
+  // en texto o un 1 no cuentan. Los ad_* de Google, siempre denegados,
+  // también con `publicidad` en true (esa es para Meta).
   function estadoConsentimiento(analitica) {
     return {
       analytics_storage: analitica === true ? 'granted' : 'denied',
@@ -141,18 +168,34 @@
     return cmds;
   }
 
-  // Las asignaciones a document.cookie que borran las cookies de GA
-  // (`_ga` y `_ga_<ID>`) presentes en `cookies`. Se borran sin dominio y
-  // en el host y cada dominio padre: hoy la cookie es de host, pero si
-  // alguna vez quedó una de dominio (.cierra.cl) solo se borra con el
-  // mismo dominio con que se creó. Un nombre parecido (`_gat`, `x_ga`) no
-  // se toca.
-  function cookiesABorrar(cookies, hostname) {
+  // ¿Es una cookie de Google Analytics (`_ga`, `_ga_<ID>`)?
+  function esCookieGA(nombre) {
+    return nombre === '_ga' || nombre.indexOf('_ga_') === 0;
+  }
+
+  // ¿Es una cookie del píxel de Meta (`_fbp`, `_fbc`)? Nombre exacto: un
+  // `_fbpx` o un `x_fbp` no son de Meta.
+  function esCookieMeta(nombre) {
+    return nombre === '_fbp' || nombre === '_fbc';
+  }
+
+  // Las asignaciones a document.cookie que borran, de las presentes en
+  // `cookies`, las que la `decision` ya no permite: las de GA (`_ga` y
+  // `_ga_<ID>`) si `analitica` no es true, y las de Meta (`_fbp`, `_fbc`)
+  // si `publicidad` no es true. Sin `decision` se borran todas (es lo
+  // que corresponde a un rechazo). Se borran sin dominio y en el host y
+  // cada dominio padre: hoy las de GA son de host, pero el píxel de Meta
+  // pone las suyas en el dominio (.cierra.cl), y una cookie de dominio
+  // solo se borra con el mismo dominio con que se creó. Un nombre
+  // parecido (`_gat`, `x_ga`, `_fbpx`) no se toca.
+  function cookiesABorrar(cookies, hostname, decision) {
+    var d = decision ? normalizarDecision(decision) : { analitica: false, publicidad: false };
     var nombres = [];
     var partes = String(cookies || '').split(';');
     for (var j = 0; j < partes.length; j++) {
       var nombre = partes[j].split('=')[0].replace(/^\s+|\s+$/g, '');
-      if ((nombre === '_ga' || nombre.indexOf('_ga_') === 0) && nombres.indexOf(nombre) === -1) nombres.push(nombre);
+      var borrar = (!d.analitica && esCookieGA(nombre)) || (!d.publicidad && esCookieMeta(nombre));
+      if (borrar && nombres.indexOf(nombre) === -1) nombres.push(nombre);
     }
     var dominios = [''];
     var trozos = String(hostname || '').split('.');
@@ -288,6 +331,34 @@
     var quienAbrio = null;
     var raiz = doc.documentElement;
 
+    // La decisión vigente: la guardada al cargar o la tomada en esta
+    // página (aunque no se haya podido guardar). Null mientras no haya.
+    var vigente = guardado ? { analitica: guardado.analitica, publicidad: guardado.publicidad } : null;
+
+    // Lo lee assets/meta-pixel.js al cargar. Devuelve una copia: quien la
+    // reciba no puede cambiar la decisión de esta página modificándola.
+    win.cierraConsentimiento = function () {
+      return vigente ? { analitica: vigente.analitica, publicidad: vigente.publicidad } : null;
+    };
+
+    // Avisa a quien escucha (el píxel de Meta) que la decisión cambió. En
+    // un try: un oyente roto o un navegador sin CustomEvent no pueden
+    // impedir que el aviso se cierre. Sin el constructor (IE11) se usa
+    // createEvent, que hace lo mismo.
+    function avisarDecision(d) {
+      try {
+        var detalle = { analitica: d.analitica, publicidad: d.publicidad };
+        var ev;
+        if (typeof win.CustomEvent === 'function') {
+          ev = new win.CustomEvent('cierra:consentimiento', { detail: detalle });
+        } else if (doc.createEvent) {
+          ev = doc.createEvent('CustomEvent');
+          ev.initCustomEvent('cierra:consentimiento', false, false, detalle);
+        }
+        if (ev && doc.dispatchEvent) doc.dispatchEvent(ev);
+      } catch (e) { /* avisar nunca rompe el aviso */ }
+    }
+
     function boton(etiqueta, analitica) {
       var btn = doc.createElement('button');
       btn.type = 'button';
@@ -314,11 +385,12 @@
       var texto = doc.createElement('p');
       texto.className = 'cookies__texto';
       texto.appendChild(doc.createTextNode(
-        'Usamos cookies de Google Analytics para saber qué partes del sitio sirven. '
+        'Usamos cookies de Google Analytics y de Meta para saber qué partes del sitio sirven y medir nuestros anuncios. '
       ));
       var mas = doc.createElement('a');
       mas.className = 'cookies__mas';
-      mas.href = 'legal.html#pp-cookies';
+      // Ruta absoluta: el aviso también sale en /blog/ y /blog/<entrada>/.
+      mas.href = '/legal.html#pp-cookies';
       mas.appendChild(doc.createTextNode('Más información'));
       texto.appendChild(mas);
 
@@ -382,14 +454,19 @@
       raiz.style.removeProperty('--cookies-alto');
     }
 
-    function decidir(analitica) {
-      guardarConsentimiento(almacen, analitica, new Date());
-      win.gtag('consent', 'update', estadoConsentimiento(analitica));
+    function decidir(decision) {
+      var d = normalizarDecision(decision);
+      vigente = d;
+      guardarConsentimiento(almacen, d, new Date());
+      win.gtag('consent', 'update', estadoConsentimiento(d.analitica));
+      // Primero el aviso y después el borrado: si el píxel estaba cargado,
+      // revoca antes de que se borren sus cookies y no las vuelve a poner.
+      avisarDecision(d);
       // El update a denied hace que gtag deje de escribir cookies, pero
       // las que ya estaban (si antes había aceptado) se quedarían hasta 2
-      // años.
-      if (!analitica) {
-        var borrar = cookiesABorrar(doc.cookie, win.location && win.location.hostname);
+      // años. Ídem las de Meta (90 días).
+      if (!d.analitica || !d.publicidad) {
+        var borrar = cookiesABorrar(doc.cookie, win.location && win.location.hostname, d);
         for (var c = 0; c < borrar.length; c++) doc.cookie = borrar[c];
       }
       ocultarBanner();
@@ -476,6 +553,7 @@
       ID: ID,
       CLAVE: CLAVE,
       VERSION: VERSION,
+      normalizarDecision: normalizarDecision,
       leerConsentimiento: leerConsentimiento,
       guardarConsentimiento: guardarConsentimiento,
       estadoConsentimiento: estadoConsentimiento,

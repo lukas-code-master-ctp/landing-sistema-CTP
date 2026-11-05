@@ -70,17 +70,28 @@ prueba('sin storage devuelve null', function () {
 });
 
 prueba('una aceptación guardada se lee como aceptada', function () {
-  var r = a.leerConsentimiento(con({ v: 1, analitica: true, fecha: '2026-10-23T12:00:00.000Z' }));
-  assert.deepStrictEqual(r, { analitica: true, fecha: '2026-10-23T12:00:00.000Z' });
+  var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' }));
+  assert.deepStrictEqual(r, { analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' });
 });
 
 prueba('un rechazo guardado se lee como rechazo (y no como "sin decidir")', function () {
-  var r = a.leerConsentimiento(con({ v: 1, analitica: false, fecha: '2026-10-23T12:00:00.000Z' }));
-  assert.deepStrictEqual(r, { analitica: false, fecha: '2026-10-23T12:00:00.000Z' });
+  var r = a.leerConsentimiento(con({ v: 2, analitica: false, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
+  assert.deepStrictEqual(r, { analitica: false, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' });
+});
+
+prueba('las dos partes se leen por separado', function () {
+  var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
+  assert.deepStrictEqual(r, { analitica: true, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' });
+});
+
+prueba('una aceptación v1 (solo cubría Google) no vale: hay que volver a preguntar', function () {
+  assert.strictEqual(a.VERSION, 2);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: true, fecha: '2026-10-23T12:00:00.000Z' })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: true, publicidad: true })), null);
 });
 
 prueba('JSON corrupto devuelve null', function () {
-  assert.strictEqual(a.leerConsentimiento(con('{"v":1,"analitica":tru')), null);
+  assert.strictEqual(a.leerConsentimiento(con('{"v":2,"analitica":tru')), null);
 });
 
 prueba('un JSON que no es objeto devuelve null', function () {
@@ -89,13 +100,15 @@ prueba('un JSON que no es objeto devuelve null', function () {
 });
 
 prueba('otra versión devuelve null (hay que volver a preguntar)', function () {
-  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true })), null);
-  assert.strictEqual(a.leerConsentimiento(con({ analitica: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ analitica: true, publicidad: true })), null);
 });
 
-prueba('una analitica que no es booleana devuelve null', function () {
-  assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: 'true' })), null);
-  assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: 1 })), null);
+prueba('una analitica o publicidad que no es booleana (o que falta) devuelve null', function () {
+  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: 'true', publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: 1, publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: 'true' })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true })), null);
 });
 
 prueba('un storage que lanza devuelve null y no lanza', function () {
@@ -107,20 +120,32 @@ prueba('guarda la aceptación con versión y fecha, y se vuelve a leer igual', f
   var s = storage();
   var ahora = new Date('2026-10-23T15:30:00.000Z');
   assert.strictEqual(a.guardarConsentimiento(s, true, ahora), true);
-  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 1, analitica: true, fecha: '2026-10-23T15:30:00.000Z' });
-  assert.deepStrictEqual(a.leerConsentimiento(s), { analitica: true, fecha: '2026-10-23T15:30:00.000Z' });
+  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 2, analitica: true, publicidad: true, fecha: '2026-10-23T15:30:00.000Z' });
+  assert.deepStrictEqual(a.leerConsentimiento(s), { analitica: true, publicidad: true, fecha: '2026-10-23T15:30:00.000Z' });
+});
+
+prueba('guarda una decisión en objeto con cada parte por separado', function () {
+  var s = storage();
+  a.guardarConsentimiento(s, { analitica: true, publicidad: false }, new Date('2026-10-23T15:30:00.000Z'));
+  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 2, analitica: true, publicidad: false, fecha: '2026-10-23T15:30:00.000Z' });
+  a.guardarConsentimiento(s, { analitica: 'true', publicidad: 1 }, new Date());
+  var r = a.leerConsentimiento(s);
+  assert.strictEqual(r.analitica, false);
+  assert.strictEqual(r.publicidad, false);
 });
 
 prueba('guarda el rechazo', function () {
   var s = storage();
   a.guardarConsentimiento(s, false, new Date('2026-10-23T15:30:00.000Z'));
   assert.strictEqual(a.leerConsentimiento(s).analitica, false);
+  assert.strictEqual(a.leerConsentimiento(s).publicidad, false);
 });
 
 prueba('solo un true estricto se guarda como aceptación', function () {
   var s = storage();
   a.guardarConsentimiento(s, 'true', new Date());
   assert.strictEqual(a.leerConsentimiento(s).analitica, false);
+  assert.strictEqual(a.leerConsentimiento(s).publicidad, false);
 });
 
 prueba('un storage que lanza devuelve false y no lanza', function () {
@@ -201,8 +226,8 @@ prueba('guardar con una fecha inválida no lanza y guarda una fecha válida', fu
 
 prueba('una fecha guardada ilegible se lee como null sin anular la decisión', function () {
   [123, { x: 1 }, 'ayer', null].forEach(function (f) {
-    var r = a.leerConsentimiento(con({ v: 1, analitica: true, fecha: f }));
-    assert.deepStrictEqual(r, { analitica: true, fecha: null }, JSON.stringify(f));
+    var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: true, fecha: f }));
+    assert.deepStrictEqual(r, { analitica: true, publicidad: true, fecha: null }, JSON.stringify(f));
   });
 });
 
@@ -219,8 +244,29 @@ prueba('borra _ga y _ga_<ID> sin dominio y en el host y cada dominio padre', fun
   ]);
 });
 
-prueba('no toca cookies de nombre parecido ni devuelve nada sin _ga', function () {
+prueba('borra _fbp y _fbc de Meta, también en el dominio padre', function () {
+  var r = a.cookiesABorrar('_fbp=fb.1.1; _fbc=fb.1.2; otra=1', 'cierra.cl');
+  assert.deepStrictEqual(r, [
+    '_fbp=; Max-Age=0; path=/',
+    '_fbp=; Max-Age=0; path=/; domain=.cierra.cl',
+    '_fbc=; Max-Age=0; path=/',
+    '_fbc=; Max-Age=0; path=/; domain=.cierra.cl'
+  ]);
+});
+
+prueba('con una decisión, borra solo lo que esa decisión ya no permite', function () {
+  var c = '_ga=1; _fbp=2; _fbc=3';
+  assert.deepStrictEqual(a.cookiesABorrar(c, 'cierra.cl', { analitica: true, publicidad: false }).filter(function (x) { return x.indexOf('domain') === -1; }),
+    ['_fbp=; Max-Age=0; path=/', '_fbc=; Max-Age=0; path=/']);
+  assert.deepStrictEqual(a.cookiesABorrar(c, 'cierra.cl', { analitica: false, publicidad: true }).filter(function (x) { return x.indexOf('domain') === -1; }),
+    ['_ga=; Max-Age=0; path=/']);
+  assert.deepStrictEqual(a.cookiesABorrar(c, 'cierra.cl', { analitica: true, publicidad: true }), []);
+  assert.strictEqual(a.cookiesABorrar(c, 'cierra.cl', false).length, 6);
+});
+
+prueba('no toca cookies de nombre parecido ni devuelve nada sin _ga ni _fbp/_fbc', function () {
   assert.deepStrictEqual(a.cookiesABorrar('_gat=1; x_ga=2; _gax=3', 'cierra.cl'), []);
+  assert.deepStrictEqual(a.cookiesABorrar('_fbpx=1; x_fbp=2; _fb=3; _fbcc=4; fbp=5', 'cierra.cl'), []);
   assert.deepStrictEqual(a.cookiesABorrar('', 'cierra.cl'), []);
   assert.deepStrictEqual(a.cookiesABorrar(undefined, undefined), []);
 });
@@ -265,6 +311,12 @@ function elemento(tag) {
     }
   });
   el.addEventListener = function (tipo, fn) { (el.oyentes[tipo] = el.oyentes[tipo] || []).push(fn); };
+  // Como el navegador: un oyente que lanza no corta a los demás ni sube
+  // al que despacha.
+  el.dispatchEvent = function (ev) {
+    (el.oyentes[ev.type] || []).forEach(function (fn) { try { fn(ev); } catch (e) { /* reportado, no propagado */ } });
+    return true;
+  };
   // Despacha un evento de mouse que sube hasta document. Devuelve el
   // evento para poder mirar si alguien llamó a preventDefault.
   el.disparar = function (tipo, button) {
@@ -340,6 +392,7 @@ function ventana(opciones) {
     location: { hostname: 'cierra.cl' },
     localStorage: opciones.storage || storage(),
     addEventListener: function () {},
+    CustomEvent: function (tipo, init) { this.type = tipo; this.detail = init && init.detail; },
     ResizeObserver: function (fn) { this.observe = function (el) { observados.push({ el: el, fn: fn }); }; }
   };
   win.observados = observados;
@@ -408,11 +461,12 @@ prueba('el alto se mide con ResizeObserver sobre el banner', function () {
   assert.strictEqual(w.document.documentElement.style.getPropertyValue('--cookies-alto'), '120px');
 });
 
-prueba('Rechazar guarda, manda update denegado, borra las _ga y oculta el banner', function () {
-  var w = ventana({ cookies: ['_ga=GA1.1.1', '_ga_ABC123=GS1', 'otra=1'] });
+prueba('Rechazar guarda, manda update denegado, borra las _ga y _fbp/_fbc y oculta el banner', function () {
+  var w = ventana({ cookies: ['_ga=GA1.1.1', '_ga_ABC123=GS1', '_fbp=fb.1.1', '_fbc=fb.1.2', 'otra=1'] });
   a.iniciar(w);
   botonDe(w, 'rechazar').click();
   assert.strictEqual(a.leerConsentimiento(w.localStorage).analitica, false);
+  assert.strictEqual(a.leerConsentimiento(w.localStorage).publicidad, false);
   var ult = consents(w).pop();
   assert.strictEqual(ult[1], 'update');
   assert.strictEqual(ult[2].analytics_storage, 'denied');
@@ -423,12 +477,15 @@ prueba('Rechazar guarda, manda update denegado, borra las _ga y oculta el banner
 });
 
 prueba('Aceptar guarda, concede analytics_storage y no borra cookies', function () {
-  var w = ventana({ cookies: ['_ga=GA1.1.1'] });
+  var w = ventana({ cookies: ['_ga=GA1.1.1', '_fbp=fb.1.1'] });
   a.iniciar(w);
   botonDe(w, 'aceptar').click();
   assert.strictEqual(a.leerConsentimiento(w.localStorage).analitica, true);
-  assert.strictEqual(consents(w).pop()[2].analytics_storage, 'granted');
-  assert.strictEqual(w.document.cookie, '_ga=GA1.1.1');
+  assert.strictEqual(a.leerConsentimiento(w.localStorage).publicidad, true);
+  var upd = consents(w).pop()[2];
+  assert.strictEqual(upd.analytics_storage, 'granted');
+  PUBLICIDAD.forEach(function (p) { assert.strictEqual(upd[p], 'denied', p + ': los ad_* de Google siguen denegados'); });
+  assert.strictEqual(w.document.cookie, '_ga=GA1.1.1; _fbp=fb.1.1');
   assert.strictEqual(banners(w)[0].hidden, true);
 });
 
@@ -466,15 +523,15 @@ prueba('un localStorage que lanza no rompe iniciar: el banner aparece igual', fu
   assert.strictEqual(banners(w)[0].hidden, true);
 });
 
-prueba('el aviso dice el texto acordado y enlaza a legal.html#pp-cookies', function () {
+prueba('el aviso dice el texto acordado y enlaza a /legal.html#pp-cookies (absoluto: también se carga en /blog/)', function () {
   var w = ventana();
   a.iniciar(w);
   var b = banners(w)[0];
   assert.strictEqual(b.getAttribute('aria-label'), 'Aviso de cookies');
   var p = b.querySelector('.cookies__texto');
-  assert.strictEqual(p.childNodes[0].texto, 'Usamos cookies de Google Analytics para saber qué partes del sitio sirven. ');
+  assert.strictEqual(p.childNodes[0].texto, 'Usamos cookies de Google Analytics y de Meta para saber qué partes del sitio sirven y medir nuestros anuncios. ');
   var mas = b.querySelector('.cookies__mas');
-  assert.strictEqual(mas.href, 'legal.html#pp-cookies');
+  assert.strictEqual(mas.href, '/legal.html#pp-cookies');
   assert.strictEqual(mas.childNodes[0].texto, 'Más información');
 });
 
@@ -507,6 +564,85 @@ prueba('la clave y la guarda son las de Cierra', function () {
   a.iniciar(w);
   assert.strictEqual(w.__cierraAnalitica, true);
   assert.strictEqual(typeof w.cierraEvento, 'function');
+});
+
+// ── cierraConsentimiento y el evento cierra:consentimiento ─────────
+function oyente(win) {
+  var recibidos = [];
+  win.document.addEventListener('cierra:consentimiento', function (ev) {
+    recibidos.push({ detail: ev.detail, cookie: win.document.cookie });
+  });
+  return recibidos;
+}
+
+prueba('cierraConsentimiento: null sin decisión, la guardada al cargar, y una copia', function () {
+  var w = ventana();
+  a.iniciar(w);
+  assert.strictEqual(w.cierraConsentimiento(), null);
+  var s = storage();
+  a.guardarConsentimiento(s, { analitica: true, publicidad: false }, new Date());
+  var w2 = ventana({ storage: s });
+  a.iniciar(w2);
+  var c = w2.cierraConsentimiento();
+  assert.deepStrictEqual(c, { analitica: true, publicidad: false });
+  c.publicidad = true;
+  assert.strictEqual(w2.cierraConsentimiento().publicidad, false, 'modificar la copia no cambia la decisión');
+});
+
+prueba('Aceptar despacha cierra:consentimiento con las dos en true y actualiza el getter', function () {
+  var w = ventana();
+  a.iniciar(w);
+  var rec = oyente(w);
+  botonDe(w, 'aceptar').click();
+  assert.deepStrictEqual(rec.map(function (r) { return r.detail; }), [{ analitica: true, publicidad: true }]);
+  assert.deepStrictEqual(w.cierraConsentimiento(), { analitica: true, publicidad: true });
+});
+
+prueba('Rechazar despacha con las dos en false, ANTES de borrar las cookies de Meta', function () {
+  var w = ventana({ cookies: ['_fbp=fb.1.1'] });
+  a.iniciar(w);
+  var rec = oyente(w);
+  botonDe(w, 'rechazar').click();
+  assert.strictEqual(rec.length, 1);
+  assert.deepStrictEqual(rec[0].detail, { analitica: false, publicidad: false });
+  assert.strictEqual(rec[0].cookie, '_fbp=fb.1.1', 'el píxel alcanza a revocar antes del borrado');
+  assert.strictEqual(w.document.cookie, '');
+  assert.deepStrictEqual(w.cierraConsentimiento(), { analitica: false, publicidad: false });
+});
+
+prueba('la decisión vale para la página aunque localStorage falle', function () {
+  var w = ventana({ storage: storageRoto() });
+  a.iniciar(w);
+  botonDe(w, 'aceptar').click();
+  assert.deepStrictEqual(w.cierraConsentimiento(), { analitica: true, publicidad: true });
+});
+
+prueba('un oyente que lanza o un navegador sin CustomEvent no impiden cerrar el aviso', function () {
+  var w = ventana();
+  a.iniciar(w);
+  w.document.addEventListener('cierra:consentimiento', function () { throw new Error('oyente roto'); });
+  assert.doesNotThrow(function () { botonDe(w, 'aceptar').click(); });
+  assert.strictEqual(banners(w)[0].hidden, true);
+
+  var w2 = ventana();
+  w2.CustomEvent = undefined;
+  var creados = [];
+  w2.document.createEvent = function () {
+    var ev = { initCustomEvent: function (t, b, c, d) { ev.type = t; ev.detail = d; } };
+    creados.push(ev);
+    return ev;
+  };
+  a.iniciar(w2);
+  var rec = oyente(w2);
+  botonDe(w2, 'rechazar').click();
+  assert.strictEqual(creados.length, 1, 'usa createEvent de respaldo');
+  assert.deepStrictEqual(rec[0].detail, { analitica: false, publicidad: false });
+
+  var w3 = ventana();
+  w3.CustomEvent = function () { throw new Error('sin CustomEvent'); };
+  a.iniciar(w3);
+  assert.doesNotThrow(function () { botonDe(w3, 'aceptar').click(); });
+  assert.strictEqual(banners(w3)[0].hidden, true);
 });
 
 // ── eventoDeEnlace ──────────────────────────────────────────────────

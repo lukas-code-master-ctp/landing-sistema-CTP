@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Ilustración: un loteo de parcelas con un camino de cuotas que llega a la entrega">
+  <rect width="1200" height="630" fill="#e6f5e7"/>
+  <circle cx="1040" cy="110" r="220" fill="#c3e6c6" opacity=".55"/>
+  <circle cx="140" cy="560" r="180" fill="#c3e6c6" opacity=".45"/>
+  <!-- Loteo: parcelas en perspectiva plana -->
+  <g transform="translate(110 150)">
+    <rect x="0" y="0" width="150" height="110" rx="12" fill="#9bd6a0"/>
+    <rect x="166" y="0" width="150" height="110" rx="12" fill="#6fc676"/>
+    <rect x="332" y="0" width="150" height="110" rx="12" fill="#9bd6a0"/>
+    <rect x="0" y="126" width="150" height="110" rx="12" fill="#6fc676"/>
+    <rect x="166" y="126" width="150" height="110" rx="12" fill="#007c10"/>
+    <rect x="332" y="126" width="150" height="110" rx="12" fill="#9bd6a0"/>
+    <rect x="0" y="252" width="150" height="110" rx="12" fill="#9bd6a0"/>
+    <rect x="166" y="252" width="150" height="110" rx="12" fill="#6fc676"/>
+    <rect x="332" y="252" width="150" height="110" rx="12" fill="#43b94e"/>
+    <!-- Marca de la parcela vendida -->
+    <rect x="221" y="161" width="40" height="40" rx="4" fill="#ffffff" transform="rotate(45 241 181)"/>
+  </g>
+  <!-- Camino de cuotas -->
+  <path d="M640 470 C 720 470, 730 380, 810 380 S 900 290, 980 290 S 1060 200, 1090 190" fill="none" stroke="#007c10" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 26"/>
+  <g fill="#ffffff" stroke="#007c10" stroke-width="8">
+    <circle cx="640" cy="470" r="22"/>
+    <circle cx="810" cy="380" r="22"/>
+    <circle cx="980" cy="290" r="22"/>
+  </g>
+  <g fill="#007c10">
+    <circle cx="640" cy="470" r="8"/>
+    <circle cx="810" cy="380" r="8"/>
+    <circle cx="980" cy="290" r="8"/>
+  </g>
+  <!-- Llegada: la escritura / entrega -->
+  <g transform="translate(1048 112)">
+    <rect width="92" height="116" rx="14" fill="#007c10"/>
+    <rect x="18" y="26" width="56" height="8" rx="4" fill="#c3e6c6"/>
+    <rect x="18" y="46" width="44" height="8" rx="4" fill="#c3e6c6"/>
+    <rect x="18" y="66" width="52" height="8" rx="4" fill="#c3e6c6"/>
+    <circle cx="66" cy="94" r="10" fill="#ffffff"/>
+  </g>
+  <!-- Monedas apiladas: el pie -->
+  <g transform="translate(560 500)">
+    <ellipse cx="0" cy="40" rx="54" ry="16" fill="#004608"/>
+    <rect x="-54" y="18" width="108" height="22" fill="#004608"/>
+    <ellipse cx="0" cy="18" rx="54" ry="16" fill="#18ac27"/>
+    <rect x="-54" y="-6" width="108" height="24" fill="#00610c"/>
+    <ellipse cx="0" cy="-6" rx="54" ry="16" fill="#43b94e"/>
+  </g>
+</svg>

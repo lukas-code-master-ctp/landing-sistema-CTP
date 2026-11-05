@@ -6,5 +6,8 @@ docs/
 # futuro, pero la web solo usa las versiones de 144px que están un nivel arriba.
 assets/testimonios/originales/
 
+# Plantilla de entrada del blog: se copia a blog/<slug>/index.html, no se publica.
+blog/_plantilla.html
+
 # Pruebas de Node (node tools/test_analitica.js): no se publican.
 tools/

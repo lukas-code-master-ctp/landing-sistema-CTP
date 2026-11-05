@@ -121,5 +121,10 @@ Inmobiliaria Fin del Mundo, Capital Terrenos y Distrito Chile.
 - [Preguntas frecuentes](https://cierra.cl/#faq): financiamiento propio,
   monedas, corredores externos, roles, notarías y CBR, formulario de reserva,
   flujo a medida, inversionistas, Asistente Cierra y plazos de implementación.
+- [Blog](https://cierra.cl/blog/): guías prácticas para vender parcelas y
+  loteos.
+- [Cómo financiar la venta de parcelas sin depender del banco](https://cierra.cl/blog/financiar-venta-parcelas-sin-banco/):
+  pie, cuotas, tasa, promesa, escritura con hipoteca y alzamiento, y cómo
+  gestionar la mora, la documentación y la conciliación de pagos.
 - [Solicitar una demo](https://cierra.cl/#demo): 30 minutos, sin compromiso.
 - [Términos y privacidad](https://cierra.cl/legal.html).
