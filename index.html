@@ -7,6 +7,7 @@
 <meta name="description" content="Cierra.cl automatiza la venta de parcelas de punta a punta: leads, cotizaciones, reservas, financiamiento del propio desarrollador, pipeline legal y liquidación de comisiones —hasta la inscripción en el CBR—, con IA incluida.">
 <link rel="canonical" href="https://cierra.cl/">
 <meta name="theme-color" content="#007C10">
+<!-- Verificación de dominio de Meta: pegar aquí &lt;meta name="facebook-domain-verification" content="VALOR"&gt; si no se usa el TXT del DNS. -->
 
 <!-- Vista previa al compartir el link (WhatsApp, LinkedIn, X, Slack) -->
 <meta property="og:type" content="website">
@@ -1318,5 +1319,8 @@
        body ya existe, para poder insertar el aviso. Vercel Web Analytics
        sigue en el <head>, en paralelo. -->
   <script src="assets/analitica.js"></script>
+  <!-- Píxel de Meta (assets/meta-pixel.js): después de analitica.js, porque
+       le pregunta a ese archivo si hay consentimiento. Sin él no carga nada. -->
+  <script src="assets/meta-pixel.js"></script>
 </body>
 </html>

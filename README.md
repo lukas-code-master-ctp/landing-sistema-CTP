@@ -74,7 +74,7 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 ### Pruebas
 
 ```bash
-node tools/test_analitica.js && node tools/test_html.js
+node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js
 ```
 
 Sin dependencias ni red.

@@ -7,7 +7,8 @@
 //  - un CTA nuevo sin `data-ubicacion`, que sale como `sin-ubicacion` y ya
 //    no se sabe de dónde vino el clic;
 //  - una página que deja de cargar analitica.js, su CSS o Vercel Web
-//    Analytics, o que pierde el botón "Preferencias de cookies" (la
+//    Analytics, o que carga el píxel de Meta antes que analitica.js (le
+//    pregunta a ese archivo si hay consentimiento), o que pierde el botón "Preferencias de cookies" (la
 //    política promete que la decisión siempre se puede cambiar);
 //  - `enviar_formulario` movido fuera de la rama de éxito, que contaría
 //    como conversión un envío que falló.
@@ -109,6 +110,14 @@ PAGINAS.forEach(function (p) {
     assert.ok(/<script\s+src="assets\/analitica\.js"><\/script>/.test(html), 'falta assets/analitica.js');
     assert.ok(/<link\s+rel="stylesheet"\s+href="assets\/analitica\.css">/.test(html), 'falta assets/analitica.css');
     assert.ok(/<script\s+defer\s+src="\/_vercel\/insights\/script\.js"><\/script>/.test(html), 'falta Vercel Web Analytics');
+  });
+
+  prueba(p + ': carga meta-pixel.js una vez, después de analitica.js', function () {
+    var meta = html.match(/<script\s+src="assets\/meta-pixel\.js"><\/script>/g) || [];
+    assert.strictEqual(meta.length, 1, 'meta-pixel.js aparece ' + meta.length + ' veces');
+    var iAnalitica = html.indexOf('<script src="assets/analitica.js"></script>');
+    var iMeta = html.indexOf('<script src="assets/meta-pixel.js"></script>');
+    assert.ok(iAnalitica !== -1 && iMeta > iAnalitica, 'meta-pixel.js tiene que ir después de analitica.js');
   });
 
   prueba(p + ': tiene exactamente un [data-preferencias-cookies], y es un <button type="button">', function () {
