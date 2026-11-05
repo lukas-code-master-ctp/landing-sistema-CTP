@@ -55,6 +55,7 @@
   .top-logo { height: 30px; width: auto; display: block; }
   .top-back { font-size: 14px; font-weight: var(--fw-medium); color: var(--fg-muted); }
   .top-back:hover { color: var(--fg-primary); text-decoration: none; }
+  .top-links { display: flex; align-items: center; gap: 20px; }
 
   /* ---- Encabezado ---- */
   header.doc { padding: 56px 0 8px; }
@@ -139,7 +140,10 @@
           <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#007C10"></path>
         </svg>
       </a>
-      <a href="index.html" class="top-back">← Volver al sitio</a>
+      <span class="top-links">
+        <a href="/blog/" class="top-back">Blog</a>
+        <a href="index.html" class="top-back">← Volver al sitio</a>
+      </span>
     </div>
   </div>
 
@@ -475,6 +479,7 @@
       <span>© 2026 Cierra.cl · Hecho en Chile</span>
       <span class="foot-links">
         <button type="button" class="foot-cookies" data-preferencias-cookies>Preferencias de cookies</button>
+        <a href="/blog/">Blog</a>
         <a href="index.html">Volver al sitio</a>
       </span>
     </div>

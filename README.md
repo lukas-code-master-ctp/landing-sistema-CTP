@@ -8,13 +8,16 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 - `api/demo.js` — función serverless (Vercel) que procesa el formulario de demo.
 - `api/_meta-capi.js` — Lead a la API de conversiones de Meta (módulo, no ruta: el `_` lo excluye). Lo usa `api/demo.js`.
 - `legal.html` — términos y condiciones y política de privacidad (incluye cookies y analítica, sección 2.8).
+- `blog/` — el blog (`/blog/`): `blog/index.html` (lista), una carpeta por entrada (`blog/<slug>/index.html`) y `blog/_plantilla.html` (no se publica). Ver [Blog](#blog).
+- `assets/blog.css` y `assets/blog.js` — estilos y nav (menú de celular) compartidos por las páginas del blog; `assets/blog/` — portadas de las entradas.
+- `tools/test_blog.js` — pruebas del blog: cada entrada enlazada, en el sitemap, con canonical, metas y JSON-LD, sin rutas relativas ni voseo.
 - `assets/analitica.js` — Google Analytics 4 con modo de consentimiento, aviso de cookies y eventos (compartido por las dos páginas).
 - `assets/analitica.css` — estilos del aviso de cookies.
 - `assets/meta-pixel.js` — píxel de Meta (PageView, ViewContent, Lead), solo con consentimiento; le pregunta la decisión a `analitica.js`.
 - `tools/test_meta.js` — pruebas de `assets/meta-pixel.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js` y de su llamada en `api/demo.js` (Node, sin red).
-- `tools/test_html.js` — pruebas del HTML de las dos páginas para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
+- `tools/test_html.js` — pruebas del HTML de las páginas (index, legal y el blog) para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
 - `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del sistema).
 - `assets/dashboard.png` — captura del dashboard que se muestra en "Velo en acción".
 - `assets/og-cover.png` — imagen 1200×630 de la vista previa al compartir el link.
@@ -38,6 +41,21 @@ Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Goo
 ## Secciones
 
 Nav sticky · Hero con composición flotante de KPIs · logos de clientes · banda oscura de posicionamiento (flujo Lead → Reserva → Autorización → Firma → Inscripción CBR) · 9 módulos + 7 roles (`#modulos`) · "Hecho a tu medida" (`#a-medida`: Asistente Cierra con IA, flujo configurable, marca propia, multi-país y multi-moneda, integraciones, importación/exportación) · showcase "Velo en acción" · "Todo tu ecosistema" (`#ecosistema`: portal del inversionista, proyectos compartidos, corredores externos) · testimonios · 4 planes (en UF, con toggle mensual/anual) · FAQ (10 preguntas) · CTA final con formulario de demo · footer.
+
+## Blog
+
+`cierra.cl/blog/` es HTML escrito a mano, sin build ni CMS: una carpeta por entrada (`blog/<slug>/index.html`), así Vercel sirve `/blog/<slug>/` sin `vercel.json` ni `cleanUrls`. Lleva el mismo nav, pie, aviso de cookies, GA4, píxel de Meta y Vercel Analytics que el resto del sitio. **Todas las rutas de las páginas del blog son absolutas** (`/assets/…`, `/#demo`, `/legal.html`): una relativa apuntaría dentro de la carpeta de la entrada.
+
+**Para agregar una entrada:**
+
+1. Copia `blog/_plantilla.html` a `blog/<slug>/index.html` (slug en minúsculas, con guiones y sin tildes).
+2. Reemplaza cada `TODO`: título (en `<title>`, `og:title`, `twitter:title`, el JSON-LD y el `<h1>`), descripciones, slug (canonical, `og:url`, `mainEntityOfPage`), fecha (`datePublished`, `<time datetime>`), tiempo de lectura (palabras / 200) y el cuerpo. Español neutro de Chile, tuteo, nunca voseo.
+3. Portada: un SVG propio en `assets/blog/<slug>.svg`, 1200×630 y sin texto. `og:image` sigue siendo `/assets/og-cover.png` (los SVG no sirven para la vista previa al compartir).
+4. Suma la tarjeta en `blog/index.html` (la más nueva primero) y su `BlogPosting` en el JSON-LD de esa página.
+5. Suma la URL en `sitemap.xml` y en `llms.txt`.
+6. Corre las [pruebas](#pruebas): `tools/test_blog.js` falla si la entrada no está enlazada, no está en el sitemap, le falta el canonical, una meta o el JSON-LD, o tiene una ruta relativa.
+
+Todo CTA nuevo lleva su `data-ubicacion` (la entrada usa `blog-entrada`; la lista, `blog-lista`).
 
 ## Para terminar de pulir
 
@@ -82,7 +100,7 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 ### Pruebas
 
 ```bash
-node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js && node tools/test_capi.mjs
+node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js && node tools/test_capi.mjs && node tools/test_blog.js
 ```
 
 Sin dependencias ni red.

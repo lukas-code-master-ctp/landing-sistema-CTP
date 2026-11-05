@@ -1,4 +1,4 @@
-// Pruebas del HTML de las dos páginas, en lo que toca a la analítica.
+// Pruebas del HTML de las páginas (index, legal y el blog), en lo que toca a la analítica.
 // Sin dependencias:  node tools/test_html.js
 //
 // assets/analitica.js se prueba aparte (tools/test_analitica.js), pero esa
@@ -20,7 +20,19 @@ var fs = require('node:fs');
 var path = require('node:path');
 
 var RAIZ = path.join(__dirname, '..');
-var PAGINAS = ['index.html', 'legal.html'];
+// index.html y legal.html, más la lista del blog, cada entrada
+// (blog/<slug>/index.html) y la plantilla: una entrada nueva nace de la
+// plantilla, así que tiene que pasar lo mismo.
+var PAGINAS = ['index.html', 'legal.html', 'blog/index.html', 'blog/_plantilla.html']
+  .concat(fs.readdirSync(path.join(RAIZ, 'blog'), { withFileTypes: true })
+    .filter(function (d) { return d.isDirectory() && d.name[0] !== '_'; })
+    .map(function (d) { return 'blog/' + d.name + '/index.html'; }));
+
+// Las páginas del blog viven en carpetas: sus rutas a assets/ tienen que
+// ser absolutas (/assets/...). index.html y legal.html, en la raíz, usan
+// la relativa.
+function prefijo(p) { return p.indexOf('blog/') === 0 ? '/' : ''; }
+function re(s) { return s.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&'); }
 
 var corridas = 0, fallos = 0;
 function prueba(nombre, fn) {
@@ -96,10 +108,13 @@ prueba('el chequeo detecta un CTA sin data-ubicacion (y acepta uno bien puesto)'
   assert.deepStrictEqual(ctasSinUbicacion(bueno), []);
 });
 
-console.log('html (dos páginas)');
+console.log('html (' + PAGINAS.length + ' páginas)');
 
 PAGINAS.forEach(function (p) {
   var html = leer(p);
+  var pre = prefijo(p);
+  var tagAnalitica = '<script src="' + pre + 'assets/analitica.js"></script>';
+  var tagMeta = '<script src="' + pre + 'assets/meta-pixel.js"></script>';
 
   prueba(p + ': todo CTA (#demo, app.cierra.cl, mailto, .btn) lleva data-ubicacion en kebab-case', function () {
     assert.ok(ctas(html).length > 0, 'no se encontró ningún CTA');
@@ -107,16 +122,17 @@ PAGINAS.forEach(function (p) {
   });
 
   prueba(p + ': carga analitica.js, analitica.css y Vercel Web Analytics', function () {
-    assert.ok(/<script\s+src="assets\/analitica\.js"><\/script>/.test(html), 'falta assets/analitica.js');
-    assert.ok(/<link\s+rel="stylesheet"\s+href="assets\/analitica\.css">/.test(html), 'falta assets/analitica.css');
+    assert.ok(html.indexOf(tagAnalitica) !== -1, 'falta ' + tagAnalitica);
+    assert.ok(new RegExp('<link\\s+rel="stylesheet"\\s+href="' + re(pre) + 'assets\\/analitica\\.css">').test(html), 'falta ' + pre + 'assets/analitica.css');
     assert.ok(/<script\s+defer\s+src="\/_vercel\/insights\/script\.js"><\/script>/.test(html), 'falta Vercel Web Analytics');
   });
 
   prueba(p + ': carga meta-pixel.js una vez, después de analitica.js', function () {
-    var meta = html.match(/<script\s+src="assets\/meta-pixel\.js"><\/script>/g) || [];
-    assert.strictEqual(meta.length, 1, 'meta-pixel.js aparece ' + meta.length + ' veces');
-    var iAnalitica = html.indexOf('<script src="assets/analitica.js"></script>');
-    var iMeta = html.indexOf('<script src="assets/meta-pixel.js"></script>');
+    var meta = html.split(tagMeta).length - 1;
+    assert.strictEqual(meta, 1, 'meta-pixel.js aparece ' + meta + ' veces');
+    assert.ok(!/<script\b[^>]*meta-pixel\.js/.test(html.split(tagMeta).join('')), 'otra carga de meta-pixel.js con otra ruta');
+    var iAnalitica = html.indexOf(tagAnalitica);
+    var iMeta = html.indexOf(tagMeta);
     assert.ok(iAnalitica !== -1 && iMeta > iAnalitica, 'meta-pixel.js tiene que ir después de analitica.js');
   });
 

@@ -523,7 +523,7 @@ prueba('un localStorage que lanza no rompe iniciar: el banner aparece igual', fu
   assert.strictEqual(banners(w)[0].hidden, true);
 });
 
-prueba('el aviso dice el texto acordado y enlaza a legal.html#pp-cookies', function () {
+prueba('el aviso dice el texto acordado y enlaza a /legal.html#pp-cookies (absoluto: también se carga en /blog/)', function () {
   var w = ventana();
   a.iniciar(w);
   var b = banners(w)[0];
@@ -531,7 +531,7 @@ prueba('el aviso dice el texto acordado y enlaza a legal.html#pp-cookies', funct
   var p = b.querySelector('.cookies__texto');
   assert.strictEqual(p.childNodes[0].texto, 'Usamos cookies de Google Analytics y de Meta para saber qué partes del sitio sirven y medir nuestros anuncios. ');
   var mas = b.querySelector('.cookies__mas');
-  assert.strictEqual(mas.href, 'legal.html#pp-cookies');
+  assert.strictEqual(mas.href, '/legal.html#pp-cookies');
   assert.strictEqual(mas.childNodes[0].texto, 'Más información');
 });
 

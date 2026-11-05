@@ -2,8 +2,8 @@
    Cierra — Analítica (Google Analytics 4 + modo de consentimiento v2)
    y el consentimiento que también usa el píxel de Meta
 
-   Un solo archivo compartido por las dos páginas (index.html y
-   legal.html), y no una copia incrustada en cada una: es lógica de
+   Un solo archivo compartido por todas las páginas (index.html,
+   legal.html y las del blog), y no una copia incrustada en cada una: es lógica de
    consentimiento, y dos copias de esa lógica terminan diciendo cosas
    distintas.
 
@@ -389,7 +389,8 @@
       ));
       var mas = doc.createElement('a');
       mas.className = 'cookies__mas';
-      mas.href = 'legal.html#pp-cookies';
+      // Ruta absoluta: el aviso también sale en /blog/ y /blog/<entrada>/.
+      mas.href = '/legal.html#pp-cookies';
       mas.appendChild(doc.createTextNode('Más información'));
       texto.appendChild(mas);
 

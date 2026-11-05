@@ -394,9 +394,9 @@
     .included-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
-  /* Con 5 enlaces el nav de escritorio no cabe bajo ~1000px: se acorta el
+  /* Con 6 enlaces el nav de escritorio no cabe bajo ~1000px: se acorta el
      espacio entre enlaces y el menú móvil entra en 1000px (antes 860px). */
-  @media (max-width: 1100px) { .nav-links { gap: 20px; } }
+  @media (max-width: 1100px) { .nav-links { gap: 18px; } }
   @media (max-width: 1000px) {
     .nav-links, .nav-signin { display: none; }
     .nav-actions .btn { display: none; }
@@ -654,6 +654,7 @@
         <a href="#a-medida">A tu medida</a>
         <a href="#precios">Precios</a>
         <a href="#faq">Preguntas</a>
+        <a href="/blog/">Blog</a>
       </nav>
       <div class="nav-actions">
         <a href="https://app.cierra.cl" class="nav-signin" data-ubicacion="nav">Iniciar sesión</a>
@@ -668,6 +669,7 @@
         <a href="#a-medida">A tu medida</a>
         <a href="#precios">Precios</a>
         <a href="#faq">Preguntas</a>
+        <a href="/blog/">Blog</a>
         <a href="https://app.cierra.cl" class="nav-mobile-signin" data-ubicacion="nav-movil">Iniciar sesión</a>
         <a href="#demo" class="btn btn-primary btn-lg" data-ubicacion="nav-movil">Solicita una demo</a>
       </div>
@@ -1203,7 +1205,7 @@
         </div>
         <div class="foot-col">
           <h4>Producto</h4>
-          <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="#demo" data-ubicacion="pie-producto">Solicitar demo</a></li></ul>
+          <ul><li><a href="#modulos">Módulos</a></li><li><a href="#producto">Cómo funciona</a></li><li><a href="#precios">Precios</a></li><li><a href="/blog/">Blog</a></li><li><a href="#demo" data-ubicacion="pie-producto">Solicitar demo</a></li></ul>
         </div>
         <div class="foot-col">
           <h4>Contacto</h4>
