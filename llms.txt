@@ -124,6 +124,9 @@ Inmobiliaria.
   flujo a medida, inversionistas, Asistente Cierra y plazos de implementación.
 - [Blog](https://cierra.cl/blog/): guías prácticas para vender parcelas y
   loteos.
+- [Qué medir en la venta de un loteo: del lead a la escritura](https://cierra.cl/blog/medir-embudo-venta-loteo/):
+  métricas para dirigir la venta de parcelas: conversión por etapa, tiempo de
+  respuesta, retractos con motivo, atribución de campañas y costo por escritura.
 - [Cómo financiar la venta de parcelas sin depender del banco](https://cierra.cl/blog/financiar-venta-parcelas-sin-banco/):
   pie, cuotas, tasa, promesa, escritura con hipoteca y alzamiento, y cómo
   gestionar la mora, la documentación y la conciliación de pagos.
