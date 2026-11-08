@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qué medir en la venta de un loteo: del lead a la escritura — Blog de Cierra.cl</title>
+<meta name="description" content="Las métricas que sirven para dirigir la venta de parcelas: conversión por etapa, tiempos de respuesta, retractos con motivo y costo por escritura.">
+<link rel="canonical" href="https://cierra.cl/blog/medir-embudo-venta-loteo/">
+<meta name="theme-color" content="#007C10">
+<meta name="author" content="Equipo Cierra">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Cierra.cl">
+<meta property="og:locale" content="es_CL">
+<meta property="og:url" content="https://cierra.cl/blog/medir-embudo-venta-loteo/">
+<meta property="og:title" content="Qué medir en la venta de un loteo: del lead a la escritura">
+<meta property="og:description" content="Conversión por etapa, tiempos, retractos con motivo y costo por escritura: qué medir en la venta de parcelas y cómo leerlo sin engañarte.">
+<meta property="og:image" content="https://cierra.cl/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cierra.cl — el software que opera la venta de parcelas, del lead a la inscripción en el CBR.">
+<meta property="article:published_time" content="2026-11-08">
+<meta property="article:author" content="Equipo Cierra">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qué medir en la venta de un loteo: del lead a la escritura">
+<meta name="twitter:description" content="Conversión por etapa, tiempos, retractos con motivo y costo por escritura: qué medir en la venta de parcelas y cómo leerlo sin engañarte.">
+<meta name="twitter:image" content="https://cierra.cl/assets/og-cover.png">
+
+<link rel="icon" type="image/svg+xml" href="/assets/cierra-icon-green.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@700;800&display=swap">
+<link rel="stylesheet" href="/assets/colors_and_type.css">
+<link rel="stylesheet" href="/assets/analitica.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Qué medir en la venta de un loteo: del lead a la escritura",
+  "description": "Las métricas que sirven para dirigir la venta de parcelas: conversión por etapa, tiempos de respuesta, retractos con motivo y costo por escritura.",
+  "datePublished": "2026-11-08",
+  "dateModified": "2026-11-08",
+  "inLanguage": "es-CL",
+  "image": "https://cierra.cl/assets/og-cover.png",
+  "author": { "@type": "Organization", "name": "Cierra", "url": "https://cierra.cl/" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cierra.cl",
+    "url": "https://cierra.cl/",
+    "logo": { "@type": "ImageObject", "url": "https://cierra.cl/assets/cierra-icon-green.svg" }
+  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cierra.cl/blog/medir-embudo-venta-loteo/" },
+  "isPartOf": { "@type": "Blog", "@id": "https://cierra.cl/blog/" }
+}
+</script>
+<!-- Vercel Web Analytics. Se sirve desde el propio dominio (/_vercel/…),
+     no desde un CDN externo, y no usa cookies ni almacenamiento local.
+     En local devuelve 404: la ruta solo existe una vez desplegado. -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <!-- ===================================================== NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-inner">
+      <a href="/" class="nav-logo-link" aria-label="Cierra.cl">
+        <svg class="nav-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+          <g transform="translate(20,52) scale(0.1875)">
+            <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+            <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+            <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+          </g>
+          <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#09090B">Cıerra<tspan fill="#007C10">.cl</tspan></text>
+          <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#007C10"></path>
+        </svg>
+      </a>
+      <nav class="nav-links">
+        <a href="/#producto">Producto</a>
+        <a href="/#modulos">Módulos</a>
+        <a href="/#a-medida">A tu medida</a>
+        <a href="/#precios">Precios</a>
+        <a href="/#faq">Preguntas</a>
+        <a href="/blog/" aria-current="true">Blog</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://app.cierra.cl" class="nav-signin" data-ubicacion="nav">Iniciar sesión</a>
+        <a href="/#demo" class="btn btn-primary btn-md" data-ubicacion="nav">Solicita una demo</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menú" aria-controls="nav-mobile" aria-expanded="false"><span class="ctp-ic" data-lucide="menu"></span></button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile" hidden>
+      <div class="wrap nav-mobile-inner">
+        <a href="/#producto">Producto</a>
+        <a href="/#modulos">Módulos</a>
+        <a href="/#a-medida">A tu medida</a>
+        <a href="/#precios">Precios</a>
+        <a href="/#faq">Preguntas</a>
+        <a href="/blog/" aria-current="true">Blog</a>
+        <a href="https://app.cierra.cl" class="nav-mobile-signin" data-ubicacion="nav-movil">Iniciar sesión</a>
+        <a href="/#demo" class="btn btn-primary btn-lg" data-ubicacion="nav-movil">Solicita una demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="post">
+      <div class="wrap">
+        <div class="post-wrap post-head">
+          <a href="/blog/" class="post-back">← Volver al blog</a>
+          <h1 class="post-h1">Qué medir en la venta de un loteo: del lead a la escritura</h1>
+          <p class="post-lead">Contar las ventas del mes llega tarde. Para dirigir el equipo conviene mirar el camino completo, etapa por etapa, y saber dónde se está quedando la gente.</p>
+          <p class="post-meta">
+            <span>Por <strong>Equipo Cierra</strong></span><span class="sep">·</span>
+            <time datetime="2026-11-08">8 de noviembre de 2026</time><span class="sep">·</span>
+            <span>6 min de lectura</span>
+          </p>
+        </div>
+        <img class="post-cover" src="/assets/blog/medir-embudo-venta-loteo.svg" alt="" width="1200" height="630">
+
+        <div class="post-wrap post-body">
+          <p>En muchas loteadoras la reunión comercial del lunes empieza con la misma pregunta: “¿cuántas vendimos?”. Es una buena pregunta, pero llega tarde. Cuando una parcela se escritura, la decisión que la hizo posible se tomó semanas o meses antes: el anuncio que trajo al interesado, la rapidez con que alguien lo llamó, la visita a terreno, la reserva y el trabajo legal que vino después.</p>
+          <p>Medir solo el resultado final es como manejar mirando el espejo retrovisor. Para dirigir un equipo de ventas de parcelas conviene mirar el camino completo, etapa por etapa, y saber dónde se está quedando la gente. Esta guía propone qué medir, cómo leerlo y qué errores evitar.</p>
+
+          <h2>El embudo de un loteo tiene más etapas que el de otros productos</h2>
+          <p>Vender una parcela no es una compra impulsiva ni se cierra en una sola llamada. Entre el primer contacto y la inscripción en el Conservador de Bienes Raíces pasan varias etapas, y en cada una se puede perder la venta por motivos distintos:</p>
+          <ol>
+            <li><strong>Lead:</strong> alguien deja sus datos en un formulario, escribe por WhatsApp o llama.</li>
+            <li><strong>Contacto:</strong> un asesor logra hablar con esa persona.</li>
+            <li><strong>Calificación:</strong> se confirma que tiene interés real, presupuesto o capacidad de pago, y un plazo razonable.</li>
+            <li><strong>Visita:</strong> conoce el proyecto en terreno o en una reunión.</li>
+            <li><strong>Reserva:</strong> paga el abono y aparta una parcela concreta.</li>
+            <li><strong>Promesa o escritura:</strong> firma el documento que corresponda según la forma de pago.</li>
+            <li><strong>Inscripción:</strong> la compraventa queda inscrita y la venta está realmente cerrada.</li>
+          </ol>
+          <p>No todas las loteadoras usan exactamente estas etapas, y está bien. Lo importante es que estén definidas por escrito y que todo el equipo entienda lo mismo cuando dice “calificado” o “reservado”. Si un asesor marca como calificado a todo el que contesta el teléfono y otro solo a quien ya pidió una cotización, los números no se pueden comparar.</p>
+
+          <h2>Las métricas que vale la pena mirar cada semana</h2>
+
+          <h3>Volumen por etapa</h3>
+          <p>Cuántas personas hay en cada etapa y cuántas entraron en la semana. Es el punto de partida: muestra si el problema es de falta de interesados o de lo que pasa con ellos después.</p>
+
+          <h3>Conversión entre etapas</h3>
+          <p>De cada diez leads, ¿cuántos se contactan? De cada diez visitas, ¿cuántas terminan en reserva? Estas tasas dicen más que el total de ventas, porque apuntan al lugar exacto donde se pierde gente. Una caída en la conversión de visita a reserva no se arregla comprando más anuncios; se arregla revisando el discurso en terreno, el precio o las condiciones de pago.</p>
+
+          <h3>Tiempo de primera respuesta</h3>
+          <p>Cuánto tarda el equipo en contactar a un lead nuevo. Quien deja sus datos en un formulario suele estar mirando varios proyectos a la vez, y el interés se enfría con los días. No hace falta un estudio para saberlo: basta con revisar qué pasó con los leads que alguien llamó a la semana. Mide este tiempo por asesor y por canal, y ponle una meta interna al equipo.</p>
+
+          <h3>Tiempo en cada etapa</h3>
+          <p>Cuántos días pasa una venta entre la reserva y la promesa, o entre la escritura y la inscripción. Aquí aparecen los cuellos de botella internos: un borrador que nadie envía, una firma que no se agenda, documentos del cliente que faltan. Una reserva que lleva demasiado tiempo detenida tiene más probabilidades de terminar en retracto.</p>
+
+          <h3>Retractos y su motivo</h3>
+          <p>Cuántas reservas se caen y, sobre todo, por qué. “El cliente se arrepintió” no sirve como motivo. Clasificar cada retracto en un catálogo cerrado (no le aprobaron el crédito, encontró otra opción, no le gustó el terreno, problema con los documentos, se demoró demasiado el proceso) permite ver patrones después de unos meses. Si muchos retractos vienen del financiamiento, el problema no está en ventas.</p>
+
+          <h3>Origen de cada venta</h3>
+          <p>De qué campaña, anuncio o canal vino cada reserva. Sin este dato, la inversión en publicidad se evalúa por cuántos leads trajo, que es la métrica más fácil de inflar. Una campaña puede traer muchos contactos que nunca reservan, y otra, menos contactos pero mejores.</p>
+
+          <h2>Cómo leer los números sin engañarte</h2>
+
+          <h3>Compara por cohortes, no por meses calendario</h3>
+          <p>Un error frecuente es dividir las ventas de noviembre por los leads de noviembre. Pero muchas de esas ventas vienen de personas que llegaron en agosto o septiembre. La forma justa de evaluar una campaña es tomar los leads que entraron en un mes y seguirlos en el tiempo: cuántos reservaron, cuántos escrituraron. Esa es la cohorte de ese mes.</p>
+
+          <h3>El costo que importa es por escritura</h3>
+          <p>El costo por lead dice poco del negocio. Lo que importa es cuánto costó cada reserva y, más aún, cada escritura, porque una reserva que se retracta no deja ingreso. Divide el gasto de una campaña por las escrituras que generó su cohorte y compáralo con el margen de una parcela. Ten paciencia: las escrituras llegan semanas después de la reserva, así que una campaña reciente siempre va a parecer peor de lo que es.</p>
+
+          <h3>Mira al asesor, pero con contexto</h3>
+          <p>Un ranking de ventas por asesor es útil, pero puede ser injusto si no considera cuántos leads recibió cada uno, de qué calidad y en qué proyectos. Comparar la conversión de cada asesor sobre leads similares es más honesto que comparar el total. Y conviene contar ventas, no reservas ingresadas: una reserva retractada no debería sumar en el ranking.</p>
+
+          <h3>Separa lo comercial de lo operativo</h3>
+          <p>A partir de la reserva, la velocidad ya no depende solo del asesor. Depende de finanzas, que concilia el pago, y del área legal, que prepara documentos y agenda firmas. Si el tiempo entre reserva y escritura crece, no tiene sentido presionar al equipo de ventas. Mide cada tramo con su responsable.</p>
+
+          <h2>De la planilla al tablero</h2>
+          <p>Todo esto se puede hacer en una planilla, y muchas loteadoras empiezan así. El problema es que la planilla depende de que cada persona actualice su fila a tiempo, y los números del lunes terminan siendo los que alguien se acordó de cargar el viernes. Además, cruzar el gasto de publicidad con las escrituras de cada cohorte a mano es un trabajo que casi nadie alcanza a hacer todas las semanas.</p>
+          <p>La clave es que los datos se generen solos, como consecuencia del trabajo diario: cuando el asesor registra la reserva, cuando finanzas concilia, cuando legal marca la firma. Así el tablero refleja lo que pasó y no lo que alguien recordó anotar.</p>
+
+          <h2>Cómo lo resuelve Cierra</h2>
+          <p>En Cierra cada venta recorre su pipeline, de la reserva a la inscripción en el CBR, y cada paso queda registrado con su fecha y su responsable. A partir de eso:</p>
+          <ul>
+            <li><strong>Dashboards por rol</strong>, para que gerencia vea el embudo completo y cada asesor su propia cartera.</li>
+            <li><strong>Alertas por etapa</strong> cuando una reserva lleva más tiempo del que la loteadora definió, con el nombre de quien tiene que moverla.</li>
+            <li><strong>Retractos clasificados</strong> con un catálogo propio de motivos, que se pueden exportar y analizar.</li>
+            <li><strong>Campañas medidas por cohorte</strong>: cada venta queda atribuida a la campaña de la que vino y se ve el costo por reserva y por escritura.</li>
+            <li><strong>Ranking de asesores</strong> que cuenta ventas y no reservas que después se cayeron.</li>
+          </ul>
+          <p>El objetivo no es tener más números, sino que la reunión del lunes deje de preguntar cuántas se vendieron y empiece a preguntar dónde se están quedando las que no.</p>
+
+          <aside class="post-cta">
+            <h2>¿Quieres ver el embudo de tu loteo en Cierra?</h2>
+            <p>En una demo de 30 minutos te mostramos los dashboards, las alertas por etapa y la medición de campañas con un proyecto como el tuyo.</p>
+            <a href="/#demo" class="btn btn-light btn-lg" data-ubicacion="blog-entrada">Agenda tu demo</a>
+          </aside>
+
+          <p class="post-foot"><a href="/blog/" class="post-back">← Volver al blog</a></p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- ===================================================== FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a href="/" class="foot-logo-link" aria-label="Cierra.cl">
+            <svg class="foot-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+              <g transform="translate(20,52) scale(0.1875)">
+                <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+                <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+                <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+              </g>
+              <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#FFFFFF">Cıerra<tspan fill="#43B94E">.cl</tspan></text>
+              <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#43B94E"></path>
+            </svg>
+          </a>
+          <p class="foot-about">El software de automatización operativa para la venta de parcelas en Chile. Del primer lead a la inscripción en el CBR —incluyendo el financiamiento del propio desarrollador— en un solo flujo.</p>
+          <p class="foot-parent">Una empresa de <a href="https://www.impulseai.cl/" target="_blank" rel="noopener" aria-label="Impulse AI"><img src="/assets/impulse-ai.png" alt="Impulse AI" width="107" height="22" loading="lazy" decoding="async"></a></p>
+        </div>
+        <div class="foot-col">
+          <h4>Producto</h4>
+          <ul><li><a href="/#modulos">Módulos</a></li><li><a href="/#producto">Cómo funciona</a></li><li><a href="/#precios">Precios</a></li><li><a href="/blog/">Blog</a></li><li><a href="/#demo" data-ubicacion="pie-producto">Solicitar demo</a></li></ul>
+        </div>
+        <div class="foot-col">
+          <h4>Contacto</h4>
+          <ul><li><a href="mailto:contacto@cierra.cl" data-ubicacion="pie-contacto">contacto@cierra.cl</a></li><li><a href="https://app.cierra.cl" data-ubicacion="pie-contacto">Iniciar sesión</a></li></ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Cierra.cl · Hecho en Chile</span>
+        <a class="foot-mail" href="/legal.html"><span class="ctp-ic" data-lucide="scale" style="width:16px;height:16px"></span>Términos y privacidad</a>
+        <button type="button" class="foot-mail foot-cookies" data-preferencias-cookies><span class="ctp-ic" data-lucide="cookie" style="width:16px;height:16px"></span>Preferencias de cookies</button>
+        <a class="foot-mail" href="mailto:contacto@cierra.cl" data-ubicacion="pie-inferior"><span class="ctp-ic" data-lucide="mail" style="width:16px;height:16px"></span>contacto@cierra.cl</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@1.35.0/dist/umd/lucide.min.js"></script>
+  <!-- Nav (íconos, sombra al hacer scroll, menú de celular): assets/blog.js. -->
+  <script src="/assets/blog.js"></script>
+  <!-- Google Analytics 4 con modo de consentimiento y aviso de cookies
+       (assets/analitica.js). Al final del body y sin defer: corre cuando el
+       body ya existe, para poder insertar el aviso. -->
+  <script src="/assets/analitica.js"></script>
+  <!-- Píxel de Meta (assets/meta-pixel.js): después de analitica.js, porque
+       le pregunta a ese archivo si hay consentimiento. Sin él no carga nada. -->
+  <script src="/assets/meta-pixel.js"></script>
+</body>
+</html>

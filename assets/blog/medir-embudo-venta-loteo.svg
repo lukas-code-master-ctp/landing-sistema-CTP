@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Ilustración: un embudo de etapas que termina en una parcela vendida, junto a un gráfico de barras">
+  <rect width="1200" height="630" fill="#e6f5e7"/>
+  <circle cx="1060" cy="540" r="230" fill="#c3e6c6" opacity=".5"/>
+  <circle cx="120" cy="90" r="170" fill="#c3e6c6" opacity=".45"/>
+  <!-- Embudo por etapas -->
+  <g transform="translate(130 120)">
+    <rect x="0" y="0" width="520" height="62" rx="14" fill="#c3e6c6"/>
+    <rect x="45" y="78" width="430" height="62" rx="14" fill="#9bd6a0"/>
+    <rect x="90" y="156" width="340" height="62" rx="14" fill="#6fc676"/>
+    <rect x="135" y="234" width="250" height="62" rx="14" fill="#43b94e"/>
+    <rect x="180" y="312" width="160" height="62" rx="14" fill="#007c10"/>
+    <rect x="240" y="323" width="40" height="40" rx="4" fill="#ffffff" transform="rotate(45 260 343)"/>
+  </g>
+  <!-- Flecha de avance -->
+  <path d="M390 520 L390 560" stroke="#007c10" stroke-width="10" stroke-linecap="round"/>
+  <path d="M368 540 L390 566 L412 540" fill="none" stroke="#007c10" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Gráfico de barras -->
+  <g transform="translate(760 150)">
+    <rect x="0" y="0" width="330" height="300" rx="22" fill="#ffffff"/>
+    <rect x="40" y="190" width="44" height="80" rx="8" fill="#9bd6a0"/>
+    <rect x="104" y="150" width="44" height="120" rx="8" fill="#6fc676"/>
+    <rect x="168" y="110" width="44" height="160" rx="8" fill="#43b94e"/>
+    <rect x="232" y="60" width="44" height="210" rx="8" fill="#007c10"/>
+    <path d="M62 170 L126 130 L190 92 L254 40" fill="none" stroke="#09090b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+    <g fill="#09090b" opacity=".55"><circle cx="62" cy="170" r="7"/><circle cx="126" cy="130" r="7"/><circle cx="190" cy="92" r="7"/><circle cx="254" cy="40" r="7"/></g>
+  </g>
+  <!-- Reloj: tiempo por etapa -->
+  <g transform="translate(860 500)">
+    <circle r="46" fill="#ffffff" stroke="#007c10" stroke-width="8"/>
+    <path d="M0 -26 L0 0 L20 12" fill="none" stroke="#007c10" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
