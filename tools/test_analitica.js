@@ -70,28 +70,43 @@ prueba('sin storage devuelve null', function () {
 });
 
 prueba('una aceptación guardada se lee como aceptada', function () {
-  var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' }));
+  var r = a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' }));
   assert.deepStrictEqual(r, { analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' });
 });
 
 prueba('un rechazo guardado se lee como rechazo (y no como "sin decidir")', function () {
-  var r = a.leerConsentimiento(con({ v: 2, analitica: false, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
+  var r = a.leerConsentimiento(con({ v: 3, analitica: false, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
   assert.deepStrictEqual(r, { analitica: false, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' });
 });
 
 prueba('las dos partes se leen por separado', function () {
-  var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
+  var r = a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' }));
   assert.deepStrictEqual(r, { analitica: true, publicidad: false, fecha: '2026-10-23T12:00:00.000Z' });
 });
 
 prueba('una aceptación v1 (solo cubría Google) no vale: hay que volver a preguntar', function () {
-  assert.strictEqual(a.VERSION, 2);
+  assert.strictEqual(a.VERSION, 3);
   assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: true, fecha: '2026-10-23T12:00:00.000Z' })), null);
   assert.strictEqual(a.leerConsentimiento(con({ v: 1, analitica: true, publicidad: true })), null);
 });
 
+prueba('una aceptación v2 (no mencionaba Clarity) no vale: hay que volver a preguntar', function () {
+  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: true, fecha: '2026-10-23T12:00:00.000Z' })), null);
+});
+
+prueba('borra _clck y _clsk de Clarity si no hay analítica, también en el dominio padre', function () {
+  var r = a.cookiesABorrar('_clck=1; _clsk=2; _clckx=3', 'cierra.cl', { analitica: false, publicidad: true });
+  assert.deepStrictEqual(r, [
+    '_clck=; Max-Age=0; path=/',
+    '_clck=; Max-Age=0; path=/; domain=.cierra.cl',
+    '_clsk=; Max-Age=0; path=/',
+    '_clsk=; Max-Age=0; path=/; domain=.cierra.cl'
+  ]);
+  assert.deepStrictEqual(a.cookiesABorrar('_clck=1; _clsk=2', 'cierra.cl', { analitica: true, publicidad: false }), []);
+});
+
 prueba('JSON corrupto devuelve null', function () {
-  assert.strictEqual(a.leerConsentimiento(con('{"v":2,"analitica":tru')), null);
+  assert.strictEqual(a.leerConsentimiento(con('{"v":3,"analitica":tru')), null);
 });
 
 prueba('un JSON que no es objeto devuelve null', function () {
@@ -100,15 +115,15 @@ prueba('un JSON que no es objeto devuelve null', function () {
 });
 
 prueba('otra versión devuelve null (hay que volver a preguntar)', function () {
-  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 4, analitica: true, publicidad: true })), null);
   assert.strictEqual(a.leerConsentimiento(con({ analitica: true, publicidad: true })), null);
 });
 
 prueba('una analitica o publicidad que no es booleana (o que falta) devuelve null', function () {
-  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: 'true', publicidad: true })), null);
-  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: 1, publicidad: true })), null);
-  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: 'true' })), null);
-  assert.strictEqual(a.leerConsentimiento(con({ v: 2, analitica: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: 'true', publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: 1, publicidad: true })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: 'true' })), null);
+  assert.strictEqual(a.leerConsentimiento(con({ v: 3, analitica: true })), null);
 });
 
 prueba('un storage que lanza devuelve null y no lanza', function () {
@@ -120,14 +135,14 @@ prueba('guarda la aceptación con versión y fecha, y se vuelve a leer igual', f
   var s = storage();
   var ahora = new Date('2026-10-23T15:30:00.000Z');
   assert.strictEqual(a.guardarConsentimiento(s, true, ahora), true);
-  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 2, analitica: true, publicidad: true, fecha: '2026-10-23T15:30:00.000Z' });
+  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 3, analitica: true, publicidad: true, fecha: '2026-10-23T15:30:00.000Z' });
   assert.deepStrictEqual(a.leerConsentimiento(s), { analitica: true, publicidad: true, fecha: '2026-10-23T15:30:00.000Z' });
 });
 
 prueba('guarda una decisión en objeto con cada parte por separado', function () {
   var s = storage();
   a.guardarConsentimiento(s, { analitica: true, publicidad: false }, new Date('2026-10-23T15:30:00.000Z'));
-  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 2, analitica: true, publicidad: false, fecha: '2026-10-23T15:30:00.000Z' });
+  assert.deepStrictEqual(JSON.parse(s.datos[a.CLAVE]), { v: 3, analitica: true, publicidad: false, fecha: '2026-10-23T15:30:00.000Z' });
   a.guardarConsentimiento(s, { analitica: 'true', publicidad: 1 }, new Date());
   var r = a.leerConsentimiento(s);
   assert.strictEqual(r.analitica, false);
@@ -226,7 +241,7 @@ prueba('guardar con una fecha inválida no lanza y guarda una fecha válida', fu
 
 prueba('una fecha guardada ilegible se lee como null sin anular la decisión', function () {
   [123, { x: 1 }, 'ayer', null].forEach(function (f) {
-    var r = a.leerConsentimiento(con({ v: 2, analitica: true, publicidad: true, fecha: f }));
+    var r = a.leerConsentimiento(con({ v: 3, analitica: true, publicidad: true, fecha: f }));
     assert.deepStrictEqual(r, { analitica: true, publicidad: true, fecha: null }, JSON.stringify(f));
   });
 });
@@ -529,7 +544,7 @@ prueba('el aviso dice el texto acordado y enlaza a /legal.html#pp-cookies (absol
   var b = banners(w)[0];
   assert.strictEqual(b.getAttribute('aria-label'), 'Aviso de cookies');
   var p = b.querySelector('.cookies__texto');
-  assert.strictEqual(p.childNodes[0].texto, 'Usamos cookies de Google Analytics y de Meta para saber qué partes del sitio sirven y medir nuestros anuncios. ');
+  assert.strictEqual(p.childNodes[0].texto, 'Usamos cookies de Google Analytics, Microsoft Clarity y Meta para saber qué partes del sitio sirven y medir nuestros anuncios. ');
   var mas = b.querySelector('.cookies__mas');
   assert.strictEqual(mas.href, '/legal.html#pp-cookies');
   assert.strictEqual(mas.childNodes[0].texto, 'Más información');

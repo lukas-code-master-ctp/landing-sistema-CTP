@@ -14,6 +14,8 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 - `assets/analitica.js` — Google Analytics 4 con modo de consentimiento, aviso de cookies y eventos (compartido por las dos páginas).
 - `assets/analitica.css` — estilos del aviso de cookies.
 - `assets/meta-pixel.js` — píxel de Meta (PageView, ViewContent, Lead), solo con consentimiento; le pregunta la decisión a `analitica.js`.
+- `assets/clarity.js` — Microsoft Clarity (mapas de calor y grabaciones), solo con la aceptación de analítica; le pregunta la decisión a `analitica.js`.
+- `tools/test_clarity.js` — pruebas de `assets/clarity.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_meta.js` — pruebas de `assets/meta-pixel.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js` y de su llamada en `api/demo.js` (Node, sin red).
@@ -36,7 +38,7 @@ python -m http.server 8000
 # abre http://localhost:8000
 ```
 
-Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono) por CDN, Google Analytics (`gtag.js`, desde googletagmanager.com) para la medición y, solo con consentimiento, el píxel de Meta (`fbevents.js`, desde connect.facebook.net); ver [Analítica](#analítica-google-analytics-4).
+Dependencias externas: [Lucide](https://unpkg.com/lucide@latest) (íconos) y Google Fonts (Plus Jakarta Sans + JetBrains Mono) por CDN, Google Analytics (`gtag.js`, desde googletagmanager.com) para la medición y, solo con consentimiento, el píxel de Meta (`fbevents.js`, desde connect.facebook.net) y Microsoft Clarity (desde clarity.ms); ver [Analítica](#analítica-google-analytics-4).
 
 ## Secciones
 
@@ -100,12 +102,12 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 ### Pruebas
 
 ```bash
-node tools/test_analitica.js && node tools/test_meta.js && node tools/test_html.js && node tools/test_capi.mjs && node tools/test_blog.js
+node tools/test_analitica.js && node tools/test_meta.js && node tools/test_clarity.js && node tools/test_html.js && node tools/test_capi.mjs && node tools/test_blog.js
 ```
 
 Sin dependencias ni red.
 
-⚠️ **Si cambia la analítica o la medición de anuncios** (`assets/analitica.js`, `assets/meta-pixel.js` o `api/_meta-capi.js`: qué se mide, qué datos recibe Meta, qué cookies se instalan o cómo se pide el consentimiento), hay que actualizar `legal.html` (secciones 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8) **en el mismo PR**.
+⚠️ **Si cambia la analítica o la medición de anuncios** (`assets/analitica.js`, `assets/meta-pixel.js`, `assets/clarity.js` o `api/_meta-capi.js`: qué se mide, qué datos recibe Meta, qué cookies se instalan o cómo se pide el consentimiento), hay que actualizar `legal.html` (secciones 2.2, 2.3, 2.4, 2.5, 2.6 y 2.8) **en el mismo PR**.
 
 ### Verificación de dominio de Meta
 

@@ -24,7 +24,8 @@
         al decidir, despacha `cierra:consentimiento` en document. De eso
         vive assets/meta-pixel.js: este archivo decide, el píxel obedece.
 
-   La decisión tiene dos partes: `analitica` (Google Analytics) y
+   La decisión tiene dos partes: `analitica` (Google Analytics y
+   Microsoft Clarity, assets/clarity.js) y
    `publicidad` (píxel de Meta). Hoy hay un solo "Aceptar", que concede
    las dos, y un "Rechazar", que niega las dos; se guardan por separado
    para poder agregar un "Configurar" sin cambiar el formato.
@@ -50,8 +51,9 @@
   // herramienta), se sube y todos vuelven a decidir: una aceptación vieja
   // no puede valer para algo que no se le mostró. La 2 sumó Meta: una
   // aceptación v1 solo cubría Google Analytics, así que se lee como null
-  // y el aviso vuelve a aparecer.
-  var VERSION = 2;
+  // y el aviso vuelve a aparecer. La 3 sumó Microsoft Clarity (dentro de
+  // `analitica`): una v2 no lo mencionaba, así que también se vuelve a preguntar.
+  var VERSION = 3;
 
   // ── Funciones puras (se prueban en Node) ─────────────────────────
 
@@ -173,6 +175,11 @@
     return nombre === '_ga' || nombre.indexOf('_ga_') === 0;
   }
 
+  // ¿Es una cookie de Microsoft Clarity (`_clck`, `_clsk`)? Nombre exacto.
+  function esCookieClarity(nombre) {
+    return nombre === '_clck' || nombre === '_clsk';
+  }
+
   // ¿Es una cookie del píxel de Meta (`_fbp`, `_fbc`)? Nombre exacto: un
   // `_fbpx` o un `x_fbp` no son de Meta.
   function esCookieMeta(nombre) {
@@ -181,7 +188,8 @@
 
   // Las asignaciones a document.cookie que borran, de las presentes en
   // `cookies`, las que la `decision` ya no permite: las de GA (`_ga` y
-  // `_ga_<ID>`) si `analitica` no es true, y las de Meta (`_fbp`, `_fbc`)
+  // `_ga_<ID>`) y las de Clarity (`_clck`, `_clsk`) si `analitica` no es
+  // true, y las de Meta (`_fbp`, `_fbc`)
   // si `publicidad` no es true. Sin `decision` se borran todas (es lo
   // que corresponde a un rechazo). Se borran sin dominio y en el host y
   // cada dominio padre: hoy las de GA son de host, pero el píxel de Meta
@@ -194,7 +202,7 @@
     var partes = String(cookies || '').split(';');
     for (var j = 0; j < partes.length; j++) {
       var nombre = partes[j].split('=')[0].replace(/^\s+|\s+$/g, '');
-      var borrar = (!d.analitica && esCookieGA(nombre)) || (!d.publicidad && esCookieMeta(nombre));
+      var borrar = (!d.analitica && (esCookieGA(nombre) || esCookieClarity(nombre))) || (!d.publicidad && esCookieMeta(nombre));
       if (borrar && nombres.indexOf(nombre) === -1) nombres.push(nombre);
     }
     var dominios = [''];
@@ -385,7 +393,7 @@
       var texto = doc.createElement('p');
       texto.className = 'cookies__texto';
       texto.appendChild(doc.createTextNode(
-        'Usamos cookies de Google Analytics y de Meta para saber qué partes del sitio sirven y medir nuestros anuncios. '
+        'Usamos cookies de Google Analytics, Microsoft Clarity y Meta para saber qué partes del sitio sirven y medir nuestros anuncios. '
       ));
       var mas = doc.createElement('a');
       mas.className = 'cookies__mas';
