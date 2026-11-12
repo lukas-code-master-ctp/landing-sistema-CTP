@@ -115,6 +115,7 @@ PAGINAS.forEach(function (p) {
   var pre = prefijo(p);
   var tagAnalitica = '<script src="' + pre + 'assets/analitica.js"></script>';
   var tagMeta = '<script src="' + pre + 'assets/meta-pixel.js"></script>';
+  var tagClarity = '<script src="' + pre + 'assets/clarity.js"></script>';
 
   prueba(p + ': todo CTA (#demo, app.cierra.cl, mailto, .btn) lleva data-ubicacion en kebab-case', function () {
     assert.ok(ctas(html).length > 0, 'no se encontró ningún CTA');
@@ -134,6 +135,13 @@ PAGINAS.forEach(function (p) {
     var iAnalitica = html.indexOf(tagAnalitica);
     var iMeta = html.indexOf(tagMeta);
     assert.ok(iAnalitica !== -1 && iMeta > iAnalitica, 'meta-pixel.js tiene que ir después de analitica.js');
+  });
+
+  prueba(p + ': carga clarity.js una vez, después de analitica.js, y no el snippet suelto de Clarity', function () {
+    var n = html.split(tagClarity).length - 1;
+    assert.strictEqual(n, 1, 'clarity.js aparece ' + n + ' veces');
+    assert.ok(html.indexOf(tagClarity) > html.indexOf(tagAnalitica), 'clarity.js tiene que ir después de analitica.js');
+    assert.ok(html.indexOf('clarity.ms/tag') === -1, 'el snippet de Clarity no puede ir en el HTML: se salta el consentimiento');
   });
 
   prueba(p + ': tiene exactamente un [data-preferencias-cookies], y es un <button type="button">', function () {
