@@ -1,0 +1,252 @@
+/* ===================================================================
+   Landing de campaña /demo/ y su página de gracias /demo/gracias/
+
+   Móvil primero. Usa los tokens de assets/colors_and_type.css y los
+   mismos valores que la portada (botones, eyebrow, formulario, logos,
+   testimonios, FAQ, banda oscura), para que se vea como el mismo sitio.
+   Sin librerías: los íconos son SVG en línea (.ic).
+   =================================================================== */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--fg-primary);
+  background: var(--bg-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; height: auto; }
+::selection { background: var(--brand-100); color: var(--brand-900); }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+.ic { display: block; flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---- Botones (valores de la portada) ---- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: var(--radius-sm); font-weight: var(--fw-semibold); transition: background-color .15s, color .15s, box-shadow .15s, border-color .15s; white-space: nowrap; }
+.btn-md { height: 42px; padding: 0 18px; font-size: 15px; }
+.btn-lg { height: 52px; padding: 0 26px; font-size: 16px; border-radius: var(--radius-md); }
+.btn-primary { background: var(--brand-700); color: #fff; box-shadow: 0 1px 2px rgb(0 70 8 / .25); }
+.btn-primary:hover { background: var(--brand-800); }
+.btn-primary:active { background: var(--brand-900); }
+.btn-outline { background: #fff; color: var(--zinc-900); border: 1px solid var(--zinc-300); }
+.btn-outline:hover { background: var(--zinc-50); border-color: var(--zinc-400); }
+.btn-light { background: #fff; color: var(--zinc-900); }
+.btn-light:hover { background: var(--zinc-100); }
+.btn[disabled] { opacity: .65; pointer-events: none; }
+.btn .ic { width: 18px; height: 18px; }
+
+/* Foco visible con teclado en todos los controles. */
+.btn:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+.foot-link:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 3px; border-radius: var(--radius-sm); }
+.band .btn:focus-visible { outline-color: #fff; }
+
+.eyebrow { display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
+.eyebrow .dot { width: 6px; height: 6px; margin-right: 8px; border-radius: 9999px; background: currentColor; }
+
+/* =========================================================== CABECERA */
+/* Sin menú y sin enlaces: el logo es solo marca. No es fija, para dejarle
+   toda la primera pantalla al título y al formulario. */
+.top { border-bottom: 1px solid var(--border-faint); background: #fff; }
+.top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 56px; }
+.top-logo { height: 28px; width: auto; display: block; }
+.top-note { display: none; margin: 0; align-items: center; gap: 8px; font-size: 14px; font-weight: var(--fw-medium); color: var(--zinc-600); }
+.top-note .ic { width: 18px; height: 18px; color: var(--brand-700); }
+
+/* =========================================================== HERO */
+.hero { position: relative; overflow: hidden; padding: 16px 0 44px; background: linear-gradient(180deg, var(--brand-50) 0, #fff 340px); }
+.hero-glow { display: none; position: absolute; top: -220px; right: -160px; width: 760px; height: 760px; border-radius: 9999px; background: radial-gradient(circle, rgb(0 124 16 / .13), rgb(0 124 16 / 0) 62%); pointer-events: none; }
+/* Celular: una columna, en el orden del HTML: texto, formulario, lista. */
+.hero-grid { position: relative; z-index: 1; display: flex; flex-direction: column; }
+.hero-h1 { margin: 10px 0 0; font-size: 31px; line-height: 1.1; font-weight: var(--fw-extra); letter-spacing: -0.025em; color: var(--zinc-950); text-wrap: balance; }
+.hero-h1 .g, .sec-title .g { color: var(--brand-700); }
+.hero-sub { margin: 12px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--fg-secondary); }
+.hero-form { margin-top: 20px; scroll-margin-top: 12px; }
+.hero-extra { margin-top: 26px; }
+.hero-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.hero-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; color: var(--zinc-800); }
+.hero-list .ic { margin-top: 1px; color: var(--brand-700); }
+.hero-quote { display: none; }
+
+/* ---- Formulario (valores de la portada; inputs de 16 px para que iOS
+        no haga zoom al enfocar, y 48 px de alto para el dedo) ---- */
+.form-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 16px 18px 18px; box-shadow: 0 24px 48px -28px rgb(9 9 11 / .28), 0 2px 6px rgb(9 9 11 / .04); }
+.form-card h2 { font-size: 19px; line-height: 1.25; font-weight: var(--fw-bold); letter-spacing: -.01em; margin: 0 0 4px; color: var(--zinc-900); }
+.form-card .fsub { font-size: 13.5px; color: var(--fg-muted); margin: 0 0 16px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; font-weight: var(--fw-medium); color: var(--zinc-700); margin-bottom: 6px; }
+.field input { height: 48px; width: 100%; border: 1px solid var(--zinc-300); border-radius: var(--radius-sm); padding: 0 12px; font-size: 16px; font-family: var(--font-sans); color: var(--fg-primary); background: #fff; transition: border-color .15s, box-shadow .15s; -webkit-appearance: none; appearance: none; }
+.field input::placeholder { color: var(--zinc-500); opacity: 1; }
+.field input:focus { outline: none; border-color: var(--brand-700); box-shadow: 0 0 0 3px rgb(0 124 16 / .22); }
+.form-card .btn { width: 100%; margin-top: 4px; }
+.form-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 12px 0 0; font-size: 13px; font-weight: var(--fw-medium); color: var(--zinc-700); text-align: center; }
+.form-note .ic { width: 15px; height: 15px; color: var(--brand-700); }
+.form-status { font-size: 13px; font-weight: var(--fw-medium); margin: 12px 0 0; text-align: center; }
+.form-status.ok { color: var(--success-700); }
+.form-status.err { color: var(--danger-700); }
+.form-fine { font-size: 12px; line-height: 1.5; color: var(--fg-muted); margin: 10px 0 0; text-align: center; }
+.form-fine a { color: var(--brand-700); text-decoration: underline; text-underline-offset: 2px; }
+
+/* =========================================================== LOGOS */
+.logos { padding: 30px 0 32px; border-top: 1px solid var(--border-faint); border-bottom: 1px solid var(--border-faint); }
+.logos-label { margin: 0; text-align: center; font-size: 12px; font-weight: var(--fw-medium); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--fg-muted); }
+/* Grilla que envuelve, sin carrusel. */
+.logos-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 22px 32px; margin-top: 22px; }
+.client-logo { display: inline-block; height: 30px; max-width: 100%; background-color: var(--zinc-500); -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; }
+
+/* =========================================================== SECCIONES */
+.section { padding: 56px 0; }
+.section.alt { background: var(--zinc-50); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sec-head { max-width: 680px; margin: 0 auto 32px; text-align: center; }
+.sec-title { margin: 0; font-size: 28px; line-height: 1.12; font-weight: var(--fw-extra); letter-spacing: -0.025em; color: var(--zinc-950); text-wrap: balance; }
+
+/* ---- Qué vas a ver: tarjetas + captura ---- */
+.see-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.see-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow-card); }
+.see-ic { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--brand-50); color: var(--brand-700); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.see-ic .ic { width: 22px; height: 22px; }
+.see-card h3 { font-size: 17px; line-height: 1.3; font-weight: var(--fw-bold); letter-spacing: -.01em; margin: 0 0 8px; color: var(--zinc-900); }
+.see-card p { font-size: 14.5px; line-height: 1.6; color: var(--fg-secondary); margin: 0; }
+.shot-frame { margin-top: 28px; border-radius: var(--radius-xl); border: 1px solid var(--border); background: #fff; box-shadow: 0 30px 60px -30px rgb(9 9 11 / .26); overflow: hidden; }
+.shot-bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-bottom: 1px solid var(--border-faint); background: var(--zinc-50); }
+.shot-bar i { width: 8px; height: 8px; border-radius: 9999px; background: var(--zinc-300); }
+.shot-frame img { width: 100%; }
+
+/* ---- Testimonios (valores de la portada) ---- */
+.tst-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.tst-card { flex: 1 1 300px; max-width: 380px; margin: 0; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; }
+.tst-quote { font-size: 16px; line-height: 1.6; color: var(--zinc-800); margin: 0 0 22px; flex: 1; }
+.tst-quote::before { content: "\201C"; }
+.tst-quote::after { content: "\201D"; }
+.tst-who { display: flex; align-items: center; gap: 12px; }
+/* El fondo de marca hace de color de espera mientras carga la imagen. */
+.tst-av { width: 48px; height: 48px; border-radius: 9999px; background: var(--brand-700); object-fit: cover; display: block; flex: none; }
+.tst-name { font-size: 14px; font-weight: var(--fw-semibold); color: var(--zinc-900); }
+.tst-role { font-size: 12.5px; color: var(--fg-muted); margin-top: 1px; }
+
+/* ---- Cómo funciona: 3 pasos ---- */
+.steps { list-style: none; margin: 0 auto; padding: 0; max-width: 980px; display: grid; grid-template-columns: 1fr; gap: 22px; }
+.step { display: flex; align-items: flex-start; gap: 14px; }
+.step-n { flex: none; width: 40px; height: 40px; border-radius: 9999px; background: var(--brand-700); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: var(--fw-bold); }
+.step h3 { font-size: 17px; line-height: 1.3; font-weight: var(--fw-bold); letter-spacing: -.01em; margin: 2px 0 4px; color: var(--zinc-900); }
+.step p { font-size: 14.5px; line-height: 1.55; color: var(--fg-secondary); margin: 0; }
+
+/* ---- Preguntas (valores de la portada) ---- */
+.faq { max-width: 800px; margin: 0 auto; border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 4px; font-size: 16px; line-height: 1.35; font-weight: var(--fw-semibold); color: var(--zinc-900); cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-chev { color: var(--zinc-500); transition: transform .2s, color .2s; }
+.faq-item[open] .faq-chev { transform: rotate(180deg); color: var(--brand-700); }
+.faq-answer { margin: 0; padding: 0 4px 22px; font-size: 15px; line-height: 1.65; color: var(--fg-secondary); max-width: 680px; }
+
+/* =========================================================== BANDA FINAL */
+.band { position: relative; overflow: hidden; background: var(--zinc-950); color: #fff; }
+.band .blob1 { position: absolute; right: -140px; bottom: -160px; width: 460px; height: 460px; border-radius: 9999px; background: rgb(0 124 16 / .22); filter: blur(90px); }
+.band .blob2 { position: absolute; left: -120px; top: -120px; width: 380px; height: 380px; border-radius: 9999px; background: rgb(24 172 39 / .12); filter: blur(90px); }
+.band-inner { position: relative; z-index: 1; padding-top: 60px; padding-bottom: 60px; text-align: center; }
+.band-title { margin: 0 auto; max-width: 760px; font-size: 28px; line-height: 1.1; font-weight: var(--fw-extra); letter-spacing: -0.03em; text-wrap: balance; }
+.band-title .g { color: var(--brand-400); }
+.band .btn { margin-top: 28px; }
+
+/* =========================================================== PIE MÍNIMO */
+/* Claro, para que el espacio que el body reserva abajo en celular (barra
+   fija o aviso de cookies) no se note como una franja de otro color. */
+.foot { background: #fff; padding: 26px 0; font-size: 13px; color: var(--zinc-600); }
+.foot-inner { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.foot-link { display: inline-flex; align-items: center; min-height: 24px; background: none; border: 0; padding: 0; margin: 0; font: inherit; color: var(--zinc-700); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--zinc-300); cursor: pointer; }
+.foot-link:hover { color: var(--zinc-950); text-decoration-color: currentColor; }
+
+/* =========================================================== BARRA FIJA (celular) */
+/* Solo en celular, solo cuando el formulario no está a la vista (el script
+   pone .is-visible) y nunca mientras el aviso de cookies esté abierto
+   (analitica.js pone .con-cookies en <html>): no se tapa el aviso. */
+.barra { display: none; }
+@media (max-width: 760px) {
+  body { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .barra {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgb(255 255 255 / .96); border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 24px -12px rgb(9 9 11 / .18);
+    transform: translateY(100%); visibility: hidden;
+    transition: transform .2s var(--ease-out), visibility 0s linear .2s;
+  }
+  .barra.is-visible { transform: none; visibility: visible; transition: transform .2s var(--ease-out), visibility 0s; }
+  html.con-cookies .barra { display: none; }
+  .barra .btn { width: 100%; }
+}
+
+/* =========================================================== TABLET */
+@media (min-width: 640px) {
+  .wrap { padding: 0 32px; }
+  .hero { padding: 36px 0 64px; }
+  .hero-h1 { font-size: 40px; }
+  .hero-sub { font-size: 17px; line-height: 1.6; max-width: 620px; }
+  .hero-form { max-width: 520px; }
+  .form-card { padding: 28px; }
+  .see-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .section { padding: 76px 0; }
+  .sec-head { margin-bottom: 44px; }
+  .sec-title, .band-title { font-size: 36px; }
+  .shot-frame { margin-top: 40px; }
+  .shot-bar { height: 40px; padding: 0 16px; }
+  .shot-bar i { width: 10px; height: 10px; }
+  .logos-row { gap: 24px 44px; }
+  .faq-item summary { padding: 24px 4px; font-size: 17px; }
+  .faq-answer { font-size: 15.5px; padding-bottom: 24px; }
+  .band-inner { padding-top: 84px; padding-bottom: 84px; }
+  .foot-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+@media (min-width: 761px) {
+  .steps { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .step { flex-direction: column; gap: 16px; }
+  .step h3 { margin-top: 0; }
+}
+
+/* =========================================================== ESCRITORIO */
+/* Dos columnas: texto a la izquierda, formulario a la derecha. */
+@media (min-width: 1000px) {
+  .top-inner { height: 64px; }
+  .top-logo { height: 32px; }
+  .top-note { display: inline-flex; }
+  .hero { padding: 64px 0 84px; background: linear-gradient(180deg, var(--brand-50) 0, #fff 520px); }
+  .hero-glow { display: block; }
+  .hero-grid {
+    display: grid; column-gap: 72px; align-items: center; align-content: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    grid-template-areas: "intro form" "extra form";
+  }
+  .hero-intro { grid-area: intro; align-self: end; }
+  .hero-extra { grid-area: extra; align-self: start; margin-top: 30px; }
+  .hero-form { grid-area: form; margin-top: 0; max-width: none; scroll-margin-top: 24px; }
+  .hero-h1 { margin-top: 18px; font-size: clamp(44px, 4.4vw, 56px); line-height: 1.05; }
+  .hero-sub { margin-top: 20px; font-size: 18px; max-width: 540px; }
+  .hero-list li { font-size: 16px; }
+  .hero-quote { display: block; margin: 30px 0 0; padding: 20px 0 0; border-top: 1px solid var(--zinc-200); max-width: 540px; }
+  .hero-quote .tst-quote { font-size: 15px; margin-bottom: 14px; color: var(--zinc-700); }
+  .hero-quote .tst-av { width: 40px; height: 40px; }
+  .form-card { padding: 30px; }
+  .form-card h2 { font-size: 21px; }
+  .see-grid { grid-template-columns: repeat(4, 1fr); }
+  .section { padding: 92px 0; }
+  .sec-head { margin-bottom: 52px; }
+  .sec-title { font-size: 42px; line-height: 1.08; }
+  .band-title { font-size: 46px; line-height: 1.06; }
+  .band-inner { padding-top: 100px; padding-bottom: 100px; }
+  .shot-frame { max-width: 1040px; margin-left: auto; margin-right: auto; margin-top: 52px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .field input, .faq-chev, .barra, .barra.is-visible { transition: none; }
+}
