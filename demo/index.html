@@ -90,8 +90,8 @@
           <div class="field"><label for="f-email">Email de trabajo</label><input id="f-email" name="email" type="email" inputmode="email" placeholder="nombre@inmobiliaria.cl" required autocomplete="email"></div>
           <div class="field"><label for="f-telefono">Teléfono de contacto</label><input id="f-telefono" name="telefono" type="tel" inputmode="tel" placeholder="+56 9 1234 5678" required autocomplete="tel"></div>
           <div class="field"><label for="f-empresa">Inmobiliaria o corredora</label><input id="f-empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" required autocomplete="organization"></div>
-          <button type="submit" class="btn btn-primary btn-lg" data-ubicacion="landing-demo">Solicitar mi demo</button>
           <p class="form-status" id="demo-status" role="status" aria-live="polite" hidden></p>
+          <button type="submit" class="btn btn-primary btn-lg" data-ubicacion="landing-demo">Solicitar mi demo</button>
           <p class="form-note"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Sin compromiso · Respuesta en 1 día hábil</p>
           <p class="form-fine">Al enviar aceptas que te contactemos sobre Cierra.cl y el tratamiento de tus datos según nuestra <a href="/legal.html#pp-datos" target="_blank" rel="noopener">Política de privacidad</a>.</p>
         </form>
@@ -304,6 +304,9 @@
         var status = document.getElementById('demo-status');
         demoForm.addEventListener('submit', async function (e) {
           e.preventDefault();
+          // Sin espacios sobrantes: un campo con solo espacios pasaría el
+          // `required` del navegador y el servidor lo rechazaría.
+          Array.prototype.forEach.call(demoForm.querySelectorAll('input'), function (i) { i.value = i.value.trim(); });
           if (!demoForm.reportValidity()) return;
           var btn = demoForm.querySelector('button[type="submit"]');
           var label = btn.textContent;
@@ -343,6 +346,17 @@
             btn.disabled = false;
             btn.textContent = label;
           }
+        });
+        // Volver con "atrás" desde la página de gracias: el celular restaura
+        // esta página tal como quedó (botón deshabilitado en "Enviando…" y
+        // los campos llenos). Se deja lista para un envío nuevo.
+        window.addEventListener('pageshow', function (e) {
+          if (!e.persisted) return;
+          var b = demoForm.querySelector('button[type="submit"]');
+          b.disabled = false;
+          b.textContent = 'Solicitar mi demo';
+          status.hidden = true;
+          demoForm.reset();
         });
       }
 

@@ -46,7 +46,7 @@ img { display: block; max-width: 100%; height: auto; }
 .btn:focus-visible,
 a:focus-visible,
 summary:focus-visible,
-.foot-link:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 3px; border-radius: var(--radius-sm); }
+.foot-link:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 3px; }
 .band .btn:focus-visible { outline-color: #fff; }
 
 .eyebrow { display: inline-flex; align-items: center; flex-wrap: wrap; max-width: 100%; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
@@ -192,7 +192,7 @@ summary:focus-visible,
   .hero { padding: 36px 0 64px; }
   .hero-h1 { font-size: 40px; }
   .hero-sub { font-size: 17px; line-height: 1.6; max-width: 620px; }
-  .hero-form { max-width: 520px; }
+  .hero-form { max-width: 560px; margin-left: auto; margin-right: auto; }
   .form-card { padding: 28px; }
   .see-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
   .section { padding: 76px 0; }
@@ -228,7 +228,7 @@ summary:focus-visible,
   }
   .hero-intro { grid-area: intro; align-self: end; }
   .hero-extra { grid-area: extra; align-self: start; margin-top: 30px; }
-  .hero-form { grid-area: form; margin-top: 0; max-width: none; scroll-margin-top: 24px; }
+  .hero-form { grid-area: form; margin: 0; max-width: none; scroll-margin-top: 24px; }
   .hero-h1 { margin-top: 18px; font-size: clamp(44px, 4.4vw, 56px); line-height: 1.05; }
   .hero-sub { margin-top: 20px; font-size: 18px; max-width: 540px; }
   .hero-list li { font-size: 16px; }
@@ -280,4 +280,9 @@ summary:focus-visible,
   .gracias-h1 { font-size: 40px; }
   .gracias-sub { font-size: 17px; }
   .gracias-sigue { padding: 28px; }
+}
+
+/* Enlaces del pie con área táctil cómoda en celular. */
+@media (max-width: 760px) {
+  .foot-link { min-height: 44px; }
 }
