@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recibimos tu solicitud — Cierra.cl</title>
+<meta name="description" content="Recibimos tu solicitud de demo. Te contactamos dentro de 1 día hábil para coordinar la hora.">
+<!-- Página de gracias de la landing de campaña /demo/: solo se llega
+     después de enviar el formulario. No se indexa ni se enlaza. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://cierra.cl/demo/gracias/">
+<meta name="theme-color" content="#007C10">
+
+<link rel="icon" type="image/svg+xml" href="/assets/cierra-icon-green.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Solo lo que la página usa: Plus Jakarta Sans y Sora 700 (el logo). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@700&display=swap">
+<link rel="stylesheet" href="/assets/colors_and_type.css">
+<link rel="stylesheet" href="/assets/analitica.css">
+<link rel="stylesheet" href="/assets/demo.css">
+<!-- Vercel Web Analytics (sin cookies) -->
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body class="pg-gracias">
+  <!-- Íconos SVG en línea (sin librería): se usan con <use href="#i-…">. -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-check-solo" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  </svg>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <svg class="top-logo" viewBox="0 34 680 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cierra.cl">
+        <g transform="translate(20,52) scale(0.1875)">
+          <rect width="512" height="512" rx="116" fill="#007C10"></rect>
+          <path d="M366 355 A148 148 0 1 1 366 157" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round"></path>
+          <rect x="208" y="208" width="96" height="96" rx="10" fill="#FFFFFF" transform="rotate(45 256 256)"></rect>
+        </g>
+        <text x="150" y="135" font-family="Sora, 'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="96" letter-spacing="-3" fill="#09090B">Cıerra<tspan fill="#007C10">.cl</tspan></text>
+        <path d="M230 40 Q234 51 245 55 Q234 59 230 70 Q226 59 215 55 Q226 51 230 40 Z" fill="#007C10"></path>
+      </svg>
+      <p class="top-note"><svg class="ic" aria-hidden="true"><use href="#i-video"/></svg>Demo de 30 minutos · por Google Meet</p>
+    </div>
+  </header>
+
+  <main class="gracias">
+    <div class="wrap gracias-inner">
+      <span class="gracias-check" aria-hidden="true"><svg class="ic"><use href="#i-check-solo"/></svg></span>
+      <h1 class="gracias-h1">¡Listo! Recibimos tu solicitud.</h1>
+      <p class="gracias-sub">Te contactamos dentro de 1 día hábil para coordinar tu demo de 30 minutos por Google Meet. También te enviamos un correo de confirmación.</p>
+
+      <section class="gracias-sigue" aria-labelledby="gracias-sigue-titulo">
+        <h2 class="gracias-sigue-titulo" id="gracias-sigue-titulo">Qué sigue</h2>
+        <!-- Los pasos 2 y 3 de la landing: el 1 (llenar el formulario) ya está hecho. -->
+        <ol class="steps gracias-steps" start="2">
+          <li class="step">
+            <span class="step-n" aria-hidden="true">2</span>
+            <div><h3>Coordinamos la hora</h3><p>Te contactamos dentro de 1 día hábil.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-n" aria-hidden="true">3</span>
+            <div><h3>Nos reunimos por Google Meet</h3><p>30 minutos para ver el sistema con tus proyectos y resolver tus dudas.</p></div>
+          </li>
+        </ol>
+      </section>
+
+      <p class="gracias-dudas">¿Dudas? Escríbenos a <a href="mailto:contacto@cierra.cl" data-ubicacion="gracias">contacto@cierra.cl</a></p>
+      <a href="/" class="btn btn-outline btn-lg" data-ubicacion="gracias">Conocer más de Cierra.cl<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© 2026 Cierra.cl · Hecho en Chile</span>
+      <div class="foot-links">
+        <a class="foot-link" href="/legal.html">Términos y privacidad</a>
+        <button type="button" class="foot-link" data-preferencias-cookies>Preferencias de cookies</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Google Analytics 4 con modo de consentimiento y aviso de cookies.
+       Al final del body y sin defer: corre cuando el body ya existe. -->
+  <script src="/assets/analitica.js"></script>
+  <!-- Píxel de Meta: después de analitica.js, porque le pregunta si hay
+       consentimiento. Sin él no carga nada. -->
+  <script src="/assets/meta-pixel.js"></script>
+  <!-- Microsoft Clarity: con la misma aceptación que Google Analytics. -->
+  <script src="/assets/clarity.js"></script>
+  <script>
+    // Conversión de la landing /demo/. Va DESPUÉS de analitica.js y
+    // meta-pixel.js: los dos corren de forma síncrona, así que aquí ya
+    // existen cierraEvento y cierraMeta (y el píxel ya está activo si la
+    // persona había aceptado la publicidad).
+    //
+    // Por qué el Lead vive aquí y no en la landing: un evento lanzado justo
+    // antes de redirigir se puede perder (el navegador corta las peticiones
+    // al cambiar de página). La landing, tras el 200 de /api/demo, redirige
+    // a /demo/gracias/#<id del evento>. Ese id es el mismo que el servidor
+    // mandó a Meta por la API de conversiones, así Meta deduplica los dos
+    // Lead y cuenta uno solo.
+    //
+    // Solo cuenta con un id válido en el hash: entrar directo, recargar o
+    // volver atrás no mide nada.
+    (function () {
+      'use strict';
+      var eventId = (window.location.hash || '').replace(/^#/, '');
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(eventId)) return;
+      // Primero se borra el hash, antes de medir: si algo de abajo falla,
+      // recargar tampoco repite.
+      try {
+        history.replaceState(null, '', location.pathname + location.search);
+      } catch (_) { /* sin History API: se mide igual */ }
+      try {
+        if (window.cierraEvento) window.cierraEvento('enviar_formulario', { formulario: 'demo', ubicacion: 'landing-demo' });
+      } catch (_) { /* medir no rompe la página */ }
+      try {
+        if (window.cierraMeta) window.cierraMeta.lead(eventId);
+      } catch (_) { /* medir no rompe la página */ }
+    })();
+  </script>
+</body>
+</html>

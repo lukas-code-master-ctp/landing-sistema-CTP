@@ -250,3 +250,34 @@ summary:focus-visible,
   html { scroll-behavior: auto; }
   .btn, .field input, .faq-chev, .barra, .barra.is-visible { transition: none; }
 }
+
+/* =========================================================== PÁGINA DE GRACIAS */
+/* /demo/gracias/ (body.pg-gracias): una columna centrada y sobria. No
+   tiene barra fija, así que no reserva el espacio de abajo en celular;
+   y el pie queda pegado abajo aunque el contenido sea corto. */
+.pg-gracias { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+.pg-gracias .foot { border-top: 1px solid var(--border-faint); }
+@media (max-width: 760px) {
+  .pg-gracias { padding-bottom: 0; }
+}
+.gracias { flex: 1; display: flex; align-items: center; padding: 40px 0 48px; background: linear-gradient(180deg, var(--brand-50) 0, #fff 340px); }
+.gracias-inner { width: 100%; max-width: 680px; text-align: center; }
+.gracias-check { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 9999px; background: var(--brand-700); color: #fff; box-shadow: 0 0 0 10px rgb(0 124 16 / .12); }
+.gracias-check .ic { width: 38px; height: 38px; stroke-width: 2.6; }
+.gracias-h1 { margin: 30px 0 0; font-size: 30px; line-height: 1.12; font-weight: var(--fw-extra); letter-spacing: -0.025em; color: var(--zinc-950); text-wrap: balance; }
+.gracias-sub { margin: 14px auto 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: var(--fg-secondary); }
+.gracias-sigue { margin: 32px auto 0; max-width: 520px; padding: 22px 20px; text-align: left; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--shadow-card); }
+.gracias-sigue-titulo { margin: 0 0 18px; font-size: 12px; font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--brand-700); }
+/* Siempre en una columna, con el número al lado (también en escritorio). */
+.gracias-steps { grid-template-columns: 1fr; gap: 20px; }
+.gracias-steps .step { flex-direction: row; gap: 14px; }
+.gracias-steps .step h3 { margin-top: 2px; }
+.gracias-dudas { margin: 28px 0 0; font-size: 15px; color: var(--fg-secondary); }
+.gracias-dudas a { color: var(--brand-700); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
+.gracias-inner > .btn { margin-top: 20px; }
+@media (min-width: 640px) {
+  .gracias { padding: 48px 0 56px; }
+  .gracias-h1 { font-size: 40px; }
+  .gracias-sub { font-size: 17px; }
+  .gracias-sigue { padding: 28px; }
+}
