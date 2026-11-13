@@ -1,5 +1,6 @@
-// Pruebas de api/_meta-capi.js (API de conversiones de Meta). Sin
-// dependencias ni red:  node tools/test_capi.mjs
+// Pruebas de api/_meta-capi.js (API de conversiones de Meta) y de
+// api/demo.js (el Lead enchufado y la fila "Origen" del aviso al equipo).
+// Sin dependencias ni red:  node tools/test_capi.mjs
 //
 // Lo que más importa vigilar: que sin consentimiento, sin token o sin
 // píxel no salga nada; que correo y teléfono viajen hasheados; que el token
@@ -203,7 +204,7 @@ await prueba('un timeout corta el request', async () => {
 });
 
 // ── api/demo.js con la CAPI enchufada ──────────────────────────────
-async function correrDemo(body, { resendOk = true } = {}) {
+async function correrDemo(body, { resendOk = true, crm = false } = {}) {
   const demo = (await import(new URL('../api/demo.js', import.meta.url))).default;
   const pedidos = [];
   const fetchReal = globalThis.fetch;
@@ -215,6 +216,8 @@ async function correrDemo(body, { resendOk = true } = {}) {
   };
   Object.assign(process.env, { RESEND_API_KEY: 're_x', ...ENV });
   delete process.env.CRM_WEBHOOK_URL;
+  delete process.env.CRM_WEBHOOK_TOKEN;
+  if (crm) process.env.CRM_WEBHOOK_URL = 'https://planilla.example/webhook';
   const res = { code: 0, json(o) { this.body = o; return this; }, status(c) { this.code = c; return this; }, setHeader() {} };
   try {
     await sinLogs(() => demo({
@@ -227,7 +230,13 @@ async function correrDemo(body, { resendOk = true } = {}) {
     for (const k of Object.keys(process.env)) if (!(k in envReal)) delete process.env[k];
     Object.assign(process.env, envReal);
   }
-  return { res, meta: pedidos.filter((p) => p.url.includes('graph.facebook.com')) };
+  return {
+    res,
+    meta: pedidos.filter((p) => p.url.includes('graph.facebook.com')),
+    // En orden: [0] el aviso al equipo, [1] la confirmación al cliente.
+    correos: pedidos.filter((p) => p.url.includes('resend')).map((p) => p.cuerpo),
+    planilla: pedidos.filter((p) => p.url.includes('planilla.example')).map((p) => p.cuerpo),
+  };
 }
 
 await prueba('demo.js: con consentimiento manda el Lead después del aviso y responde 200', async () => {
@@ -255,6 +264,86 @@ await prueba('demo.js: si falla el aviso al equipo no se manda a Meta', async ()
   const { res, meta } = await correrDemo({ meta_consentimiento: true, meta_event_id: 'id-1' }, { resendOk: false });
   assert.strictEqual(res.code, 502);
   assert.strictEqual(meta.length, 0);
+});
+
+// ── api/demo.js: fila "Origen" del aviso al equipo ─────────────────
+const { origenLegible } = await import(new URL('../api/demo.js', import.meta.url));
+
+await prueba('origenLegible: ruta y parámetros de una URL http(s), sin dominio ni hash', () => {
+  assert.strictEqual(origenLegible('https://cierra.cl/demo/?utm_source=meta&utm_campaign=x'), '/demo/?utm_source=meta&utm_campaign=x');
+  assert.strictEqual(origenLegible('https://cierra.cl/demo/?utm_source=meta#demo'), '/demo/?utm_source=meta');
+  assert.strictEqual(origenLegible('https://cierra.cl/#demo'), '/');
+  assert.strictEqual(origenLegible('http://localhost:8000/demo/'), '/demo/');
+  assert.strictEqual(origenLegible('  https://cierra.cl/demo/  '), '/demo/');
+});
+
+await prueba('origenLegible: lo que no es una URL http(s) da "—", sin lanzar', () => {
+  const raros = ['javascript:alert(1)', 'data:text/html,<script>alert(1)</script>', 'mailto:a@b.cl',
+    'texto suelto', '/demo/?utm_source=meta', '', '   ', 42, 0, null, undefined, true, {}, [], ['https://cierra.cl/'],
+    { toString() { throw new Error('no'); } }];
+  for (const v of raros) {
+    assert.strictEqual(origenLegible(v), '—', typeof v === 'string' ? JSON.stringify(v) : Object.prototype.toString.call(v));
+  }
+  assert.strictEqual(origenLegible(), '—');
+});
+
+await prueba('origenLegible: recorta a 300 caracteres y no deja pasar HTML ni saltos de línea', () => {
+  const largo = origenLegible('https://cierra.cl/demo/?utm_campaign=' + 'a'.repeat(1000));
+  assert.strictEqual(largo.length, 300);
+  assert.ok(largo.startsWith('/demo/?utm_campaign=aaa'));
+  const sucio = origenLegible('https://cierra.cl/demo/?x=<script>alert(1)</script>&y="\n\rOtra: línea');
+  assert.ok(!/[<>"\n\r]/.test(sucio), sucio);
+});
+
+await prueba('demo.js: el aviso al equipo trae "Origen" con la ruta y los UTM (texto y HTML)', async () => {
+  const { res, correos } = await correrDemo({ pagina: 'https://cierra.cl/demo/?utm_source=meta&utm_campaign=x#demo' });
+  assert.strictEqual(res.code, 200);
+  assert.strictEqual(correos.length, 2, 'aviso al equipo y confirmación al cliente');
+  const [equipo, cliente] = correos;
+  assert.ok(equipo.subject.startsWith('Nueva solicitud de demo'), equipo.subject);
+  const lineas = equipo.text.split('\n');
+  const i = lineas.indexOf('Origen: /demo/?utm_source=meta&utm_campaign=x');
+  assert.ok(i !== -1, equipo.text);
+  assert.ok(lineas[i - 1].startsWith('Tamaño del equipo: '), 'Origen va después de "Tamaño del equipo"');
+  assert.ok(/>Origen<\/td>\s*<td[^>]*>\/demo\/\?utm_source=meta&amp;utm_campaign=x<\/td>/.test(equipo.html), 'falta la fila Origen (con & escapado) en el HTML');
+  assert.ok(!equipo.html.includes('utm_source=meta&utm_campaign'), 'el & del origen va escapado en el HTML');
+  // El correo al cliente no cambia: no lleva el origen.
+  assert.deepStrictEqual(cliente.to, ['pedro@cierra.cl']);
+  assert.ok(!cliente.text.includes('Origen') && !cliente.html.includes('Origen'), 'el correo al cliente no lleva Origen');
+  assert.ok(!cliente.text.includes('utm_source') && !cliente.html.includes('utm_source'));
+});
+
+await prueba('demo.js: sin `pagina` (o con algo que no es una URL) el aviso dice "Origen: —"', async () => {
+  for (const pagina of [undefined, 'javascript:alert(1)', 42, { a: 1 }]) {
+    const { res, correos } = await correrDemo({ pagina });
+    assert.strictEqual(res.code, 200);
+    assert.ok(correos[0].text.split('\n').includes('Origen: —'), String(pagina));
+    assert.ok(/>Origen<\/td>\s*<td[^>]*>—<\/td>/.test(correos[0].html), String(pagina));
+  }
+});
+
+await prueba('demo.js: un `pagina` con <script> no llega sin escapar al aviso', async () => {
+  for (const pagina of [
+    'https://cierra.cl/demo/?x=<script>alert(1)</script>',
+    'https://cierra.cl/demo/<img src=x onerror=alert(1)>',
+    '<script>alert(1)</script>',
+    'https://cierra.cl/"><script>alert(1)</script>',
+  ]) {
+    const { res, correos } = await correrDemo({ pagina });
+    assert.strictEqual(res.code, 200);
+    for (const c of correos) {
+      assert.ok(!/<script|<img src=x|onerror=alert\(1\)>/i.test(c.html), pagina);
+    }
+    assert.ok(!correos[0].text.includes('<script'), pagina);
+  }
+});
+
+await prueba('demo.js: el cuerpo del webhook de la planilla no cambia (origen: landing/demo, sin la página)', async () => {
+  const { res, planilla } = await correrDemo({ pagina: 'https://cierra.cl/demo/?utm_source=meta', equipo: '' }, { crm: true });
+  assert.strictEqual(res.code, 200);
+  assert.strictEqual(planilla.length, 1);
+  assert.deepStrictEqual(Object.keys(planilla[0]).sort(), ['email', 'empresa', 'equipo', 'fecha', 'nombre', 'origen', 'telefono']);
+  assert.strictEqual(planilla[0].origen, 'landing/demo');
 });
 
 console.log('');
