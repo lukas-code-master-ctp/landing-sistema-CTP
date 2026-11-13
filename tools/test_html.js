@@ -1,4 +1,5 @@
-// Pruebas del HTML de las páginas (index, legal y el blog), en lo que toca a la analítica.
+// Pruebas del HTML de las páginas (index, legal, el blog y la landing de
+// campaña /demo/ con su página de gracias), en lo que toca a la analítica.
 // Sin dependencias:  node tools/test_html.js
 //
 // assets/analitica.js se prueba aparte (tools/test_analitica.js), pero esa
@@ -22,16 +23,18 @@ var path = require('node:path');
 var RAIZ = path.join(__dirname, '..');
 // index.html y legal.html, más la lista del blog, cada entrada
 // (blog/<slug>/index.html) y la plantilla: una entrada nueva nace de la
-// plantilla, así que tiene que pasar lo mismo.
-var PAGINAS = ['index.html', 'legal.html', 'blog/index.html', 'blog/_plantilla.html']
+// plantilla, así que tiene que pasar lo mismo. Y la landing de campaña
+// (demo/index.html) con su página de gracias; lo propio de esas dos
+// (noindex, sin menú, el Lead en la de gracias) lo revisa tools/test_demo.js.
+var PAGINAS = ['index.html', 'legal.html', 'demo/index.html', 'demo/gracias/index.html', 'blog/index.html', 'blog/_plantilla.html']
   .concat(fs.readdirSync(path.join(RAIZ, 'blog'), { withFileTypes: true })
     .filter(function (d) { return d.isDirectory() && d.name[0] !== '_'; })
     .map(function (d) { return 'blog/' + d.name + '/index.html'; }));
 
-// Las páginas del blog viven en carpetas: sus rutas a assets/ tienen que
-// ser absolutas (/assets/...). index.html y legal.html, en la raíz, usan
-// la relativa.
-function prefijo(p) { return p.indexOf('blog/') === 0 ? '/' : ''; }
+// Las páginas del blog y las de demo/ viven en carpetas: sus rutas a
+// assets/ tienen que ser absolutas (/assets/...). index.html y legal.html,
+// en la raíz, usan la relativa.
+function prefijo(p) { return /^(?:blog|demo)\//.test(p) ? '/' : ''; }
 function re(s) { return s.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&'); }
 
 var corridas = 0, fallos = 0;

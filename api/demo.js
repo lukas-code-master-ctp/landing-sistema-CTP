@@ -81,6 +81,25 @@ function filasDatos(pares) {
   return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${filas}</table>`;
 }
 
+/**
+ * Desde qué página se envió el formulario, para el aviso al equipo: ruta y
+ * parámetros (los UTM de la campaña), sin dominio ni hash. `pagina` la manda
+ * el navegador, así que solo se acepta una URL http(s) que se pueda parsear;
+ * cualquier otra cosa da '—'. Máximo 300 caracteres. Nunca lanza.
+ *   https://cierra.cl/demo/?utm_source=meta#demo → /demo/?utm_source=meta
+ */
+const MAX_ORIGEN = 300;
+export function origenLegible(pagina) {
+  try {
+    if (typeof pagina !== 'string' || !pagina.trim()) return '—';
+    const u = new URL(pagina.trim());
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return '—';
+    return (u.pathname + u.search).slice(0, MAX_ORIGEN);
+  } catch {
+    return '—';
+  }
+}
+
 async function sendEmail(apiKey, payload) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -110,6 +129,8 @@ export default async function handler(req, res) {
   const telefono = String(body.telefono || '').trim();
   const empresa = String(body.empresa || '').trim();
   const equipo = String(body.equipo || '').trim();
+  // Solo para el aviso al equipo: distingue los leads de la campaña (/demo/).
+  const origen = origenLegible(body.pagina);
 
   if (!nombre || !email || !telefono || !empresa) {
     return res.status(400).json({ error: 'Faltan campos obligatorios.' });
@@ -151,6 +172,7 @@ export default async function handler(req, res) {
         `Teléfono: ${telefono}`,
         `Inmobiliaria o corredora: ${empresa}`,
         `Tamaño del equipo: ${equipo || '—'}`,
+        `Origen: ${origen}`,
         '',
         `Recibida el ${fecha}`,
         `Este correo responde a ${email}, así que puedes contestarle desde aquí.`,
@@ -165,6 +187,7 @@ export default async function handler(req, res) {
             ['Email', email],
             ['Teléfono', telefono],
             ['Tamaño del equipo', equipo || '—'],
+            ['Origen', origen],
           ])}
           <p style="margin:26px 0 0;padding-top:18px;border-top:1px solid #e4e4e7;color:#71717a;font-size:13px;line-height:1.6;">
             Recibida el ${esc(fecha)}<br>

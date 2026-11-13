@@ -7,6 +7,9 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 - `index.html` — la landing completa (una sola página, es-CL).
 - `api/demo.js` — función serverless (Vercel) que procesa el formulario de demo.
 - `api/_meta-capi.js` — Lead a la API de conversiones de Meta (módulo, no ruta: el `_` lo excluye). Lo usa `api/demo.js`.
+- `demo/` — landing de campaña (`/demo/`, `demo/index.html`) y su página de gracias (`/demo/gracias/`, `demo/gracias/index.html`). No se indexan ni se enlazan desde el sitio. Ver [Landing de campaña](#landing-de-campaña-demo).
+- `assets/demo.css` — estilos compartidos por esas dos páginas.
+- `tools/test_demo.js` — pruebas de la landing de campaña y su página de gracias: noindex, fuera del sitemap, sin menú ni enlaces de fuga, rutas absolutas, los 4 campos, y la conversión medida una sola vez, en la página de gracias.
 - `legal.html` — términos y condiciones y política de privacidad (incluye cookies y analítica, sección 2.8).
 - `blog/` — el blog (`/blog/`): `blog/index.html` (lista), una carpeta por entrada (`blog/<slug>/index.html`) y `blog/_plantilla.html` (no se publica). Ver [Blog](#blog).
 - `assets/blog.css` y `assets/blog.js` — estilos y nav (menú de celular) compartidos por las páginas del blog; `assets/blog/` — portadas de las entradas.
@@ -18,8 +21,8 @@ Landing page SaaS para vender **Cierra.cl** —el software de automatización op
 - `tools/test_clarity.js` — pruebas de `assets/clarity.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_meta.js` — pruebas de `assets/meta-pixel.js` con un DOM falso (Node, sin dependencias).
 - `tools/test_analitica.js` — pruebas de `assets/analitica.js` con un DOM falso (Node, sin dependencias).
-- `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js` y de su llamada en `api/demo.js` (Node, sin red).
-- `tools/test_html.js` — pruebas del HTML de las páginas (index, legal y el blog) para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
+- `tools/test_capi.mjs` — pruebas de `api/_meta-capi.js`, de su llamada en `api/demo.js` y de la fila "Origen" del aviso al equipo (Node, sin red).
+- `tools/test_html.js` — pruebas del HTML de las páginas (index, legal, el blog y la landing de campaña) para la analítica (tag, Vercel, botón de preferencias, `data-ubicacion`).
 - `assets/colors_and_type.css` — tokens de marca, tipografía, sombras y radios (fuente de verdad del sistema).
 - `assets/dashboard.png` — captura del dashboard que se muestra en "Velo en acción".
 - `assets/og-cover.png` — imagen 1200×630 de la vista previa al compartir el link.
@@ -59,6 +62,26 @@ Nav sticky · Hero con composición flotante de KPIs · logos de clientes · ban
 
 Todo CTA nuevo lleva su `data-ubicacion` (la entrada usa `blog-entrada`; la lista, `blog-lista`).
 
+## Landing de campaña (`/demo/`)
+
+`cierra.cl/demo/` es el destino de los anuncios de Meta. Tiene un solo objetivo: que la persona llene el formulario de demo. Spec: [docs/specs/2026-11-13-landing-campana-demo-spec.md](docs/specs/2026-11-13-landing-campana-demo-spec.md).
+
+- **Solo se llega por el anuncio.** Lleva `noindex`, no está en `sitemap.xml` ni en `llms.txt` y ninguna página del sitio la enlaza. No la sumes al menú ni al pie.
+- **No lleva menú, a propósito.** Sin nav, sin precios, sin blog, sin "Iniciar sesión" y sin WhatsApp; el logo no es enlace. Los únicos enlaces que salen de la página son los legales (`/legal.html`), que Meta exige tener a la vista. Todos los botones llevan a `#demo`, el formulario.
+- **Formulario de 4 campos**: nombre, email de trabajo, teléfono e inmobiliaria o corredora (`nombre`, `email`, `telefono`, `empresa`). No pide el tamaño del equipo. Se envía a `POST /api/demo`, igual que el de la portada.
+- **Página de gracias.** Cuando `/api/demo` responde 200, la landing redirige a `/demo/gracias/#<id del evento>`. Si el envío falla, muestra el error en el formulario y no redirige.
+- **El Lead del navegador se dispara en `/demo/gracias/`, no en la landing.** Un evento lanzado justo antes de cambiar de página se puede perder, porque el navegador corta las peticiones pendientes. El id que viaja en el hash es el mismo `meta_event_id` que el servidor mandó a la API de conversiones, así Meta deduplica los dos Lead y cuenta uno. La página de gracias mide (`enviar_formulario` y `Lead`) solo si el hash es un UUID válido, y antes de medir lo borra con `history.replaceState`: recargar, volver atrás o entrar directo a `/demo/gracias/` no cuenta nada.
+- **Valores de `data-ubicacion`**: `landing-demo` (el formulario y su botón de envío), `landing-demo-final` (botón de la banda final), `landing-demo-barra` (barra fija de celular) y `gracias` (enlaces de la página de gracias).
+- **El aviso al equipo trae la fila "Origen"**: la ruta y los parámetros de la página desde donde se envió el formulario (por ejemplo `/demo/?utm_source=meta&utm_campaign=…`), para distinguir los leads de la campaña de los de la portada (`/`). Lo arma `origenLegible` en `api/demo.js`. La planilla no cambia: sigue recibiendo `origen: "landing/demo"`.
+- **Rutas absolutas**, como en el blog: las dos páginas viven en carpetas (`/assets/…`, `/legal.html`).
+- **Sin Lucide**: los íconos son SVG en línea.
+
+URL para el anuncio (cambia `NOMBRE` por el de la campaña; los UTM llegan al aviso en la fila "Origen"):
+
+```
+https://cierra.cl/demo/?utm_source=meta&utm_medium=paid_social&utm_campaign=NOMBRE
+```
+
 ## Para terminar de pulir
 
 - **Captura real del dashboard:** el recuadro de "Velo en acción" es ahora un `<img src="assets/dashboard.png">`. Reemplaza ese archivo por la captura real cuando quieras actualizarla.
@@ -66,11 +89,11 @@ Todo CTA nuevo lleva su `data-ubicacion` (la entrada usa `blog-entrada`; la list
 
 ## Analítica (Google Analytics 4)
 
-Dos mediciones en paralelo, en `index.html` y `legal.html`:
+Las mismas mediciones en todas las páginas (portada, legal, blog y la landing de campaña):
 
 - **Google Analytics 4**: propiedad "Cierra" (`560564776`), ID de medición `G-GEPXVS6GJH`, en la cuenta de Analytics de Impulse AI. Lo carga [`assets/analitica.js`](assets/analitica.js), un solo archivo compartido; los estilos del aviso están en [`assets/analitica.css`](assets/analitica.css). **El ID se cambia en un solo lugar**: la constante `ID` al principio de `analitica.js`.
 - **Vercel Web Analytics**: sin cookies, cuenta todas las visitas —también las de quien rechaza— y sirve de control para comparar contra GA4.
-- **Meta Pixel**: píxel "Cierra.cl - Pixel" (`4526586427599697`, portfolio Impulse AI), para medir las campañas de Instagram y Facebook. Lo carga [`assets/meta-pixel.js`](assets/meta-pixel.js), después de `analitica.js`; **el ID se cambia en la constante `ID`** de ese archivo (el servidor lo lee aparte, de `META_PIXEL_ID`). Usa el **mismo consentimiento v2** que GA4: sin `publicidad: true` no se descarga `fbevents.js`, no existe `fbq` y no hay cookies. Eventos: `PageView` al cargar; `ViewContent` (`content_name: 'Página demo'`) una vez por página, cuando `#demo` queda a la vista; `Lead` (`content_name: 'Demo Cierra'`) solo cuando `/api/demo` responde 200, con un `eventID` (UUID) para que Meta lo deduplique contra la API de conversiones. Sin datos personales en los parámetros.
+- **Meta Pixel**: píxel "Cierra.cl - Pixel" (`4526586427599697`, portfolio Impulse AI), para medir las campañas de Instagram y Facebook. Lo carga [`assets/meta-pixel.js`](assets/meta-pixel.js), después de `analitica.js`; **el ID se cambia en la constante `ID`** de ese archivo (el servidor lo lee aparte, de `META_PIXEL_ID`). Usa el **mismo consentimiento v2** que GA4: sin `publicidad: true` no se descarga `fbevents.js`, no existe `fbq` y no hay cookies. Eventos: `PageView` al cargar; `ViewContent` (`content_name: 'Página demo'`) una vez por página, cuando `#demo` queda a la vista; `Lead` (`content_name: 'Demo Cierra'`) solo cuando `/api/demo` responde 200, con un `eventID` (UUID) para que Meta lo deduplique contra la API de conversiones (en la landing de campaña sale desde `/demo/gracias/`; ver [Landing de campaña](#landing-de-campaña-demo)). Sin datos personales en los parámetros.
 - **API de conversiones de Meta**: [`api/_meta-capi.js`](api/_meta-capi.js), llamada desde `api/demo.js` después del aviso al equipo. Manda el mismo `Lead`, con el mismo `event_id`, **solo si el navegador avisó consentimiento de publicidad** (`meta_consentimiento: true`) y existen `META_PIXEL_ID` y `META_CAPI_ACCESS_TOKEN`. Datos: correo y teléfono en SHA-256 (nunca en claro; el teléfono normalizado con código de país), IP, user agent, `_fbp`/`_fbc` si existen y la URL de la página. Best-effort: un error queda en el log (sin token ni datos personales) y no cambia la respuesta del formulario.
 
 ### Consentimiento
@@ -93,7 +116,7 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 | Evento | Cuándo | Parámetros |
 |---|---|---|
 | `clic_solicitar_demo` | Clic en un enlace a `#demo` | `ubicacion`, `texto` (texto visible, hasta 60 caracteres) |
-| `enviar_formulario` | Respuesta OK de `/api/demo` | `formulario` (`demo`), `ubicacion` |
+| `enviar_formulario` | Respuesta OK de `/api/demo`. En la portada sale en la misma página (`ubicacion: demo`); en la landing de campaña sale desde `/demo/gracias/` (`ubicacion: landing-demo`) | `formulario` (`demo`), `ubicacion` |
 | `clic_ingresar` | Clic en un enlace a `https://app.cierra.cl` | `ubicacion` |
 | `clic_correo` | Clic en un `mailto:` | `ubicacion` |
 
@@ -102,7 +125,7 @@ Cada evento va a GA4 (`gtag`) y a Vercel (`window.va`, máximo 2 parámetros por
 ### Pruebas
 
 ```bash
-node tools/test_analitica.js && node tools/test_meta.js && node tools/test_clarity.js && node tools/test_html.js && node tools/test_capi.mjs && node tools/test_blog.js
+node tools/test_analitica.js && node tools/test_meta.js && node tools/test_clarity.js && node tools/test_html.js && node tools/test_capi.mjs && node tools/test_blog.js && node tools/test_demo.js
 ```
 
 Sin dependencias ni red.
@@ -117,7 +140,7 @@ Meta pide verificar `cierra.cl` en el Administrador comercial. La forma elegida 
 
 El formulario "Agenda tu demo" hace `POST /api/demo` con los campos en JSON. Ese endpoint es una **función serverless** ([api/demo.js](api/demo.js)) que hace tres cosas:
 
-1. **Avisa al equipo** por email vía [Resend] (`DEMO_TO`, con copia a `DEMO_CC`). El `reply_to` es el correo del lead, así que responder el aviso le contesta directo a él.
+1. **Avisa al equipo** por email vía [Resend] (`DEMO_TO`, con copia a `DEMO_CC`). El `reply_to` es el correo del lead, así que responder el aviso le contesta directo a él. El aviso trae la fila "Origen": la ruta y los parámetros (UTM) de la página desde donde se envió.
 2. **Le confirma la recepción al cliente** por email.
 3. **Empuja el lead a la planilla** que hace de CRM, si `CRM_WEBHOOK_URL` está definida.
 
